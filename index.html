@@ -308,61 +308,89 @@
 <section style="background:var(--navy);padding:5rem 2rem;">
   <div style="max-width:1100px;margin:0 auto;">
     <p style="font-size:.8rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--teal);margin-bottom:.8rem;">Stimmen</p>
-    <h2 style="font-family:'Bebas Neue',sans-serif;font-size:clamp(2.4rem,4.5vw,3.8rem);line-height:1;margin-bottom:2.5rem;color:#fff;">Was <span style="color:var(--teal);">Eltern & Schüler:innen</span> sagen</h2>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem;">
+    <h2 style="font-family:'Bebas Neue',sans-serif;font-size:clamp(2.4rem,4.5vw,3.8rem);line-height:1;margin-bottom:2rem;color:#fff;">Was <span style="color:var(--teal);">Eltern &amp; Schüler:innen</span> sagen</h2>
 
-      <!-- Placeholder 1 -->
-      <div style="background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:1.8rem;display:flex;flex-direction:column;gap:1rem;">
-        <p style="font-size:1.4rem;color:var(--teal);">❝</p>
-        <p style="font-size:.95rem;color:rgba(255,255,255,.85);line-height:1.75;font-style:italic;font-weight:300;">
-          Dank der Nachhilfe habe ich mich in der Schule verbessert, bessere Noten geschrieben und meine Hausaufgaben besser verstanden als davor.
-        </p>
-        <div style="display:flex;align-items:center;gap:.8rem;margin-top:auto;">
-          <div style="width:36px;height:36px;border-radius:50%;background:var(--teal);display:flex;align-items:center;justify-content:center;font-weight:700;color:#fff;font-size:.85rem;">AA</div>
-          <div>
-            <p style="font-weight:600;font-size:.875rem;color:#fff;">A. A.</p>
-            <p style="font-size:.78rem;color:rgba(255,255,255,.45);">Schüler</p>
+    <!-- Scrollable carousel -->
+    <div style="overflow-x:auto;padding-bottom:1rem;cursor:grab;user-select:none;" id="testimonialTrack">
+      <div style="display:flex;gap:1.2rem;width:max-content;padding-bottom:.5rem;">
+
+        <!-- AA -->
+        <div style="background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:1.8rem;width:320px;flex-shrink:0;display:flex;flex-direction:column;gap:1rem;">
+          <p style="font-size:1.4rem;color:var(--teal);">❝</p>
+          <p style="font-size:.92rem;color:rgba(255,255,255,.85);line-height:1.75;font-style:italic;font-weight:300;flex:1;">
+            Dank der Nachhilfe habe ich mich in der Schule verbessert, bessere Noten geschrieben und meine Hausaufgaben besser verstanden als davor.
+          </p>
+          <div style="display:flex;align-items:center;gap:.8rem;margin-top:auto;">
+            <div style="width:36px;height:36px;border-radius:50%;background:var(--teal);display:flex;align-items:center;justify-content:center;font-weight:700;color:#fff;font-size:.85rem;flex-shrink:0;">AA</div>
+            <div><p style="font-weight:600;font-size:.875rem;color:#fff;">A. A.</p><p style="font-size:.78rem;color:rgba(255,255,255,.45);">Schüler</p></div>
           </div>
         </div>
-      </div>
 
-      <!-- Placeholder 2 -->
-      <div style="background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:1.8rem;display:flex;flex-direction:column;gap:1rem;">
-        <p style="font-size:1.4rem;color:var(--teal);">❝</p>
-        <p style="font-size:.95rem;color:rgba(255,255,255,.85);line-height:1.75;font-style:italic;font-weight:300;">
-          Am Anfang dachte ich so: „Nachhilfe … gar keinen Bock, extra Schule zu machen." Aber ehrlich? Es ist viel besser, als ich dachte! Die Leute dort sind mega nett und erklären alles ruhig und verständlich. Ich muss keine Angst haben, eine Frage zu stellen, weil mich dort niemand auslacht.
-        </p>
-        <div style="display:flex;align-items:center;gap:.8rem;margin-top:auto;">
-          <div style="width:36px;height:36px;border-radius:50%;background:var(--teal);display:flex;align-items:center;justify-content:center;font-weight:700;color:#fff;font-size:.85rem;">EG</div>
-          <div>
-            <p style="font-weight:600;font-size:.875rem;color:#fff;">E. G.</p>
-            <p style="font-size:.78rem;color:rgba(255,255,255,.45);">Schüler:in</p>
+        <!-- AZ -->
+        <div style="background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:1.8rem;width:320px;flex-shrink:0;display:flex;flex-direction:column;gap:1rem;">
+          <p style="font-size:1.4rem;color:var(--teal);">❝</p>
+          <p style="font-size:.92rem;color:rgba(255,255,255,.85);line-height:1.75;font-style:italic;font-weight:300;flex:1;">
+            Ich finde, die Nachhilfe hat mir sehr viel weitergeholfen. Die Leute hier sorgen dafür, dass einem nicht langweilig wird. Es sind immer genug Personen da, sodass jede Lehrperson an einem Tisch sein kann und sich darum kümmert, dass man wirklich etwas lernt.
+          </p>
+          <div style="display:flex;align-items:center;gap:.8rem;margin-top:auto;">
+            <div style="width:36px;height:36px;border-radius:50%;background:var(--teal);display:flex;align-items:center;justify-content:center;font-weight:700;color:#fff;font-size:.85rem;flex-shrink:0;">AZ</div>
+            <div><p style="font-weight:600;font-size:.875rem;color:#fff;">A. Z.</p><p style="font-size:.78rem;color:rgba(255,255,255,.45);">Schüler:in</p></div>
           </div>
         </div>
-      </div>
 
-      <!-- Placeholder 3 -->
-      <div style="background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:1.8rem;display:flex;flex-direction:column;gap:1rem;">
-        <p style="font-size:1.4rem;color:var(--teal);">❝</p>
-        <p style="font-size:.95rem;color:rgba(255,255,255,.85);line-height:1.75;font-style:italic;font-weight:300;">
-          Ich finde, die Nachhilfe hat mir sehr viel weitergeholfen. Die Leute hier sorgen dafür, dass einem nicht langweilig wird. Es sind immer genug Personen da, sodass jede Lehrperson an einem Tisch sein kann und sich darum kümmert, dass man wirklich etwas lernt.
-        </p>
-        <div style="display:flex;align-items:center;gap:.8rem;margin-top:auto;">
-          <div style="width:36px;height:36px;border-radius:50%;background:var(--teal);display:flex;align-items:center;justify-content:center;font-weight:700;color:#fff;font-size:.85rem;">AZ</div>
-          <div>
-            <p style="font-weight:600;font-size:.875rem;color:#fff;">A. Z.</p>
-            <p style="font-size:.78rem;color:rgba(255,255,255,.45);">Schüler:in</p>
+        <!-- Riad -->
+        <div style="background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:1.8rem;width:320px;flex-shrink:0;display:flex;flex-direction:column;gap:1rem;">
+          <p style="font-size:1.4rem;color:var(--teal);">❝</p>
+          <p style="font-size:.92rem;color:rgba(255,255,255,.85);line-height:1.75;font-style:italic;font-weight:300;flex:1;">
+            Ich habe mich bewusst für Lerncoaching ZH entschieden, weil ich weiss, dass Jusef und sein Team sehr kompetent sind und mich professionell unterstützen. Deshalb bin ich zuversichtlich, dass bei der Abschlussprüfung alles gut laufen wird.
+          </p>
+          <div style="display:flex;align-items:center;gap:.8rem;margin-top:auto;">
+            <div style="width:36px;height:36px;border-radius:50%;background:var(--teal);display:flex;align-items:center;justify-content:center;font-weight:700;color:#fff;font-size:.85rem;flex-shrink:0;">R</div>
+            <div><p style="font-weight:600;font-size:.875rem;color:#fff;">Riad</p><p style="font-size:.78rem;color:rgba(255,255,255,.45);">4. Lehrjahr, Anlagen- und Apparatebauer</p></div>
           </div>
         </div>
-      </div>
 
+        <!-- EK -->
+        <div style="background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:1.8rem;width:320px;flex-shrink:0;display:flex;flex-direction:column;gap:1rem;">
+          <p style="font-size:1.4rem;color:var(--teal);">❝</p>
+          <p style="font-size:.92rem;color:rgba(255,255,255,.85);line-height:1.75;font-style:italic;font-weight:300;flex:1;">
+            Ich finde die Nachhilfe sehr gut, weil ich dabei viel lernen kann und jederzeit Hilfe und Unterstützung bekomme.
+          </p>
+          <div style="display:flex;align-items:center;gap:.8rem;margin-top:auto;">
+            <div style="width:36px;height:36px;border-radius:50%;background:var(--teal);display:flex;align-items:center;justify-content:center;font-weight:700;color:#fff;font-size:.85rem;flex-shrink:0;">EK</div>
+            <div><p style="font-weight:600;font-size:.875rem;color:#fff;">E. K.</p><p style="font-size:.78rem;color:rgba(255,255,255,.45);">Schüler:in</p></div>
+          </div>
+        </div>
+
+        <!-- EG -->
+        <div style="background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:1.8rem;width:320px;flex-shrink:0;display:flex;flex-direction:column;gap:1rem;">
+          <p style="font-size:1.4rem;color:var(--teal);">❝</p>
+          <p style="font-size:.92rem;color:rgba(255,255,255,.85);line-height:1.75;font-style:italic;font-weight:300;flex:1;">
+            Am Anfang dachte ich so: „Nachhilfe … gar keinen Bock, extra Schule zu machen." Aber ehrlich? Es ist viel besser, als ich dachte! Die Leute dort sind mega nett und erklären alles ruhig und verständlich. Wenn ich etwas in Mathe oder Deutsch nicht verstehe, nehmen sie sich Zeit für mich. Ich muss keine Angst haben, eine Frage zu stellen, weil mich dort niemand auslacht.<br/><br/>
+            Ich finde es schön, dass es so einen Ort gibt. Es ist wirklich ein Haus des Friedens und ein Ort, wo man nicht nur für die Schule, sondern auch fürs Leben lernt. 📚
+          </p>
+          <div style="display:flex;align-items:center;gap:.8rem;margin-top:auto;">
+            <div style="width:36px;height:36px;border-radius:50%;background:var(--teal);display:flex;align-items:center;justify-content:center;font-weight:700;color:#fff;font-size:.85rem;flex-shrink:0;">EG</div>
+            <div><p style="font-weight:600;font-size:.875rem;color:#fff;">E. G.</p><p style="font-size:.78rem;color:rgba(255,255,255,.45);">Schüler:in</p></div>
+          </div>
+        </div>
+
+      </div>
     </div>
-    
+
+    <!-- Scroll hint -->
+    <div style="display:flex;align-items:center;gap:1rem;margin-top:1.2rem;">
+      <button id="tPrev" onclick="document.getElementById('testimonialTrack').scrollBy({left:-340,behavior:'smooth'})"
+        style="background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:#fff;width:38px;height:38px;border-radius:50%;cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;">‹</button>
+      <button id="tNext" onclick="document.getElementById('testimonialTrack').scrollBy({left:340,behavior:'smooth'})"
+        style="background:var(--teal);border:none;color:#fff;width:38px;height:38px;border-radius:50%;cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;">›</button>
+      <p style="font-size:.8rem;color:rgba(255,255,255,.35);">← Wischen oder Pfeile zum Navigieren</p>
+    </div>
+
   </div>
 </section>
 
 <hr/>
-
 
 <section class="preise" id="preise">
   <div class="container">
