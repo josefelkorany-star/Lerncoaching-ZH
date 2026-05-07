@@ -229,10 +229,12 @@
     <p class="section-label">Unser Team</p>
     <h2 class="section-title">Menschen hinter <span style="color:var(--teal)">Lerncoaching ZH</span></h2>
     <p class="section-desc">Keine Lehrpersonen von der Stange — Student:innen führender Schweizer Hochschulen, die selbst wissen, wie es sich anfühlt, 'lost' zu sein.</p>
+    <p style="font-size:.85rem;color:var(--muted);margin-top:1rem;">← Seitlich scrollen, um das erweiterte Team zu sehen →</p>
 
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.5rem;margin-top:3rem;">
+    <div style="display:flex;gap:1.5rem;margin-top:2rem;overflow-x:auto;padding-bottom:1rem;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;">
+      <div style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);">Team-Karten horizontal scrollbar</div>
 
-      <div style="background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:2rem;display:flex;flex-direction:column;gap:.8rem;">
+      <div style="background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:2rem;display:flex;flex-direction:column;gap:.8rem;flex:0 0 285px;scroll-snap-align:start;">
               <div style="width:56px;height:56px;border-radius:50%;background:#EBF0F7;display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:1.4rem;color:var(--navy);flex-shrink:0;">AT</div>
               <div>
                 <p style="font-weight:700;font-size:1rem;color:var(--navy);">Abdullah</p>
@@ -247,9 +249,9 @@
               <p style="font-size:.78rem;color:var(--muted);margin-top:.2rem;">🗣 Deutsch · Englisch · Französisch · Urdu</p>
             </div>
       
-            <!-- SYRIN -->
+            <!-- JOSEF -->
 
-      <div style="background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:2rem;display:flex;flex-direction:column;gap:.8rem;">
+      <div style="background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:2rem;display:flex;flex-direction:column;gap:.8rem;flex:0 0 285px;scroll-snap-align:start;">
               <div style="width:56px;height:56px;border-radius:50%;background:var(--teal-light);display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:1.4rem;color:var(--teal-mid);flex-shrink:0;">JK</div>
               <div>
                 <p style="font-weight:700;font-size:1rem;color:var(--navy);">Josef</p>
@@ -264,9 +266,9 @@
               <p style="font-size:.78rem;color:var(--muted);margin-top:.2rem;">🗣 Deutsch · Englisch · Arabisch</p>
             </div>
       
-            <!-- ABDULLAH -->
+            <!-- EMINE -->
 
-      <div style="background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:2rem;display:flex;flex-direction:column;gap:.8rem;">
+      <div style="background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:2rem;display:flex;flex-direction:column;gap:.8rem;flex:0 0 285px;scroll-snap-align:start;">
               <div style="width:56px;height:56px;border-radius:50%;background:#F0EBF7;display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:1.4rem;color:#6B3FA0;flex-shrink:0;">EM</div>
               <div>
                 <p style="font-weight:700;font-size:1rem;color:var(--navy);">Emine</p>
@@ -283,7 +285,7 @@
               <p style="font-size:.78rem;color:var(--muted);margin-top:.2rem;">🗣 Deutsch · Englisch · Albanisch</p>
             </div>
 
-      <div style="background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:2rem;display:flex;flex-direction:column;gap:.8rem;">
+      <div style="background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:2rem;display:flex;flex-direction:column;gap:.8rem;flex:0 0 285px;scroll-snap-align:start;">
               <div style="width:56px;height:56px;border-radius:50%;background:#FFF0E8;display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:1.4rem;color:#C05A1A;flex-shrink:0;">SE</div>
               <div>
                 <p style="font-weight:700;font-size:1rem;color:var(--navy);">Syrin</p>
@@ -300,7 +302,23 @@
               <p style="font-size:.78rem;color:var(--muted);margin-top:.2rem;">🗣 Deutsch · Englisch · Arabisch</p>
             </div>
       
-            <!-- EMINE -->
+            <!-- ERSATZLEHRPERSONEN -->
+
+      <div style="background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:2rem;display:flex;flex-direction:column;gap:.8rem;flex:0 0 285px;scroll-snap-align:start;">
+              <div style="width:56px;height:56px;border-radius:50%;background:#E8F2FF;display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:1.4rem;color:#275A9F;flex-shrink:0;">E+</div>
+              <div>
+                <p style="font-weight:700;font-size:1rem;color:var(--navy);">Ersatzlehrer:innen</p>
+                <p style="font-size:.8rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--teal);margin-top:.1rem;">Flexibles Support-Team</p>
+              </div>
+              <p style="font-size:.9rem;color:var(--muted);line-height:1.7;">Zusätzlich zu unserem Kernteam haben wir mindestens <strong style="color:var(--navy);">5 Ersatzlehrpersonen</strong>, die bei Ausfällen oder hoher Nachfrage einspringen können. Auch sie studieren oder studierten an Schweizer Hochschulen wie ETH, UZH, ZHAW oder PH und haben bereits mehrfach in der Nachhilfe unterstützt.</p>
+              <div style="display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.3rem;">
+                <span style="background:#E8F2FF;color:#275A9F;font-size:.75rem;font-weight:600;padding:.25rem .7rem;border-radius:20px;">ETH · UZH · ZHAW · PH</span>
+                <span style="background:#E8F2FF;color:#275A9F;font-size:.75rem;font-weight:600;padding:.25rem .7rem;border-radius:20px;">Finanzmathe</span>
+                <span style="background:#E8F2FF;color:#275A9F;font-size:.75rem;font-weight:600;padding:.25rem .7rem;border-radius:20px;">Wirtschaft</span>
+                <span style="background:#E8F2FF;color:#275A9F;font-size:.75rem;font-weight:600;padding:.25rem .7rem;border-radius:20px;">Geschichte & Politik</span>
+              </div>
+              <p style="font-size:.78rem;color:var(--muted);margin-top:.2rem;">Flexibel einsetzbar · zusätzliche Fachbereiche · Teamreserve</p>
+            </div>
 
     </div>    </div>
   </div>
@@ -317,12 +335,6 @@
   <div class="container">
     <div class="poster-wrap">
       <div class="poster-img">
-        <!--
-          SO FÜGST DU DEIN POSTER EIN:
-          1. Speichere dein Flyer-Bild als "poster.jpg" (oder poster.png)
-          2. Lege es in den GLEICHEN Ordner wie diese index.html Datei
-          3. Fertig — das Bild erscheint automatisch hier
-        -->
         <img src="poster.jpg" alt="Unser offizieller Flyer – Lerncoaching ZH Nachhilfe Zürich" style="width:100%;display:block;border-radius:10px;"/>
       </div>
       <div>
@@ -368,12 +380,12 @@
   <div class="container">
     <p class="section-label">Der Samstags-Zyklus</p>
     <h2 class="section-title">Jeder Samstag hat ein Ziel</h2>
-    <p class="section-desc">Dein Semester folgt einer klaren, strategischen Route — kein blinder Aktionismus.</p>
+    <p class="section-desc">Dein Quartal folgt einer klaren, strategischen Route — kein blinder Aktionismus.</p>
     <div class="zyklus-phases">
       <div class="phase-card phase-a">
         <div class="phase-tag">Phase A · Kick-off</div>
         <div class="phase-title">Diagnostik & Planung</div>
-        <div class="phase-subtitle">Erster Samstag im Semester</div>
+        <div class="phase-subtitle">Erster Samstag im Quartal</div>
         <ul class="phase-items"><li>Stärken / Schwächen-Analyse</li><li>Zielsetzung bis nächste Ferien</li><li>Lernplan & Soft-Skill-Auswahl</li></ul>
       </div>
       <div class="phase-card phase-b">
@@ -457,9 +469,9 @@
       <div style="background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:1.4rem;border-top:3px solid var(--teal);">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.8rem;">
           <p style="font-weight:700;color:var(--navy);">August 2026</p>
-          <span style="background:var(--teal);color:#fff;font-size:.75rem;font-weight:700;padding:.2rem .7rem;border-radius:20px;">3 Samstage</span>
+          <span style="background:var(--teal);color:#fff;font-size:.75rem;font-weight:700;padding:.2rem .7rem;border-radius:20px;">2 Samstage</span>
         </div>
-        <p style="font-size:.9rem;color:var(--muted);">15. · 22. · 29. Aug &nbsp;·&nbsp; <em style="font-size:.8rem;">Schulstart Mo 17.08</em></p>
+        <p style="font-size:.9rem;color:var(--muted);">22. · 29. Aug &nbsp;·&nbsp; <em style="font-size:.8rem;">Schulstart Mo 17.08</em></p>
         <div style="margin-top:.8rem;font-size:.8rem;color:var(--muted);border-top:1px solid var(--border);padding-top:.7rem;">
           1 Kind: CHF 80.– &nbsp;|&nbsp; 2 Geschwister: CHF 140.– &nbsp;|&nbsp; 3 Geschwister: CHF 180.–
         </div>
@@ -661,7 +673,7 @@
 <section class="preise" id="preise">
   <div class="container">
     <p class="section-label">Investition</p>
-    <h2 class="section-title">Faire Monatspauschalen</h2>
+    <h2 class="section-title">Faire Monatsbeiträge</h2>
     <p class="section-desc">Zahlung bequem per TWINT bis zum 1. des Monats. Verbindlich für 1 Quartal.</p>
     <div style="display:flex;gap:.8rem;align-items:flex-start;background:#FFF8E1;border-left:4px solid #E07B39;border-radius:0 8px 8px 0;padding:1rem 1.2rem;margin-bottom:.5rem;max-width:700px;">
       <span style="font-size:1.2rem;flex-shrink:0;">⏱</span>
@@ -830,6 +842,20 @@
 
       <details style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;overflow:hidden;">
         <summary style="padding:1.1rem 1.4rem;font-weight:600;font-size:.95rem;color:var(--navy);cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;">
+          Ist Lerncoaching ZH ein Kurs oder normale Nachhilfe? <span style="color:var(--teal);font-size:1.1rem;flex-shrink:0;margin-left:1rem;">+</span>
+        </summary>
+        <p style="padding:.2rem 1.4rem 1.1rem;font-size:.9rem;color:var(--muted);line-height:1.75;">Es ist eine gruppenbasierte Nachhilfe mit Coaching-Elementen im Kursrahmen: feste Zeiten, fester Ort, Quartalsstruktur und klare Organisation — aber kein Frontalunterricht mit starrem Stoffplan. Die Inhalte richten sich nach den individuellen Bedürfnissen der Schüler:innen.</p>
+      </details>
+
+      <details style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;overflow:hidden;">
+        <summary style="padding:1.1rem 1.4rem;font-weight:600;font-size:.95rem;color:var(--navy);cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;">
+          Habe ich immer dieselbe Lehrperson? <span style="color:var(--teal);font-size:1.1rem;flex-shrink:0;margin-left:1rem;">+</span>
+        </summary>
+        <p style="padding:.2rem 1.4rem 1.1rem;font-size:.9rem;color:var(--muted);line-height:1.75;">Du wirst vom Lerncoaching-ZH-Team begleitet, nicht von einer fix zugesicherten Einzelperson. Wir achten darauf, dass immer genügend qualifizierte Lehrpersonen im passenden Verhältnis zur Schülerzahl anwesend sind. Falls jemand ausfällt, organisieren wir rechtzeitig Ersatz aus unserem erweiterten Team.</p>
+      </details>
+
+      <details style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;overflow:hidden;">
+        <summary style="padding:1.1rem 1.4rem;font-weight:600;font-size:.95rem;color:var(--navy);cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;">
           Wie läuft der erste Samstag ab? <span style="color:var(--teal);font-size:1.1rem;flex-shrink:0;margin-left:1rem;">+</span>
         </summary>
         <p style="padding:.2rem 1.4rem 1.1rem;font-size:.9rem;color:var(--muted);line-height:1.75;">Der erste Samstag ist unser Kick-off: Wir führen eine Stärken/Schwächen-Analyse durch, setzen gemeinsam klare Ziele und erstellen einen individuellen Lernplan. Kein Frontalunterricht — wir hören erst zu.</p>
@@ -839,7 +865,7 @@
         <summary style="padding:1.1rem 1.4rem;font-weight:600;font-size:.95rem;color:var(--navy);cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;">
           Gibt es ein «Erstes Mal»-Angebot? <span style="color:var(--teal);font-size:1.1rem;flex-shrink:0;margin-left:1rem;">+</span>
         </summary>
-        <p style="padding:.2rem 1.4rem 1.1rem;font-size:.9rem;color:var(--muted);line-height:1.75;">Ja! Wir bieten eine Erstes Mal für CHF 20.– an — völlig unverbindlich. So kannst du uns und unsere Arbeitsweise kennenlernen, bevor du dich für ein Quartal entscheidest.</p>
+        <p style="padding:.2rem 1.4rem 1.1rem;font-size:.9rem;color:var(--muted);line-height:1.75;">Ja! Wir bieten eine erste Doppellektion für CHF 20.– an — völlig unverbindlich. So kannst du uns und unsere Arbeitsweise kennenlernen, bevor du dich für ein Quartal entscheidest.</p>
       </details>
 
       <details style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;overflow:hidden;">
