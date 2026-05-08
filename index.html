@@ -142,6 +142,10 @@
     .hero{padding:7rem 1.2rem 3rem;}
   }
 
+  details[open] > summary .faq-icon::after{content:'-';}
+  details > summary .faq-icon::after{content:'+';}
+  details > summary .faq-icon{color:var(--teal);font-size:1.1rem;flex-shrink:0;margin-left:1rem;font-weight:700;font-style:normal;display:inline-block;width:1rem;text-align:center;}
+
   @keyframes fadeUp{from{opacity:0;transform:translateY(18px);}to{opacity:1;transform:translateY(0);}}
   .hero-eyebrow{animation:fadeUp .6s ease both;}
   .hero h1{animation:fadeUp .6s .1s ease both;}
@@ -325,62 +329,62 @@
     <div style="display:flex;flex-direction:column;gap:.8rem;max-width:800px;">
 
       <details style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;overflow:hidden;">
-        <summary style="padding:1.1rem 1.4rem;font-weight:600;font-size:.95rem;color:var(--navy);cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;">Für welche Schulstufen ist Lerncoaching ZH geeignet? <span style="color:var(--teal);font-size:1.1rem;flex-shrink:0;margin-left:1rem;">+</span></summary>
+        <summary style="padding:1.1rem 1.4rem;font-weight:600;font-size:.95rem;color:var(--navy);cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;">Für welche Schulstufen ist Lerncoaching ZH geeignet? <span class="faq-icon"></span></summary>
         <p style="padding:.2rem 1.4rem 1.1rem;font-size:.9rem;color:var(--muted);line-height:1.75;">Wir begleiten Schüler:innen ab der 3. Primarklasse bis hin zu Gymnasiast:innen, Lehrlingen sowie BMS- und HMS-Studierenden.</p>
       </details>
 
       <details style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;overflow:hidden;">
-        <summary style="padding:1.1rem 1.4rem;font-weight:600;font-size:.95rem;color:var(--navy);cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;">Welche Fächer werden abgedeckt? <span style="color:var(--teal);font-size:1.1rem;flex-shrink:0;margin-left:1rem;">+</span></summary>
+        <summary style="padding:1.1rem 1.4rem;font-weight:600;font-size:.95rem;color:var(--navy);cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;">Welche Fächer werden abgedeckt? <span class="faq-icon"></span></summary>
         <p style="padding:.2rem 1.4rem 1.1rem;font-size:.9rem;color:var(--muted);line-height:1.75;">Wir unterrichten alle Schulfächer: Mathematik, Physik, Chemie, Biologie, Englisch, Deutsch, Französisch, Geschichte, Naturwissenschaften und mehr.</p>
       </details>
 
       <details style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;overflow:hidden;">
-        <summary style="padding:1.1rem 1.4rem;font-weight:600;font-size:.95rem;color:var(--navy);cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;">Wie gross sind die Gruppen? <span style="color:var(--teal);font-size:1.1rem;flex-shrink:0;margin-left:1rem;">+</span></summary>
+        <summary style="padding:1.1rem 1.4rem;font-weight:600;font-size:.95rem;color:var(--navy);cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;">Wie gross sind die Gruppen? <span class="faq-icon"></span></summary>
         <p style="padding:.2rem 1.4rem 1.1rem;font-size:.9rem;color:var(--muted);line-height:1.75;">Wir arbeiten in kleinen Gruppen von 2–5 Schüler:innen, damit jede:r die nötige Aufmerksamkeit bekommt.</p>
       </details>
 
       <details style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;overflow:hidden;">
-        <summary style="padding:1.1rem 1.4rem;font-weight:600;font-size:.95rem;color:var(--navy);cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;">Wie läuft der erste Samstag ab? <span style="color:var(--teal);font-size:1.1rem;flex-shrink:0;margin-left:1rem;">+</span></summary>
+        <summary style="padding:1.1rem 1.4rem;font-weight:600;font-size:.95rem;color:var(--navy);cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;">Wie läuft der erste Samstag ab? <span class="faq-icon"></span></summary>
         <p style="padding:.2rem 1.4rem 1.1rem;font-size:.9rem;color:var(--muted);line-height:1.75;">Der erste Samstag ist unser Kick-off: Stärken/Schwächen-Analyse, gemeinsame Zielsetzung und individueller Lernplan. Kein Frontalunterricht — wir hören erst zu.</p>
       </details>
 
       <details style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;overflow:hidden;">
-        <summary style="padding:1.1rem 1.4rem;font-weight:600;font-size:.95rem;color:var(--navy);cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;">Gibt es ein «Erstes Mal»-Angebot? <span style="color:var(--teal);font-size:1.1rem;flex-shrink:0;margin-left:1rem;">+</span></summary>
+        <summary style="padding:1.1rem 1.4rem;font-weight:600;font-size:.95rem;color:var(--navy);cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;">Gibt es ein «Erstes Mal»-Angebot? <span class="faq-icon"></span></summary>
         <p style="padding:.2rem 1.4rem 1.1rem;font-size:.9rem;color:var(--muted);line-height:1.75;">Ja! Wir bieten einen Ersttermin für CHF 20.– an. Die CHF 20.– sind fix fällig — unverbindlich bedeutet nur, dass du danach frei entscheidest ob du ein Quartal buchst oder nicht.</p>
       </details>
 
       <details style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;overflow:hidden;">
-        <summary style="padding:1.1rem 1.4rem;font-weight:600;font-size:.95rem;color:var(--navy);cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;">Kann ich auch mitten im Quartal einsteigen? <span style="color:var(--teal);font-size:1.1rem;flex-shrink:0;margin-left:1rem;">+</span></summary>
+        <summary style="padding:1.1rem 1.4rem;font-weight:600;font-size:.95rem;color:var(--navy);cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;">Kann ich auch mitten im Quartal einsteigen? <span class="faq-icon"></span></summary>
         <p style="padding:.2rem 1.4rem 1.1rem;font-size:.9rem;color:var(--muted);line-height:1.75;">Ja, eine Anmeldung ist jederzeit möglich. Der Monatsbeitrag für den Eintrittsmonat wird anteilsmässig berechnet.</p>
       </details>
 
       <details style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;overflow:hidden;">
-        <summary style="padding:1.1rem 1.4rem;font-weight:600;font-size:.95rem;color:var(--navy);cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;">Was passiert wenn mein Kind einen Samstag verpasst? <span style="color:var(--teal);font-size:1.1rem;flex-shrink:0;margin-left:1rem;">+</span></summary>
+        <summary style="padding:1.1rem 1.4rem;font-weight:600;font-size:.95rem;color:var(--navy);cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;">Was passiert wenn mein Kind einen Samstag verpasst? <span class="faq-icon"></span></summary>
         <p style="padding:.2rem 1.4rem 1.1rem;font-size:.9rem;color:var(--muted);line-height:1.75;">Unser Angebot funktioniert wie ein regulärer Kurs — wir planen Lehrpersonen im Voraus ein und tragen laufende Kosten unabhängig von der Anwesenheit. Bei Abwesenheit, egal aus welchem Grund, gibt es keine Rückerstattung oder Nachholmöglichkeit. Vergleichbar mit einem Monatsabo beim Fitnesscenter oder einem Musikschulkurs: der Platz ist reserviert, die Kosten laufen. Wir hoffen auf Verständnis — und dass Absenzen so selten wie möglich vorkommen.</p>
       </details>
 
       <details style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;overflow:hidden;">
-        <summary style="padding:1.1rem 1.4rem;font-weight:600;font-size:.95rem;color:var(--navy);cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;">Bis wann muss ich kündigen? <span style="color:var(--teal);font-size:1.1rem;flex-shrink:0;margin-left:1rem;">+</span></summary>
+        <summary style="padding:1.1rem 1.4rem;font-weight:600;font-size:.95rem;color:var(--navy);cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;">Bis wann muss ich kündigen? <span class="faq-icon"></span></summary>
         <p style="padding:.2rem 1.4rem 1.1rem;font-size:.9rem;color:var(--muted);line-height:1.75;">Die Kündigung muss spätestens bis am letzten Tag des laufenden Quartals eingereicht werden — schriftlich per E-Mail oder WhatsApp. Q1: bis 31. Oktober · Q2: bis 31. Januar · Q3: bis 30. April · Q4: bis 31. Juli.</p>
       </details>
 
       <details style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;overflow:hidden;">
-        <summary style="padding:1.1rem 1.4rem;font-weight:600;font-size:.95rem;color:var(--navy);cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;">Wie wird bezahlt? <span style="color:var(--teal);font-size:1.1rem;flex-shrink:0;margin-left:1rem;">+</span></summary>
+        <summary style="padding:1.1rem 1.4rem;font-weight:600;font-size:.95rem;color:var(--navy);cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;">Wie wird bezahlt? <span class="faq-icon"></span></summary>
         <p style="padding:.2rem 1.4rem 1.1rem;font-size:.9rem;color:var(--muted);line-height:1.75;">Ausschliesslich per TWINT, monatlich im Voraus bis zum 1. des Monats.</p>
       </details>
 
       <details style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;overflow:hidden;">
-        <summary style="padding:1.1rem 1.4rem;font-weight:600;font-size:.95rem;color:var(--navy);cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;">Bietet ihr auch Online-Unterricht an? <span style="color:var(--teal);font-size:1.1rem;flex-shrink:0;margin-left:1rem;">+</span></summary>
+        <summary style="padding:1.1rem 1.4rem;font-weight:600;font-size:.95rem;color:var(--navy);cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;">Bietet ihr auch Online-Unterricht an? <span class="faq-icon"></span></summary>
         <p style="padding:.2rem 1.4rem 1.1rem;font-size:.9rem;color:var(--muted);line-height:1.75;">Ja, auf Anfrage ist Online-Unterricht möglich. Einfach via WhatsApp melden.</p>
       </details>
 
       <details style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;overflow:hidden;">
-        <summary style="padding:1.1rem 1.4rem;font-weight:600;font-size:.95rem;color:var(--navy);cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;">Ist Lerncoaching ZH ein Kurs oder Nachhilfe? <span style="color:var(--teal);font-size:1.1rem;flex-shrink:0;margin-left:1rem;">+</span></summary>
+        <summary style="padding:1.1rem 1.4rem;font-weight:600;font-size:.95rem;color:var(--navy);cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;">Ist Lerncoaching ZH ein Kurs oder Nachhilfe? <span class="faq-icon"></span></summary>
         <p style="padding:.2rem 1.4rem 1.1rem;font-size:.9rem;color:var(--muted);line-height:1.75;">Beides — bewusst so. Die Struktur ist kursmässig: feste Zeiten, Quartalsbindung, Phasensystem, Lernpläne. Der Inhalt ist individuell: jede:r bringt seine eigenen Themen mit. Wir nennen es <strong style="color:var(--navy);">gruppenbasierte Nachhilfe mit Coaching-Elementen</strong> — kein Frontalunterricht, kein Einheitsprogramm.</p>
       </details>
 
       <details style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;overflow:hidden;">
-        <summary style="padding:1.1rem 1.4rem;font-weight:600;font-size:.95rem;color:var(--navy);cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;">Was passiert, wenn unsere Lehrperson krank ist? <span style="color:var(--teal);font-size:1.1rem;flex-shrink:0;margin-left:1rem;">+</span></summary>
+        <summary style="padding:1.1rem 1.4rem;font-weight:600;font-size:.95rem;color:var(--navy);cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;">Was passiert, wenn unsere Lehrperson krank ist? <span class="faq-icon"></span></summary>
         <p style="padding:.2rem 1.4rem 1.1rem;font-size:.9rem;color:var(--muted);line-height:1.75;">Euer Kind wird vom <strong style="color:var(--navy);">Team Lerncoaching ZH</strong> begleitet — nicht von einer Einzelperson. Bei Ausfall stehen mindestens 5 ausgebildete Ersatzlehrpersonen von ETH, UZH, ZHAW und PH bereit, die das Format kennen. Der Unterricht findet statt. Bei Totalausfall ohne Ersatz wird die Lektion gutgeschrieben.</p>
       </details>
 
@@ -873,84 +877,84 @@
 
       <details style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;overflow:hidden;">
         <summary style="padding:1.1rem 1.4rem;font-weight:600;font-size:.95rem;color:var(--navy);cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;">
-          Für welche Schulstufen ist Lerncoaching ZH geeignet? <span style="color:var(--teal);font-size:1.1rem;flex-shrink:0;margin-left:1rem;">+</span>
+          Für welche Schulstufen ist Lerncoaching ZH geeignet? <span class="faq-icon"></span>
         </summary>
         <p style="padding:.2rem 1.4rem 1.1rem;font-size:.9rem;color:var(--muted);line-height:1.75;">Wir begleiten Schüler:innen ab der 3. Primarklasse bis hin zu Gymnasiast:innen, Lehrlingen sowie BMS- und HMS-Studierenden. Bei Fragen zu einer spezifischen Stufe einfach via WhatsApp melden.</p>
       </details>
 
       <details style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;overflow:hidden;">
         <summary style="padding:1.1rem 1.4rem;font-weight:600;font-size:.95rem;color:var(--navy);cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;">
-          Welche Fächer werden abgedeckt? <span style="color:var(--teal);font-size:1.1rem;flex-shrink:0;margin-left:1rem;">+</span>
+          Welche Fächer werden abgedeckt? <span class="faq-icon"></span>
         </summary>
         <p style="padding:.2rem 1.4rem 1.1rem;font-size:.9rem;color:var(--muted);line-height:1.75;">Wir unterrichten alle Schulfächer: Mathematik, Physik, Chemie, Biologie, Englisch, Deutsch, Französisch, Geschichte, Naturwissenschaften und mehr.</p>
       </details>
 
       <details style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;overflow:hidden;">
         <summary style="padding:1.1rem 1.4rem;font-weight:600;font-size:.95rem;color:var(--navy);cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;">
-          Wie gross sind die Gruppen? <span style="color:var(--teal);font-size:1.1rem;flex-shrink:0;margin-left:1rem;">+</span>
+          Wie gross sind die Gruppen? <span class="faq-icon"></span>
         </summary>
         <p style="padding:.2rem 1.4rem 1.1rem;font-size:.9rem;color:var(--muted);line-height:1.75;">Wir arbeiten bewusst in kleinen Gruppen von 2–5 Schüler:innen, damit jede:r die Aufmerksamkeit bekommt, die er oder sie braucht.</p>
       </details>
 
       <details style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;overflow:hidden;">
         <summary style="padding:1.1rem 1.4rem;font-weight:600;font-size:.95rem;color:var(--navy);cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;">
-          Ist Lerncoaching ZH ein Kurs oder normale Nachhilfe? <span style="color:var(--teal);font-size:1.1rem;flex-shrink:0;margin-left:1rem;">+</span>
+          Ist Lerncoaching ZH ein Kurs oder normale Nachhilfe? <span class="faq-icon"></span>
         </summary>
         <p style="padding:.2rem 1.4rem 1.1rem;font-size:.9rem;color:var(--muted);line-height:1.75;">Es ist eine gruppenbasierte Nachhilfe mit Coaching-Elementen im Kursrahmen: feste Zeiten, fester Ort, Quartalsstruktur und klare Organisation — aber kein Frontalunterricht mit starrem Stoffplan. Die Inhalte richten sich nach den individuellen Bedürfnissen der Schüler:innen.</p>
       </details>
 
       <details style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;overflow:hidden;">
         <summary style="padding:1.1rem 1.4rem;font-weight:600;font-size:.95rem;color:var(--navy);cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;">
-          Habe ich immer dieselbe Lehrperson? <span style="color:var(--teal);font-size:1.1rem;flex-shrink:0;margin-left:1rem;">+</span>
+          Habe ich immer dieselbe Lehrperson? <span class="faq-icon"></span>
         </summary>
         <p style="padding:.2rem 1.4rem 1.1rem;font-size:.9rem;color:var(--muted);line-height:1.75;">Du wirst vom Lerncoaching-ZH-Team begleitet, nicht von einer fix zugesicherten Einzelperson. Wir achten darauf, dass immer genügend qualifizierte Lehrpersonen im passenden Verhältnis zur Schülerzahl anwesend sind. Falls jemand ausfällt, organisieren wir rechtzeitig Ersatz aus unserem erweiterten Team.</p>
       </details>
 
       <details style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;overflow:hidden;">
         <summary style="padding:1.1rem 1.4rem;font-weight:600;font-size:.95rem;color:var(--navy);cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;">
-          Wie läuft der erste Samstag ab? <span style="color:var(--teal);font-size:1.1rem;flex-shrink:0;margin-left:1rem;">+</span>
+          Wie läuft der erste Samstag ab? <span class="faq-icon"></span>
         </summary>
         <p style="padding:.2rem 1.4rem 1.1rem;font-size:.9rem;color:var(--muted);line-height:1.75;">Der erste Samstag ist unser Kick-off: Wir machen einen Lernstand- &amp; Strategie-Check, klären Stärken und Lücken, setzen gemeinsam Ziele und erstellen daraus einen individuellen Lernplan. Kein Frontalunterricht — wir hören erst zu.</p>
       </details>
 
       <details style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;overflow:hidden;">
         <summary style="padding:1.1rem 1.4rem;font-weight:600;font-size:.95rem;color:var(--navy);cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;">
-          Gibt es ein «Erstes Mal»-Angebot? <span style="color:var(--teal);font-size:1.1rem;flex-shrink:0;margin-left:1rem;">+</span>
+          Gibt es ein «Erstes Mal»-Angebot? <span class="faq-icon"></span>
         </summary>
         <p style="padding:.2rem 1.4rem 1.1rem;font-size:.9rem;color:var(--muted);line-height:1.75;">Ja! Wir bieten eine erste Doppellektion für CHF 20.– an — völlig unverbindlich. So kannst du uns und unsere Arbeitsweise kennenlernen, bevor du dich für ein Quartal entscheidest.</p>
       </details>
 
       <details style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;overflow:hidden;">
         <summary style="padding:1.1rem 1.4rem;font-weight:600;font-size:.95rem;color:var(--navy);cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;">
-          Kann ich auch mitten im Quartal einsteigen? <span style="color:var(--teal);font-size:1.1rem;flex-shrink:0;margin-left:1rem;">+</span>
+          Kann ich auch mitten im Quartal einsteigen? <span class="faq-icon"></span>
         </summary>
         <p style="padding:.2rem 1.4rem 1.1rem;font-size:.9rem;color:var(--muted);line-height:1.75;">Ja, eine Anmeldung ist jederzeit möglich. Der Monatsbeitrag für den Eintrittsmonat wird anteilsmässig berechnet.</p>
       </details>
 
       <details style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;overflow:hidden;">
         <summary style="padding:1.1rem 1.4rem;font-weight:600;font-size:.95rem;color:var(--navy);cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;">
-          Was passiert wenn mein Kind einen Samstag verpasst? <span style="color:var(--teal);font-size:1.1rem;flex-shrink:0;margin-left:1rem;">+</span>
+          Was passiert wenn mein Kind einen Samstag verpasst? <span class="faq-icon"></span>
         </summary>
         <p style="padding:.2rem 1.4rem 1.1rem;font-size:.9rem;color:var(--muted);line-height:1.75;">Unser Angebot funktioniert wie ein regulärer Kurs, und wir möchten ehrlich erklären warum das so ist — denn wir verstehen, dass diese Regelung auf den ersten Blick streng wirken kann. Wenn dein Kind angemeldet ist, reservieren wir einen fixen Platz, planen die Lehrperson ein, bezahlen sie für ihre Vorbereitung und Anwesenheit, und tragen laufende Kosten wie Raummiete und Organisation. All das entsteht unabhängig davon, ob dein Kind am Ende erscheint oder nicht. Es ist vergleichbar mit einem Monatsabo im Fitnesscenter oder einem Kurs an der Musikschule: der Platz gehört dir, die Kosten laufen — ob du kommst oder nicht. Eine Rückerstattung oder ein Nachholen ist daher leider nicht möglich, unabhängig vom Grund der Abwesenheit. Wir hoffen, dass dieses Verständnis dabei hilft, Absenzen wenn immer möglich zu vermeiden.</p>
       </details>
 
       <details style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;overflow:hidden;">
         <summary style="padding:1.1rem 1.4rem;font-weight:600;font-size:.95rem;color:var(--navy);cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;">
-          Bis wann muss ich kündigen? <span style="color:var(--teal);font-size:1.1rem;flex-shrink:0;margin-left:1rem;">+</span>
+          Bis wann muss ich kündigen? <span class="faq-icon"></span>
         </summary>
         <p style="padding:.2rem 1.4rem 1.1rem;font-size:.9rem;color:var(--muted);line-height:1.75;">Die Kündigung muss spätestens bis am letzten Tag des laufenden Quartals eingereicht werden — schriftlich per E-Mail oder WhatsApp. Die Quartale: Q1 Aug–Okt, Q2 Nov–Jan, Q3 Feb–Apr, Q4 Mai–Jul.</p>
       </details>
 
       <details style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;overflow:hidden;">
         <summary style="padding:1.1rem 1.4rem;font-weight:600;font-size:.95rem;color:var(--navy);cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;">
-          Wie wird bezahlt? <span style="color:var(--teal);font-size:1.1rem;flex-shrink:0;margin-left:1rem;">+</span>
+          Wie wird bezahlt? <span class="faq-icon"></span>
         </summary>
         <p style="padding:.2rem 1.4rem 1.1rem;font-size:.9rem;color:var(--muted);line-height:1.75;">Ausschliesslich per TWINT, monatlich im Voraus bis zum 1. des Monats.</p>
       </details>
 
       <details style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;overflow:hidden;">
         <summary style="padding:1.1rem 1.4rem;font-weight:600;font-size:.95rem;color:var(--navy);cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;">
-          Bietet ihr auch Online-Unterricht an? <span style="color:var(--teal);font-size:1.1rem;flex-shrink:0;margin-left:1rem;">+</span>
+          Bietet ihr auch Online-Unterricht an? <span class="faq-icon"></span>
         </summary>
         <p style="padding:.2rem 1.4rem 1.1rem;font-size:.9rem;color:var(--muted);line-height:1.75;">Ja, auf Anfrage ist Online-Unterricht möglich. Meldet euch einfach direkt via WhatsApp und wir besprechen die Details.</p>
       </details>
@@ -987,10 +991,10 @@
 </section>
 
 <footer>
-  <div style="margin-bottom:1.2rem;">
+  <div style="margin-bottom:1.2rem;" id="footer-logo-wrap">
     <img src="logo.png" alt="Lerncoaching ZH" height="48"
          style="filter:brightness(0) invert(1);opacity:.7;"
-         onerror="this.style.display='none'"/>
+         onerror="document.getElementById('footer-logo-wrap').style.display='none'"/>
   </div>
   <p><strong>Lerncoaching ZH</strong> — Gemeinsam für Mindset-Coaching und Zukunft.<br/>
   Dörflistrasse 67, 8050 Zürich &nbsp;·&nbsp; <a href="tel:+41762829244">+41 76 282 92 44</a> &nbsp;·&nbsp; <a href="mailto:zhlerncoaching@gmail.com">zhlerncoaching@gmail.com</a></p>
