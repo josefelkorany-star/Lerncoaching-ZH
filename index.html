@@ -142,6 +142,10 @@
     .hero{padding:7rem 1.2rem 3rem;}
   }
 
+  details[open] > summary .faq-icon::after{content:'-';}
+  details > summary .faq-icon::after{content:'+';}
+  details > summary .faq-icon{color:var(--teal);font-size:1.1rem;flex-shrink:0;margin-left:1rem;font-weight:700;font-style:normal;display:inline-block;width:1rem;text-align:center;}
+
   @keyframes fadeUp{from{opacity:0;transform:translateY(18px);}to{opacity:1;transform:translateY(0);}}
   .hero-eyebrow{animation:fadeUp .6s ease both;}
   .hero h1{animation:fadeUp .6s .1s ease both;}
@@ -215,30 +219,23 @@
 
 <hr/>
 
-
-
-<hr/>
-
-
-<hr/>
-
-<hr/>
-
 <section id="team" style="background:var(--bg2);padding:5rem 2rem;">
   <div class="container">
     <p class="section-label">Unser Team</p>
     <h2 class="section-title">Menschen hinter <span style="color:var(--teal)">Lerncoaching ZH</span></h2>
     <p class="section-desc">Keine Lehrpersonen von der Stange — Student:innen führender Schweizer Hochschulen, die selbst wissen, wie es sich anfühlt, 'lost' zu sein.</p>
+    <p style="font-size:.85rem;color:var(--muted);margin-top:1rem;">← Seitlich scrollen, um das erweiterte Team zu sehen →</p>
 
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.5rem;margin-top:3rem;">
+    <div style="display:flex;gap:1.5rem;margin-top:2rem;overflow-x:auto;padding-bottom:1rem;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;">
+      <div style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);">Team-Karten horizontal scrollbar</div>
 
-      <div style="background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:2rem;display:flex;flex-direction:column;gap:.8rem;">
+      <div style="background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:2rem;display:flex;flex-direction:column;gap:.8rem;flex:0 0 285px;scroll-snap-align:start;">
               <div style="width:56px;height:56px;border-radius:50%;background:#EBF0F7;display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:1.4rem;color:var(--navy);flex-shrink:0;">AT</div>
               <div>
                 <p style="font-weight:700;font-size:1rem;color:var(--navy);">Abdullah</p>
                 <p style="font-size:.8rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--teal);margin-top:.1rem;">Coach & Mentor</p>
               </div>
-              <p style="font-size:.9rem;color:var(--muted);line-height:1.7;">Doppelt ETH-diplomiert: BSc Maschinenbau und MSc Management, Technology &amp; Ökonomie — mit Auslandsemester an der University of Loughborough (UK). Seit 2015 engagiert er sich im Nachhilfeprojekt, wo er wöchentlich rund 30 Kinder mit Migrationshintergrund begleitet — seit 2020 als <strong style="color:var(--navy);">Projektleiter</strong> mit Verantwortung für Team, Finanzen und Elternkommunikation. Mehrere Jahre als Projektleiter mit Verantwortung für Team und Elternkommunikation — technische Tiefe, echtes gesellschaftliches Engagement.</p>
+              <p style="font-size:.9rem;color:var(--muted);line-height:1.7;">Doppelt ETH-diplomiert: BSc Maschinenbau und MSc Management, Technology &amp; Ökonomie — mit Auslandsemester an der University of Loughborough (UK). Seit 2015 engagiert er sich im Nachhilfeprojekt, wo er wöchentlich rund 30 Kinder mit Migrationshintergrund begleitet — seit 2020 als <strong style="color:var(--navy);">Projektleiter</strong> mit Verantwortung für Team und Elternkommunikation. Technische Tiefe, echtes gesellschaftliches Engagement.</p>
               <div style="display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.3rem;">
                 <span style="background:#EBF0F7;color:var(--navy);font-size:.75rem;font-weight:600;padding:.25rem .7rem;border-radius:20px;">ETH Zürich</span>
                 <span style="background:#EBF0F7;color:var(--navy);font-size:.75rem;font-weight:600;padding:.25rem .7rem;border-radius:20px;">Maschinenbau & MTE</span>
@@ -247,15 +244,15 @@
               <p style="font-size:.78rem;color:var(--muted);margin-top:.2rem;">🗣 Deutsch · Englisch · Französisch · Urdu</p>
             </div>
       
-            <!-- SYRIN -->
+            <!-- JOSEF -->
 
-      <div style="background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:2rem;display:flex;flex-direction:column;gap:.8rem;">
+      <div style="background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:2rem;display:flex;flex-direction:column;gap:.8rem;flex:0 0 285px;scroll-snap-align:start;">
               <div style="width:56px;height:56px;border-radius:50%;background:var(--teal-light);display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:1.4rem;color:var(--teal-mid);flex-shrink:0;">JK</div>
               <div>
                 <p style="font-weight:700;font-size:1rem;color:var(--navy);">Josef</p>
-                <p style="font-size:.8rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--teal);margin-top:.1rem;">Kursleiter & Gründer</p>
+                <p style="font-size:.8rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--teal);margin-top:.1rem;">Kursleiter, Gründer &amp; Coach</p>
               </div>
-              <p style="font-size:.9rem;color:var(--muted);line-height:1.7;">Masterstudent in Biomedizin an der UZH mit Masterarbeit in Neuroinformatik — begann seine akademische Laufbahn mit einem Jahr Gesundheitswissenschaften an der ETH. Über <strong style="color:var(--navy);">6 Jahre intensive Nachhilfeerfahrung</strong> an vier verschiedenen Institutionen: von Primar bis Gymi, Mathe, Physik, Biologie, Chemie, Englisch, Deutsch und mehr — praktisch alle Fächer ausser Geschichte und Französisch. Er weiss aus eigener Erfahrung, wie unterschiedlich Menschen lernen — und passt seinen Ansatz präzise daran an.</p>
+              <p style="font-size:.9rem;color:var(--muted);line-height:1.7;">Masterstudent in Biomedizin an der UZH mit Masterarbeit in Neuroinformatik — begann seine akademische Laufbahn mit einem Jahr Gesundheitswissenschaften an der ETH. Über <strong style="color:var(--navy);">6 Jahre intensive Nachhilfeerfahrung</strong> an vier verschiedenen Institutionen: von Primar bis Gymi — Mathe, Physik, Biologie, Chemie, Englisch, Deutsch, Französisch, Geschichte und mehr. Er weiss aus eigener Erfahrung, wie unterschiedlich Menschen lernen — und passt seinen Ansatz präzise daran an.</p>
               <div style="display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.5rem;">
                 <span style="background:var(--teal-light);color:var(--teal-mid);font-size:.75rem;font-weight:600;padding:.25rem .7rem;border-radius:20px;">UZH · ETH</span>
                 <span style="background:var(--teal-light);color:var(--teal-mid);font-size:.75rem;font-weight:600;padding:.25rem .7rem;border-radius:20px;">Biomedizin / Neuroinformatik</span>
@@ -264,9 +261,9 @@
               <p style="font-size:.78rem;color:var(--muted);margin-top:.2rem;">🗣 Deutsch · Englisch · Arabisch</p>
             </div>
       
-            <!-- ABDULLAH -->
+            <!-- EMINE -->
 
-      <div style="background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:2rem;display:flex;flex-direction:column;gap:.8rem;">
+      <div style="background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:2rem;display:flex;flex-direction:column;gap:.8rem;flex:0 0 285px;scroll-snap-align:start;">
               <div style="width:56px;height:56px;border-radius:50%;background:#F0EBF7;display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:1.4rem;color:#6B3FA0;flex-shrink:0;">EM</div>
               <div>
                 <p style="font-weight:700;font-size:1rem;color:var(--navy);">Emine</p>
@@ -283,7 +280,7 @@
               <p style="font-size:.78rem;color:var(--muted);margin-top:.2rem;">🗣 Deutsch · Englisch · Albanisch</p>
             </div>
 
-      <div style="background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:2rem;display:flex;flex-direction:column;gap:.8rem;">
+      <div style="background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:2rem;display:flex;flex-direction:column;gap:.8rem;flex:0 0 285px;scroll-snap-align:start;">
               <div style="width:56px;height:56px;border-radius:50%;background:#FFF0E8;display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:1.4rem;color:#C05A1A;flex-shrink:0;">SE</div>
               <div>
                 <p style="font-weight:700;font-size:1rem;color:var(--navy);">Syrin</p>
@@ -300,7 +297,23 @@
               <p style="font-size:.78rem;color:var(--muted);margin-top:.2rem;">🗣 Deutsch · Englisch · Arabisch</p>
             </div>
       
-            <!-- EMINE -->
+            <!-- ERSATZLEHRPERSONEN -->
+
+      <div style="background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:2rem;display:flex;flex-direction:column;gap:.8rem;flex:0 0 285px;scroll-snap-align:start;">
+              <div style="width:56px;height:56px;border-radius:50%;background:#E8F2FF;display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:1.4rem;color:#275A9F;flex-shrink:0;">E+</div>
+              <div>
+                <p style="font-weight:700;font-size:1rem;color:var(--navy);">Ersatzlehrer:innen</p>
+                <p style="font-size:.8rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--teal);margin-top:.1rem;">Flexibles Support-Team</p>
+              </div>
+              <p style="font-size:.9rem;color:var(--muted);line-height:1.7;">Zusätzlich zu unserem Kernteam haben wir mindestens <strong style="color:var(--navy);">5 Ersatzlehrpersonen</strong>, die bei Ausfällen oder hoher Nachfrage einspringen können. Auch sie studieren oder studierten an Schweizer Hochschulen wie ETH, UZH, ZHAW oder PH und haben bereits mehrfach in der Nachhilfe unterstützt.</p>
+              <div style="display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.3rem;">
+                <span style="background:#E8F2FF;color:#275A9F;font-size:.75rem;font-weight:600;padding:.25rem .7rem;border-radius:20px;">ETH · UZH · ZHAW · PH</span>
+                <span style="background:#E8F2FF;color:#275A9F;font-size:.75rem;font-weight:600;padding:.25rem .7rem;border-radius:20px;">Finanzmathe</span>
+                <span style="background:#E8F2FF;color:#275A9F;font-size:.75rem;font-weight:600;padding:.25rem .7rem;border-radius:20px;">Wirtschaft</span>
+                <span style="background:#E8F2FF;color:#275A9F;font-size:.75rem;font-weight:600;padding:.25rem .7rem;border-radius:20px;">Geschichte & Politik</span>
+              </div>
+              <p style="font-size:.78rem;color:var(--muted);margin-top:.2rem;">Flexibel einsetzbar · zusätzliche Fachbereiche · Teamreserve</p>
+            </div>
 
     </div>    </div>
   </div>
@@ -309,6 +322,75 @@
 <hr/>
 
 <!-- FAQ -->
+<section style="background:var(--bg);padding:5rem 2rem;" id="faq">
+  <div style="max-width:1100px;margin:0 auto;">
+    <p style="font-size:.8rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--teal);margin-bottom:.8rem;">FAQ</p>
+    <h2 style="font-family:'Bebas Neue',sans-serif;font-size:clamp(2.4rem,4.5vw,3.8rem);line-height:1;margin-bottom:2.5rem;color:var(--navy);">Häufige <span style="color:var(--teal);">Fragen</span></h2>
+    <div style="display:flex;flex-direction:column;gap:.8rem;max-width:800px;">
+
+      <details style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;overflow:hidden;">
+        <summary style="padding:1.1rem 1.4rem;font-weight:600;font-size:.95rem;color:var(--navy);cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;">Für welche Schulstufen ist Lerncoaching ZH geeignet? <span class="faq-icon"></span></summary>
+        <p style="padding:.2rem 1.4rem 1.1rem;font-size:.9rem;color:var(--muted);line-height:1.75;">Wir begleiten Schüler:innen ab der 3. Primarklasse bis hin zu Gymnasiast:innen, Lehrlingen sowie BMS- und HMS-Studierenden.</p>
+      </details>
+
+      <details style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;overflow:hidden;">
+        <summary style="padding:1.1rem 1.4rem;font-weight:600;font-size:.95rem;color:var(--navy);cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;">Welche Fächer werden abgedeckt? <span class="faq-icon"></span></summary>
+        <p style="padding:.2rem 1.4rem 1.1rem;font-size:.9rem;color:var(--muted);line-height:1.75;">Wir unterrichten alle Schulfächer: Mathematik, Physik, Chemie, Biologie, Englisch, Deutsch, Französisch, Geschichte, Naturwissenschaften und mehr.</p>
+      </details>
+
+      <details style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;overflow:hidden;">
+        <summary style="padding:1.1rem 1.4rem;font-weight:600;font-size:.95rem;color:var(--navy);cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;">Wie gross sind die Gruppen? <span class="faq-icon"></span></summary>
+        <p style="padding:.2rem 1.4rem 1.1rem;font-size:.9rem;color:var(--muted);line-height:1.75;">Wir arbeiten in kleinen Gruppen von 2–5 Schüler:innen, damit jede:r die nötige Aufmerksamkeit bekommt.</p>
+      </details>
+
+      <details style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;overflow:hidden;">
+        <summary style="padding:1.1rem 1.4rem;font-weight:600;font-size:.95rem;color:var(--navy);cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;">Wie läuft der erste Samstag ab? <span class="faq-icon"></span></summary>
+        <p style="padding:.2rem 1.4rem 1.1rem;font-size:.9rem;color:var(--muted);line-height:1.75;">Der erste Samstag ist unser Kick-off: Stärken/Schwächen-Analyse, gemeinsame Zielsetzung und individueller Lernplan. Kein Frontalunterricht — wir hören erst zu.</p>
+      </details>
+
+      <details style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;overflow:hidden;">
+        <summary style="padding:1.1rem 1.4rem;font-weight:600;font-size:.95rem;color:var(--navy);cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;">Gibt es ein «Erstes Mal»-Angebot? <span class="faq-icon"></span></summary>
+        <p style="padding:.2rem 1.4rem 1.1rem;font-size:.9rem;color:var(--muted);line-height:1.75;">Ja! Wir bieten einen Ersttermin für CHF 20.– an. Die CHF 20.– sind fix fällig — unverbindlich bedeutet nur, dass du danach frei entscheidest ob du ein Quartal buchst oder nicht.</p>
+      </details>
+
+      <details style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;overflow:hidden;">
+        <summary style="padding:1.1rem 1.4rem;font-weight:600;font-size:.95rem;color:var(--navy);cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;">Kann ich auch mitten im Quartal einsteigen? <span class="faq-icon"></span></summary>
+        <p style="padding:.2rem 1.4rem 1.1rem;font-size:.9rem;color:var(--muted);line-height:1.75;">Ja, eine Anmeldung ist jederzeit möglich. Der Monatsbeitrag für den Eintrittsmonat wird anteilsmässig berechnet.</p>
+      </details>
+
+      <details style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;overflow:hidden;">
+        <summary style="padding:1.1rem 1.4rem;font-weight:600;font-size:.95rem;color:var(--navy);cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;">Was passiert wenn mein Kind einen Samstag verpasst? <span class="faq-icon"></span></summary>
+        <p style="padding:.2rem 1.4rem 1.1rem;font-size:.9rem;color:var(--muted);line-height:1.75;">Unser Angebot funktioniert wie ein regulärer Kurs — wir planen Lehrpersonen im Voraus ein und tragen laufende Kosten unabhängig von der Anwesenheit. Bei Abwesenheit, egal aus welchem Grund, gibt es keine Rückerstattung oder Nachholmöglichkeit. Vergleichbar mit einem Monatsabo beim Fitnesscenter oder einem Musikschulkurs: der Platz ist reserviert, die Kosten laufen. Wir hoffen auf Verständnis — und dass Absenzen so selten wie möglich vorkommen.</p>
+      </details>
+
+      <details style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;overflow:hidden;">
+        <summary style="padding:1.1rem 1.4rem;font-weight:600;font-size:.95rem;color:var(--navy);cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;">Bis wann muss ich kündigen? <span class="faq-icon"></span></summary>
+        <p style="padding:.2rem 1.4rem 1.1rem;font-size:.9rem;color:var(--muted);line-height:1.75;">Die Kündigung muss spätestens bis am letzten Tag des laufenden Quartals eingereicht werden — schriftlich per E-Mail oder WhatsApp. Q1: bis 31. Oktober · Q2: bis 31. Januar · Q3: bis 30. April · Q4: bis 31. Juli.</p>
+      </details>
+
+      <details style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;overflow:hidden;">
+        <summary style="padding:1.1rem 1.4rem;font-weight:600;font-size:.95rem;color:var(--navy);cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;">Wie wird bezahlt? <span class="faq-icon"></span></summary>
+        <p style="padding:.2rem 1.4rem 1.1rem;font-size:.9rem;color:var(--muted);line-height:1.75;">Ausschliesslich per TWINT, monatlich im Voraus bis zum 1. des Monats.</p>
+      </details>
+
+      <details style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;overflow:hidden;">
+        <summary style="padding:1.1rem 1.4rem;font-weight:600;font-size:.95rem;color:var(--navy);cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;">Bietet ihr auch Online-Unterricht an? <span class="faq-icon"></span></summary>
+        <p style="padding:.2rem 1.4rem 1.1rem;font-size:.9rem;color:var(--muted);line-height:1.75;">Ja, auf Anfrage ist Online-Unterricht möglich. Einfach via WhatsApp melden.</p>
+      </details>
+
+      <details style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;overflow:hidden;">
+        <summary style="padding:1.1rem 1.4rem;font-weight:600;font-size:.95rem;color:var(--navy);cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;">Ist Lerncoaching ZH ein Kurs oder Nachhilfe? <span class="faq-icon"></span></summary>
+        <p style="padding:.2rem 1.4rem 1.1rem;font-size:.9rem;color:var(--muted);line-height:1.75;">Beides — bewusst so. Die Struktur ist kursmässig: feste Zeiten, Quartalsbindung, Phasensystem, Lernpläne. Der Inhalt ist individuell: jede:r bringt seine eigenen Themen mit. Wir nennen es <strong style="color:var(--navy);">gruppenbasierte Nachhilfe mit Coaching-Elementen</strong> — kein Frontalunterricht, kein Einheitsprogramm.</p>
+      </details>
+
+      <details style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;overflow:hidden;">
+        <summary style="padding:1.1rem 1.4rem;font-weight:600;font-size:.95rem;color:var(--navy);cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;">Was passiert, wenn unsere Lehrperson krank ist? <span class="faq-icon"></span></summary>
+        <p style="padding:.2rem 1.4rem 1.1rem;font-size:.9rem;color:var(--muted);line-height:1.75;">Euer Kind wird vom <strong style="color:var(--navy);">Team Lerncoaching ZH</strong> begleitet — nicht von einer Einzelperson. Bei Ausfall stehen mindestens 5 ausgebildete Ersatzlehrpersonen von ETH, UZH, ZHAW und PH bereit, die das Format kennen. Der Unterricht findet statt. Bei Totalausfall ohne Ersatz wird die Lektion gutgeschrieben.</p>
+      </details>
+
+    </div>
+  </div>
+</section>
 
 <hr/>
 
@@ -317,12 +399,6 @@
   <div class="container">
     <div class="poster-wrap">
       <div class="poster-img">
-        <!--
-          SO FÜGST DU DEIN POSTER EIN:
-          1. Speichere dein Flyer-Bild als "poster.jpg" (oder poster.png)
-          2. Lege es in den GLEICHEN Ordner wie diese index.html Datei
-          3. Fertig — das Bild erscheint automatisch hier
-        -->
         <img src="poster.jpg" alt="Unser offizieller Flyer – Lerncoaching ZH Nachhilfe Zürich" style="width:100%;display:block;border-radius:10px;"/>
       </div>
       <div>
@@ -344,8 +420,6 @@
 
 <hr/>
 
-<hr/>
-
 <section class="saulen" id="konzept">
   <div class="container">
     <p class="section-label">Unser Herzstück</p>
@@ -362,18 +436,16 @@
 
 <hr/>
 
-<hr/>
-
 <section class="zyklus" id="zyklus">
   <div class="container">
     <p class="section-label">Der Samstags-Zyklus</p>
     <h2 class="section-title">Jeder Samstag hat ein Ziel</h2>
-    <p class="section-desc">Dein Semester folgt einer klaren, strategischen Route — kein blinder Aktionismus.</p>
+    <p class="section-desc">Dein Quartal folgt einer klaren, strategischen Route — kein blinder Aktionismus.</p>
     <div class="zyklus-phases">
       <div class="phase-card phase-a">
         <div class="phase-tag">Phase A · Kick-off</div>
-        <div class="phase-title">Diagnostik & Planung</div>
-        <div class="phase-subtitle">Erster Samstag im Semester</div>
+        <div class="phase-title">Lernstand- &amp; Strategie-Check</div>
+        <div class="phase-subtitle">Erster Samstag im Quartal</div>
         <ul class="phase-items"><li>Stärken / Schwächen-Analyse</li><li>Zielsetzung bis nächste Ferien</li><li>Lernplan & Soft-Skill-Auswahl</li></ul>
       </div>
       <div class="phase-card phase-b">
@@ -457,9 +529,9 @@
       <div style="background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:1.4rem;border-top:3px solid var(--teal);">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.8rem;">
           <p style="font-weight:700;color:var(--navy);">August 2026</p>
-          <span style="background:var(--teal);color:#fff;font-size:.75rem;font-weight:700;padding:.2rem .7rem;border-radius:20px;">3 Samstage</span>
+          <span style="background:var(--teal);color:#fff;font-size:.75rem;font-weight:700;padding:.2rem .7rem;border-radius:20px;">2 Samstage</span>
         </div>
-        <p style="font-size:.9rem;color:var(--muted);">15. · 22. · 29. Aug &nbsp;·&nbsp; <em style="font-size:.8rem;">Schulstart Mo 17.08</em></p>
+        <p style="font-size:.9rem;color:var(--muted);">22. · 29. Aug &nbsp;·&nbsp; <em style="font-size:.8rem;">Schulstart Mo 17.08</em></p>
         <div style="margin-top:.8rem;font-size:.8rem;color:var(--muted);border-top:1px solid var(--border);padding-top:.7rem;">
           1 Kind: CHF 80.– &nbsp;|&nbsp; 2 Geschwister: CHF 140.– &nbsp;|&nbsp; 3 Geschwister: CHF 180.–
         </div>
@@ -566,8 +638,6 @@
 
 <hr/>
 
-<hr/>
-
 <!-- TESTIMONIALS -->
 <section style="background:var(--navy);padding:5rem 2rem;">
   <div style="max-width:1100px;margin:0 auto;">
@@ -656,13 +726,11 @@
 
 <hr/>
 
-<hr/>
-
 <section class="preise" id="preise">
   <div class="container">
     <p class="section-label">Investition</p>
-    <h2 class="section-title">Faire Monatspauschalen</h2>
-    <p class="section-desc">Zahlung bequem per TWINT, E-Banking oder bar bis zum 1. des Monats. Bei Barzahlung stellen wir selbstverständlich eine Quittung aus. Verbindlich für 1 Quartal.</p>
+    <h2 class="section-title">Faire Monatsbeiträge</h2>
+    <p class="section-desc">Zahlung bequem per TWINT bis zum 1. des Monats. Verbindlich für 1 Quartal.</p>
     <div style="display:flex;gap:.8rem;align-items:flex-start;background:#FFF8E1;border-left:4px solid #E07B39;border-radius:0 8px 8px 0;padding:1rem 1.2rem;margin-bottom:.5rem;max-width:700px;">
       <span style="font-size:1.2rem;flex-shrink:0;">⏱</span>
       <p style="font-size:.9rem;color:#5A3A00;line-height:1.7;"><strong>Immer Doppellektion — keine Einzellektion möglich.</strong> Der Unterricht findet ausschliesslich als Doppellektion statt (09:30–11:30 Uhr, mit Pause). Eine Buchung einzelner Lektionen ist nicht möglich.</p>
@@ -711,8 +779,8 @@
         <ul class="preis-features">
           <li><span>✓</span>Alle regulären Samstage</li>
           <li><span>✓</span>Individueller Lernplan</li>
-          <li><span>✓</span>Diagnostik & Feedback</li>
-          <li><span>✓</span>Zahlung per TWINT, E-Banking oder bar</li>
+          <li><span>✓</span>Lernstand- & Strategie-Check</li>
+          <li><span>✓</span>Zahlung per TWINT</li>
         </ul>
         <a href="#kontakt" class="btn-primary" style="display:block;text-align:center;">Anmelden →</a>
         <div class="preis-note">Verbindlichkeit: 1 Quartal (3 Monate). Kündigung bis Ende Quartal.</div>
@@ -724,8 +792,8 @@
         <ul class="preis-features">
           <li><span>✓</span>Beide Kinder inklusive</li>
           <li><span>✓</span>Individuelle Lernpläne</li>
-          <li><span>✓</span>Diagnostik & Feedback</li>
-          <li><span>✓</span>Zahlung per TWINT, E-Banking oder bar</li>
+          <li><span>✓</span>Lernstand- & Strategie-Check</li>
+          <li><span>✓</span>Zahlung per TWINT</li>
         </ul>
         <a href="#kontakt" class="btn-primary" style="display:block;text-align:center;">Anmelden →</a>
         <div class="preis-note">Verbindlichkeit: 1 Quartal (3 Monate). Kündigung bis Ende Quartal.</div>
@@ -733,12 +801,12 @@
       <div class="preis-card">
         <div class="preis-label">3 Geschwister</div>
         <div class="preis-amount">CHF 360</div>
-        <div class="preis-per">pro Monat · Familienpaket</div>
+        <div class="preis-per">pro Monat · CHF 30 pro Doppellektion/Kind</div>
         <ul class="preis-features">
           <li><span>✓</span>Alle drei Kinder inklusive</li>
           <li><span>✓</span>Individuelle Lernpläne</li>
-          <li><span>✓</span>Diagnostik & Feedback</li>
-          <li><span>✓</span>Zahlung per TWINT, E-Banking oder bar</li>
+          <li><span>✓</span>Lernstand- & Strategie-Check</li>
+          <li><span>✓</span>Zahlung per TWINT</li>
         </ul>
         <a href="#kontakt" class="btn-primary" style="display:block;text-align:center;">Anmelden →</a>
         <div class="preis-note">Verbindlichkeit: 1 Quartal (3 Monate). Kündigung bis Ende Quartal.</div>
@@ -809,70 +877,84 @@
 
       <details style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;overflow:hidden;">
         <summary style="padding:1.1rem 1.4rem;font-weight:600;font-size:.95rem;color:var(--navy);cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;">
-          Für welche Schulstufen ist Lerncoaching ZH geeignet? <span style="color:var(--teal);font-size:1.1rem;flex-shrink:0;margin-left:1rem;">+</span>
+          Für welche Schulstufen ist Lerncoaching ZH geeignet? <span class="faq-icon"></span>
         </summary>
         <p style="padding:.2rem 1.4rem 1.1rem;font-size:.9rem;color:var(--muted);line-height:1.75;">Wir begleiten Schüler:innen ab der 3. Primarklasse bis hin zu Gymnasiast:innen, Lehrlingen sowie BMS- und HMS-Studierenden. Bei Fragen zu einer spezifischen Stufe einfach via WhatsApp melden.</p>
       </details>
 
       <details style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;overflow:hidden;">
         <summary style="padding:1.1rem 1.4rem;font-weight:600;font-size:.95rem;color:var(--navy);cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;">
-          Welche Fächer werden abgedeckt? <span style="color:var(--teal);font-size:1.1rem;flex-shrink:0;margin-left:1rem;">+</span>
+          Welche Fächer werden abgedeckt? <span class="faq-icon"></span>
         </summary>
         <p style="padding:.2rem 1.4rem 1.1rem;font-size:.9rem;color:var(--muted);line-height:1.75;">Wir unterrichten alle Schulfächer: Mathematik, Physik, Chemie, Biologie, Englisch, Deutsch, Französisch, Geschichte, Naturwissenschaften und mehr.</p>
       </details>
 
       <details style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;overflow:hidden;">
         <summary style="padding:1.1rem 1.4rem;font-weight:600;font-size:.95rem;color:var(--navy);cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;">
-          Wie gross sind die Gruppen? <span style="color:var(--teal);font-size:1.1rem;flex-shrink:0;margin-left:1rem;">+</span>
+          Wie gross sind die Gruppen? <span class="faq-icon"></span>
         </summary>
         <p style="padding:.2rem 1.4rem 1.1rem;font-size:.9rem;color:var(--muted);line-height:1.75;">Wir arbeiten bewusst in kleinen Gruppen von 2–5 Schüler:innen, damit jede:r die Aufmerksamkeit bekommt, die er oder sie braucht.</p>
       </details>
 
       <details style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;overflow:hidden;">
         <summary style="padding:1.1rem 1.4rem;font-weight:600;font-size:.95rem;color:var(--navy);cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;">
-          Wie läuft der erste Samstag ab? <span style="color:var(--teal);font-size:1.1rem;flex-shrink:0;margin-left:1rem;">+</span>
+          Ist Lerncoaching ZH ein Kurs oder normale Nachhilfe? <span class="faq-icon"></span>
         </summary>
-        <p style="padding:.2rem 1.4rem 1.1rem;font-size:.9rem;color:var(--muted);line-height:1.75;">Der erste Samstag ist unser Kick-off: Wir führen eine Stärken/Schwächen-Analyse durch, setzen gemeinsam klare Ziele und erstellen einen individuellen Lernplan. Kein Frontalunterricht — wir hören erst zu.</p>
+        <p style="padding:.2rem 1.4rem 1.1rem;font-size:.9rem;color:var(--muted);line-height:1.75;">Es ist eine gruppenbasierte Nachhilfe mit Coaching-Elementen im Kursrahmen: feste Zeiten, fester Ort, Quartalsstruktur und klare Organisation — aber kein Frontalunterricht mit starrem Stoffplan. Die Inhalte richten sich nach den individuellen Bedürfnissen der Schüler:innen.</p>
       </details>
 
       <details style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;overflow:hidden;">
         <summary style="padding:1.1rem 1.4rem;font-weight:600;font-size:.95rem;color:var(--navy);cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;">
-          Gibt es ein «Erstes Mal»-Angebot? <span style="color:var(--teal);font-size:1.1rem;flex-shrink:0;margin-left:1rem;">+</span>
+          Habe ich immer dieselbe Lehrperson? <span class="faq-icon"></span>
         </summary>
-        <p style="padding:.2rem 1.4rem 1.1rem;font-size:.9rem;color:var(--muted);line-height:1.75;">Ja! Wir bieten eine Erstes Mal für CHF 20.– an — völlig unverbindlich. So kannst du uns und unsere Arbeitsweise kennenlernen, bevor du dich für ein Quartal entscheidest.</p>
+        <p style="padding:.2rem 1.4rem 1.1rem;font-size:.9rem;color:var(--muted);line-height:1.75;">Du wirst vom Lerncoaching-ZH-Team begleitet, nicht von einer fix zugesicherten Einzelperson. Wir achten darauf, dass immer genügend qualifizierte Lehrpersonen im passenden Verhältnis zur Schülerzahl anwesend sind. Falls jemand ausfällt, organisieren wir rechtzeitig Ersatz aus unserem erweiterten Team.</p>
       </details>
 
       <details style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;overflow:hidden;">
         <summary style="padding:1.1rem 1.4rem;font-weight:600;font-size:.95rem;color:var(--navy);cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;">
-          Kann ich auch mitten im Quartal einsteigen? <span style="color:var(--teal);font-size:1.1rem;flex-shrink:0;margin-left:1rem;">+</span>
+          Wie läuft der erste Samstag ab? <span class="faq-icon"></span>
+        </summary>
+        <p style="padding:.2rem 1.4rem 1.1rem;font-size:.9rem;color:var(--muted);line-height:1.75;">Der erste Samstag ist unser Kick-off: Wir machen einen Lernstand- &amp; Strategie-Check, klären Stärken und Lücken, setzen gemeinsam Ziele und erstellen daraus einen individuellen Lernplan. Kein Frontalunterricht — wir hören erst zu.</p>
+      </details>
+
+      <details style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;overflow:hidden;">
+        <summary style="padding:1.1rem 1.4rem;font-weight:600;font-size:.95rem;color:var(--navy);cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;">
+          Gibt es ein «Erstes Mal»-Angebot? <span class="faq-icon"></span>
+        </summary>
+        <p style="padding:.2rem 1.4rem 1.1rem;font-size:.9rem;color:var(--muted);line-height:1.75;">Ja! Wir bieten eine erste Doppellektion für CHF 20.– an — völlig unverbindlich. So kannst du uns und unsere Arbeitsweise kennenlernen, bevor du dich für ein Quartal entscheidest.</p>
+      </details>
+
+      <details style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;overflow:hidden;">
+        <summary style="padding:1.1rem 1.4rem;font-weight:600;font-size:.95rem;color:var(--navy);cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;">
+          Kann ich auch mitten im Quartal einsteigen? <span class="faq-icon"></span>
         </summary>
         <p style="padding:.2rem 1.4rem 1.1rem;font-size:.9rem;color:var(--muted);line-height:1.75;">Ja, eine Anmeldung ist jederzeit möglich. Der Monatsbeitrag für den Eintrittsmonat wird anteilsmässig berechnet.</p>
       </details>
 
       <details style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;overflow:hidden;">
         <summary style="padding:1.1rem 1.4rem;font-weight:600;font-size:.95rem;color:var(--navy);cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;">
-          Was passiert wenn mein Kind einen Samstag verpasst? <span style="color:var(--teal);font-size:1.1rem;flex-shrink:0;margin-left:1rem;">+</span>
+          Was passiert wenn mein Kind einen Samstag verpasst? <span class="faq-icon"></span>
         </summary>
-        <p style="padding:.2rem 1.4rem 1.1rem;font-size:.9rem;color:var(--muted);line-height:1.75;">Unser Angebot funktioniert wie ein regulärer Kurs, und wir möchten ehrlich erklären warum das so ist — denn wir verstehen, dass diese Regelung auf den ersten Blick streng wirken kann. Wenn dein Kind angemeldet ist, reservieren wir einen fixen Platz, planen die Lehrperson ein, bezahlen sie für ihre Vorbereitung und Anwesenheit, und tragen laufende Kosten wie Raummiete und Organisation. All das entsteht unabhängig davon, ob dein Kind am Ende erscheint oder nicht. Es ist vergleichbar mit einem Monatsabo im Fitnesscenter oder einem Kurs an der Musikschule: der Platz gehört dir, die Kosten laufen — ob du kommst oder nicht. Eine Rückerstattung oder ein Nachholen ist daher grundsätzlich nicht möglich. Bei krankheitsbedingter Abwesenheit kann nach frühzeitiger Absprache im Einzelfall eine Kulanzlösung geprüft werden; ein Anspruch darauf besteht jedoch nicht. Wir hoffen, dass dieses Verständnis dabei hilft, Absenzen wenn immer möglich zu vermeiden.</p>
+        <p style="padding:.2rem 1.4rem 1.1rem;font-size:.9rem;color:var(--muted);line-height:1.75;">Unser Angebot funktioniert wie ein regulärer Kurs, und wir möchten ehrlich erklären warum das so ist — denn wir verstehen, dass diese Regelung auf den ersten Blick streng wirken kann. Wenn dein Kind angemeldet ist, reservieren wir einen fixen Platz, planen die Lehrperson ein, bezahlen sie für ihre Vorbereitung und Anwesenheit, und tragen laufende Kosten wie Raummiete und Organisation. All das entsteht unabhängig davon, ob dein Kind am Ende erscheint oder nicht. Es ist vergleichbar mit einem Monatsabo im Fitnesscenter oder einem Kurs an der Musikschule: der Platz gehört dir, die Kosten laufen — ob du kommst oder nicht. Eine Rückerstattung oder ein Nachholen ist daher leider nicht möglich, unabhängig vom Grund der Abwesenheit. Wir hoffen, dass dieses Verständnis dabei hilft, Absenzen wenn immer möglich zu vermeiden.</p>
       </details>
 
       <details style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;overflow:hidden;">
         <summary style="padding:1.1rem 1.4rem;font-weight:600;font-size:.95rem;color:var(--navy);cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;">
-          Bis wann muss ich kündigen? <span style="color:var(--teal);font-size:1.1rem;flex-shrink:0;margin-left:1rem;">+</span>
+          Bis wann muss ich kündigen? <span class="faq-icon"></span>
         </summary>
         <p style="padding:.2rem 1.4rem 1.1rem;font-size:.9rem;color:var(--muted);line-height:1.75;">Die Kündigung muss spätestens bis am letzten Tag des laufenden Quartals eingereicht werden — schriftlich per E-Mail oder WhatsApp. Die Quartale: Q1 Aug–Okt, Q2 Nov–Jan, Q3 Feb–Apr, Q4 Mai–Jul.</p>
       </details>
 
       <details style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;overflow:hidden;">
         <summary style="padding:1.1rem 1.4rem;font-weight:600;font-size:.95rem;color:var(--navy);cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;">
-          Wie wird bezahlt? <span style="color:var(--teal);font-size:1.1rem;flex-shrink:0;margin-left:1rem;">+</span>
+          Wie wird bezahlt? <span class="faq-icon"></span>
         </summary>
-        <p style="padding:.2rem 1.4rem 1.1rem;font-size:.9rem;color:var(--muted);line-height:1.75;">Per TWINT, E-Banking oder bar, monatlich im Voraus bis zum 1. des Monats. Bei Barzahlung stellen wir selbstverständlich eine Quittung aus.</p>
+        <p style="padding:.2rem 1.4rem 1.1rem;font-size:.9rem;color:var(--muted);line-height:1.75;">Ausschliesslich per TWINT, monatlich im Voraus bis zum 1. des Monats.</p>
       </details>
 
       <details style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;overflow:hidden;">
         <summary style="padding:1.1rem 1.4rem;font-weight:600;font-size:.95rem;color:var(--navy);cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;">
-          Bietet ihr auch Online-Unterricht an? <span style="color:var(--teal);font-size:1.1rem;flex-shrink:0;margin-left:1rem;">+</span>
+          Bietet ihr auch Online-Unterricht an? <span class="faq-icon"></span>
         </summary>
         <p style="padding:.2rem 1.4rem 1.1rem;font-size:.9rem;color:var(--muted);line-height:1.75;">Ja, auf Anfrage ist Online-Unterricht möglich. Meldet euch einfach direkt via WhatsApp und wir besprechen die Details.</p>
       </details>
@@ -892,7 +974,7 @@
           <div class="contact-item"><div class="contact-icon">📍</div><div><strong>Standort</strong><span>Dörflistrasse 67, 8050 Zürich</span></div></div>
           <div class="contact-item"><div class="contact-icon">📱</div><div><strong>WhatsApp / Telefon</strong><span>+41 76 282 92 44</span></div></div>
           <div class="contact-item"><div class="contact-icon">📅</div><div><strong>Unterrichtstag</strong><span>Samstags · 09:30–11:30 Uhr (mit Zwischenpause)</span></div></div>
-          <div class="contact-item"><div class="contact-icon">💳</div><div><strong>Zahlung</strong><span>TWINT · E-Banking · Barzahlung mit Quittung</span></div></div>
+          <div class="contact-item"><div class="contact-icon">💳</div><div><strong>Zahlung</strong><span>TWINT</span></div></div>
         </div>
       </div>
       <div class="kontakt-form" style="padding:0;overflow:hidden;border-radius:10px;">
@@ -909,10 +991,10 @@
 </section>
 
 <footer>
-  <div style="margin-bottom:1.2rem;">
+  <div style="margin-bottom:1.2rem;" id="footer-logo-wrap">
     <img src="logo.png" alt="Lerncoaching ZH" height="48"
          style="filter:brightness(0) invert(1);opacity:.7;"
-         onerror="this.style.display='none'"/>
+         onerror="document.getElementById('footer-logo-wrap').style.display='none'"/>
   </div>
   <p><strong>Lerncoaching ZH</strong> — Gemeinsam für Mindset-Coaching und Zukunft.<br/>
   Dörflistrasse 67, 8050 Zürich &nbsp;·&nbsp; <a href="tel:+41762829244">+41 76 282 92 44</a> &nbsp;·&nbsp; <a href="mailto:zhlerncoaching@gmail.com">zhlerncoaching@gmail.com</a></p>
