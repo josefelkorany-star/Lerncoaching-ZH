@@ -9,17 +9,30 @@
 <style>
   :root{--navy:#0B2244;--teal:#1D9E75;--teal-mid:#0F6E56;--teal-light:#E1F5EE;--bg:#F5F7FA;--bg2:#FFFFFF;--border:rgba(11,34,68,0.1);--text:#0B2244;--muted:#5A6F8A;}
   *{margin:0;padding:0;box-sizing:border-box;}
-  html{scroll-behavior:smooth;}
+  html{scroll-behavior:smooth;scroll-padding-top:var(--nav-height,7rem);}
   body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;font-size:16px;line-height:1.6;overflow-x:hidden;}
 
-  nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:1rem 2rem;display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,0.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:1rem 2rem;display:flex;justify-content:space-between;align-items:center;gap:1rem;background:rgba(255,255,255,0.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);}
+  .nav-brand{display:flex;align-items:center;gap:.6rem;text-decoration:none;min-width:0;}
+  .nav-brand img{display:block;}
   .nav-logo{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;letter-spacing:0.06em;color:var(--navy);}
   .nav-logo span{color:var(--teal);}
   .nav-links{display:flex;gap:2rem;}
+  .nav-links[hidden],.nav-toggle[hidden]{display:none;}
   .nav-links a{color:var(--muted);text-decoration:none;font-size:0.9rem;font-weight:500;transition:color .2s;}
   .nav-links a:hover{color:var(--teal);}
-  .nav-cta{background:var(--teal);color:#fff;padding:.5rem 1.3rem;border-radius:5px;text-decoration:none;font-weight:600;font-size:.9rem;transition:background .2s;}
+  .nav-cta{background:var(--teal);color:#fff;padding:.5rem 1.3rem;border-radius:5px;text-decoration:none;font-weight:600;font-size:.9rem;transition:background .2s;white-space:nowrap;flex-shrink:0;}
   .nav-cta:hover{background:var(--teal-mid);}
+  .nav-toggle{display:inline-flex;align-items:center;justify-content:center;gap:.6rem;min-height:44px;padding:.4rem .8rem;border:1px solid var(--border);border-radius:5px;background:#fff;color:var(--navy);font:inherit;font-size:.9rem;font-weight:600;cursor:pointer;}
+  .nav-toggle::after{content:'+';font-size:1.2rem;}
+  .nav-toggle[aria-expanded="true"]::after{content:'−';}
+  nav a:focus-visible,.nav-toggle:focus-visible{outline:3px solid var(--teal-mid);outline-offset:3px;}
+  .schedule-rules{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1.2rem;margin-bottom:2.5rem;max-width:800px;}
+  .schedule-rules > div{min-width:0;overflow-wrap:anywhere;}
+  .form-fallback{margin:0;padding:1rem;font-size:.9rem;line-height:1.6;}
+  .form-fallback a{color:var(--teal-mid);text-underline-offset:.15em;}
+  .modal{position:fixed;inset:0;width:100%;max-width:none;height:100%;max-height:none;margin:0;border:0;background:transparent;color:var(--text);overflow-y:auto;overscroll-behavior:contain;overflow-wrap:anywhere;padding:2rem 1rem;}
+  .modal::backdrop{background:rgba(11,34,68,.6);}
 
   .hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:8rem 2rem 4rem;background:var(--bg2);position:relative;overflow:hidden;}
   .hero::after{content:'';position:absolute;top:0;right:0;width:42%;height:100%;background:linear-gradient(135deg,#dff4ec 0%,#b8e8d4 100%);clip-path:polygon(18% 0,100% 0,100% 100%,0% 100%);z-index:0;}
@@ -131,15 +144,26 @@
 
   hr{border:none;border-top:1px solid var(--border);}
 
+  @media(max-width:1279px){
+    nav{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:.5rem 1rem;padding:.75rem 1.2rem;}
+    .hero{padding-top:9rem;}
+    .nav-brand{grid-column:1;grid-row:1;}
+    .nav-brand img{width:160px;max-width:100%;height:auto;}
+    .nav-logo{font-size:1.2rem;line-height:1.2;}
+    .nav-cta{grid-column:2;grid-row:1;}
+    .nav-toggle{grid-column:1 / -1;grid-row:2;justify-self:start;}
+    .nav-links{grid-column:1 / -1;grid-row:3;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.25rem 1rem;max-height:calc(100vh - 9rem);max-height:calc(100dvh - 9rem);overflow-y:auto;padding:.25rem;}
+    .nav-links a{display:block;padding:.65rem .5rem;overflow-wrap:anywhere;}
+  }
   @media(max-width:768px){
-    .nav-links{display:none;}
     .versprechen-grid,.kontakt-inner,.poster-wrap{grid-template-columns:1fr;}
+    .schedule-rules{grid-template-columns:minmax(0,1fr);}
     .hero::after{display:none;}
   }
   @media(max-width:480px){
-    nav{padding:1rem 1.2rem;}
+    .nav-links{grid-template-columns:repeat(2,minmax(0,1fr));}
     section{padding:4rem 1.2rem;}
-    .hero{padding:7rem 1.2rem 3rem;}
+    .hero{padding:9rem 1.2rem 3rem;}
   }
 
   details[open] > summary .faq-icon::after{content:'-';}
@@ -156,13 +180,14 @@
 </head>
 <body>
 
-<nav>
-  <a href="#" style="display:flex;align-items:center;gap:.6rem;text-decoration:none;">
+<nav aria-label="Hauptnavigation">
+  <a href="#" class="nav-brand">
     <img src="logo.png" alt="Lerncoaching ZH" height="78"
          onerror="this.style.display='none';document.getElementById('nav-logo-text').style.display='block'"/>
     <span class="nav-logo" id="nav-logo-text" style="display:none;">Lerncoaching <span>ZH</span></span>
   </a>
-  <div class="nav-links">
+  <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-links" hidden>Menü</button>
+  <div class="nav-links" id="nav-links">
     <a href="#konzept">Konzept</a>
     <a href="#team">Team</a>
     <a href="#zyklus">Ablauf</a>
@@ -395,13 +420,13 @@
 
 
 <!-- FERIENPLAN & STUNDENPLAN -->
-<section style="background:var(--bg2);padding:5rem 2rem;" id="stundenplan">
+<section style="background:var(--bg2);" id="stundenplan">
   <div style="max-width:1100px;margin:0 auto;">
     <p style="font-size:.8rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--teal);margin-bottom:.8rem;">Ferienregelung & Stundenplan</p>
     <h2 style="font-family:'Bebas Neue',sans-serif;font-size:clamp(2.4rem,4.5vw,3.8rem);line-height:1;margin-bottom:1rem;color:var(--navy);">Wann findet <span style="color:var(--teal);">Nachhilfe statt?</span></h2>
 
     <!-- Ferienregel Erklärung -->
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;margin-bottom:2.5rem;max-width:800px;">
+    <div class="schedule-rules">
       <div style="background:var(--teal-light);border-left:4px solid var(--teal);border-radius:0 8px 8px 0;padding:1rem 1.2rem;">
         <p style="font-weight:700;font-size:.9rem;color:var(--teal-mid);margin-bottom:.3rem;">✅ Nachhilfe findet statt</p>
         <p style="font-size:.85rem;color:var(--muted);line-height:1.65;">Wenn auf den Samstag eine normale Schulwoche folgt — auch am Samstag direkt vor Schulbeginn nach Ferien (Vorbereitung).</p>
@@ -420,7 +445,7 @@
     <!-- Monatliche Übersicht -->
     <p style="font-weight:700;font-size:1rem;color:var(--navy);margin-bottom:1.2rem;">Nachhilfetage Mai–Dezember 2026</p>
 
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem;">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:1rem;">
 
       <!-- Mai -->
       <div style="background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:1.4rem;border-top:3px solid var(--teal);">
@@ -1009,11 +1034,13 @@
       <div class="kontakt-form" style="padding:0;overflow:hidden;border-radius:10px;">
         <iframe 
           src="https://script.google.com/macros/s/AKfycbyzoXaSxK5Pp3W5rCMSMiDef2HMdZqMB0G7jYPJf2Tan8R_2j2r6b4Y2_0vMkUXn7o0HQ/exec"
+          title="Anmeldeformular Lerncoaching ZH"
           width="100%"
           height="620"
           frameborder="0"
           style="display:block;border:none;">
         </iframe>
+        <p class="form-fallback"><a href="https://script.google.com/macros/s/AKfycbyzoXaSxK5Pp3W5rCMSMiDef2HMdZqMB0G7jYPJf2Tan8R_2j2r6b4Y2_0vMkUXn7o0HQ/exec" target="_blank" rel="noopener noreferrer">Formular wird nicht angezeigt? Hier direkt öffnen.</a></p>
       </div>
     </div>
   </div>
@@ -1028,20 +1055,20 @@
   <p><strong>Lerncoaching ZH</strong> — Gemeinsam für Mindset-Coaching und Zukunft.<br/>
   Dörflistrasse 67, 8050 Zürich &nbsp;·&nbsp; <a href="tel:+41762829244">+41 76 282 92 44</a> &nbsp;·&nbsp; <a href="mailto:zhlerncoaching@gmail.com">zhlerncoaching@gmail.com</a></p>
   <p style="margin-top:.8rem;">
-    <a href="#" onclick="document.getElementById('impModal').style.display='block';return false;" style="color:rgba(255,255,255,.5);font-size:.82rem;text-decoration:none;margin:0 .8rem;">Impressum</a>
+    <a href="#impModal" data-modal-open="impModal" style="color:rgba(255,255,255,.5);font-size:.82rem;text-decoration:none;margin:0 .8rem;">Impressum</a>
     <span style="color:rgba(255,255,255,.2);">|</span>
-    <a href="#" onclick="document.getElementById('dsModal').style.display='block';return false;" style="color:rgba(255,255,255,.5);font-size:.82rem;text-decoration:none;margin:0 .8rem;">Datenschutzerklärung</a>
+    <a href="#dsModal" data-modal-open="dsModal" style="color:rgba(255,255,255,.5);font-size:.82rem;text-decoration:none;margin:0 .8rem;">Datenschutzerklärung</a>
   </p>
   <p style="margin-top:.5rem;font-size:.8rem;opacity:.4">© 2026 Lerncoaching ZH · Josef El Korany</p>
 </footer>
 
 
 <!-- DATENSCHUTZ MODAL -->
-<div id="dsModal" style="display:none;position:fixed;inset:0;background:rgba(11,34,68,.6);z-index:999;overflow-y:auto;padding:2rem 1rem;">
+<dialog id="dsModal" class="modal" aria-labelledby="dsModal-title">
   <div style="background:#fff;border-radius:12px;max-width:700px;margin:2rem auto;padding:2.5rem;position:relative;">
-    <button onclick="document.getElementById('dsModal').style.display='none'"
+    <button type="button" data-modal-close aria-label="Datenschutzerklärung schliessen" autofocus
       style="position:absolute;top:1rem;right:1rem;background:var(--bg);border:none;border-radius:5px;padding:.4rem .8rem;cursor:pointer;font-size:1rem;color:var(--navy);">✕</button>
-    <h2 style="font-family:'Bebas Neue',sans-serif;font-size:2rem;color:var(--navy);margin-bottom:1.5rem;">Datenschutzerklärung</h2>
+    <h2 id="dsModal-title" style="font-family:'Bebas Neue',sans-serif;font-size:2rem;color:var(--navy);margin-bottom:1.5rem;">Datenschutzerklärung</h2>
 
     <p style="font-size:.85rem;color:var(--muted);line-height:1.75;margin-bottom:1rem;"><strong style="color:var(--navy);">Verantwortliche Person (Art. 5 lit. j DSG)</strong><br/>
     Josef El Korany, handelnd unter Lerncoaching ZH<br/>
@@ -1063,14 +1090,14 @@
     <p style="font-size:.85rem;color:var(--muted);line-height:1.75;"><strong style="color:var(--navy);">Anwendbares Recht</strong><br/>
     Diese Datenschutzerklärung richtet sich nach dem Schweizer Datenschutzgesetz (DSG, SR 235.1). Gerichtsstand ist Zürich.</p>
   </div>
-</div>
+</dialog>
 
 <!-- IMPRESSUM MODAL -->
-<div id="impModal" style="display:none;position:fixed;inset:0;background:rgba(11,34,68,.6);z-index:999;overflow-y:auto;padding:2rem 1rem;">
+<dialog id="impModal" class="modal" aria-labelledby="impModal-title">
   <div style="background:#fff;border-radius:12px;max-width:600px;margin:2rem auto;padding:2.5rem;position:relative;">
-    <button onclick="document.getElementById('impModal').style.display='none'"
+    <button type="button" data-modal-close aria-label="Impressum schliessen" autofocus
       style="position:absolute;top:1rem;right:1rem;background:var(--bg);border:none;border-radius:5px;padding:.4rem .8rem;cursor:pointer;font-size:1rem;color:var(--navy);">✕</button>
-    <h2 style="font-family:'Bebas Neue',sans-serif;font-size:2rem;color:var(--navy);margin-bottom:1.5rem;">Impressum</h2>
+    <h2 id="impModal-title" style="font-family:'Bebas Neue',sans-serif;font-size:2rem;color:var(--navy);margin-bottom:1.5rem;">Impressum</h2>
     <p style="font-size:.9rem;color:var(--muted);line-height:1.9;">
       <strong style="color:var(--navy);">Verantwortlich für den Inhalt</strong><br/>
       Josef El Korany<br/>
@@ -1088,13 +1115,86 @@
       Schweizer Recht · Gerichtsstand Zürich
     </p>
   </div>
-</div>
+</dialog>
 
 <script>
-// Close modals on background click
-['dsModal','impModal'].forEach(function(id){
-  document.getElementById(id).addEventListener('click', function(e){
-    if(e.target === this) this.style.display='none';
+const nav = document.querySelector('nav');
+const navToggle = document.querySelector('.nav-toggle');
+const navLinks = document.getElementById('nav-links');
+const compactNav = window.matchMedia('(max-width:1279px)');
+
+function updateNavHeight(){
+  document.documentElement.style.setProperty('--nav-height', nav.offsetHeight + 'px');
+}
+
+function setNavOpen(open){
+  const expanded = compactNav.matches && open;
+  navToggle.setAttribute('aria-expanded', String(expanded));
+  navLinks.hidden = compactNav.matches && !expanded;
+  updateNavHeight();
+}
+
+function syncNav(){
+  const focused = document.activeElement;
+  navToggle.hidden = !compactNav.matches;
+  setNavOpen(false);
+  if(compactNav.matches && navLinks.contains(focused)) navToggle.focus();
+  if(!compactNav.matches && focused === navToggle) nav.querySelector('.nav-brand').focus();
+}
+
+syncNav();
+navToggle.addEventListener('click', function(){
+  setNavOpen(this.getAttribute('aria-expanded') !== 'true');
+});
+nav.addEventListener('keydown', function(event){
+  if(event.key === 'Escape' && navToggle.getAttribute('aria-expanded') === 'true'){
+    event.preventDefault();
+    setNavOpen(false);
+    navToggle.focus();
+  }
+});
+nav.addEventListener('click', function(event){
+  if(compactNav.matches && event.target.closest('a')){
+    if(navLinks.contains(document.activeElement)) navToggle.focus();
+    setNavOpen(false);
+  }
+});
+compactNav.addEventListener('change', syncNav);
+new ResizeObserver(updateNavHeight).observe(nav);
+
+document.querySelectorAll('[data-modal-open]').forEach(function(opener){
+  const modal = document.getElementById(opener.dataset.modalOpen);
+  function closeModal(){
+    modal.close();
+    opener.focus({preventScroll:true});
+  }
+  opener.addEventListener('click', function(event){
+    event.preventDefault();
+    modal.showModal();
+    modal.scrollTop = 0;
+  });
+  modal.querySelector('[data-modal-close]').addEventListener('click', closeModal);
+  modal.addEventListener('cancel', function(event){
+    event.preventDefault();
+    closeModal();
+  });
+  modal.addEventListener('click', function(event){
+    if(event.target === modal) closeModal();
+  });
+  modal.addEventListener('keydown', function(event){
+    if(event.key !== 'Tab') return;
+    const focusable = Array.from(modal.querySelectorAll('a[href],button:not([disabled]),input:not([disabled]),select:not([disabled]),textarea:not([disabled]),[tabindex]:not([tabindex="-1"])')).filter(function(element){
+      return element.getClientRects().length > 0;
+    });
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    if(event.shiftKey && document.activeElement === first){
+      event.preventDefault();
+      last.focus();
+    } else if(!event.shiftKey && document.activeElement === last){
+      event.preventDefault();
+      first.focus();
+    }
   });
 });
 </script>
