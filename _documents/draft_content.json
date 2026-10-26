@@ -1,0 +1,24 @@
+{
+  "title": "Private Nachhilfe mit Lerncoaching-Elementen",
+  "intro": "Lerncoaching ZH verbindet fachliche Unterstützung mit einem bewussten Umgang mit dem eigenen Lernen. Ausgangspunkt sind die aktuellen Aufgaben, Fragen und Schwierigkeiten der Schüler:innen. Wir unterstützen beim Verstehen, Üben und selbstständigen Weiterarbeiten.",
+  "audience": "Aufnahme ab der 4. Primarklasse. Das Angebot richtet sich an Schüler:innen der Primarstufe, Sekundarstufe und des Gymnasiums sowie an Lernende in der Berufslehre und Teilnehmende der BMS oder HMS.",
+  "page1_sections": [
+    ["Individuelle Inhalte, gemeinsame Kursstruktur", "Die Samstage geben dem Lernen einen festen organisatorischen Rahmen. Innerhalb dieser Struktur arbeiten die Schüler:innen an ihren eigenen Fächern, Aufgaben und Lernzielen. Gruppenbasierte Betreuung bedeutet dabei keinen einheitlichen Stoffplan und keinen Frontalunterricht."],
+    ["Vom Lernstandscheck zum nächsten Schritt", "Ein Einstiegs-Lernstandscheck hilft, Stärken, offene Fragen und Lücken einzuordnen. Daraus werden passende Ziele und nächste Arbeitsschritte abgeleitet. Beim Üben werden Lösungswege erklärt, ausprobiert und überprüft. Eine kurze Reflexion hilft, hilfreiche Strategien zu erkennen und den nächsten Schritt zu planen."]
+  ],
+  "skills": [
+    ["Problemlösen", "Aufgaben verstehen und eigene Lösungswege entwickeln."],
+    ["Kommunikation", "Fragen stellen und Gedankengänge verständlich erklären."],
+    ["Organisation", "Aufgaben, Zeit und Prüfungsvorbereitung sinnvoll ordnen."],
+    ["Selbstregulation", "Mit Frust umgehen und die eigene Konzentration reflektieren."]
+  ],
+  "capacity": "Betreuungsschlüssel: maximal vier Schüler:innen je Betreuungsperson. Bei drei gleichzeitig eingesetzten Betreuungspersonen ergeben sich höchstens zwölf Plätze. Das Gesamtteam ist von der tatsächlich gleichzeitig anwesenden Besetzung zu unterscheiden.",
+  "page2_sections": [
+    ["Begleitung im Lernprozess", "Der Ablauf verbindet einen gemeinsamen Start mit individuellen Arbeitsphasen. Je nach Aufgabe und Lernstand werden fachliche Erklärung, eigenständiges Üben und Rückfragen kombiniert. Ziele und Lernstrategien werden im Verlauf wieder aufgegriffen; die Inhalte richten sich nach dem aktuellen Bedarf."],
+    ["Verantwortung und Selbstständigkeit", "Die Betreuung unterstützt die Schüler:innen darin, ihren Lösungsweg nachvollziehbar zu machen und zunehmend selbstständig zu arbeiten. Lerncoaching ZH bietet sorgfältige Unterstützung. Bestimmte Noten, Prüfungsergebnisse oder schulische Erfolge werden nicht zugesichert."],
+    ["Zusammenarbeit mit Eltern", "Elternkommunikation dient dem Austausch über Anliegen und den Lernprozess. Eltern-Feedback ist im bestehenden Angebot auf Anfrage vorgesehen. Dieser Entwurf führt keine zusätzlichen festen Berichtstermine oder neuen Rückmeldepflichten ein."],
+    ["Team und Einsatzplanung", "Die Begleitung erfolgt durch das Lerncoaching-ZH-Team. Für die Gruppengrösse zählt die Zahl der gleichzeitig eingesetzten Betreuungspersonen. Dieser Entwurf sagt keine bestimmte Einzelperson oder dauerhafte Personalbesetzung zu."]
+  ],
+  "terms": "Vertragsbedingungen, Preise, Anmeldegebühr, Rabatte, Quartalsbindung, Kündigung und Absenzen bleiben in den bestehenden Vertragsvorlagen geregelt. Für den Ersttermin besteht eine separate Vereinbarung. Dieser Konzeptentwurf ersetzt keine Vereinbarung und führt keine neuen Bedingungen ein.",
+  "status_note": "ENTWURF: Diese zweiseitige Fassung dient der inhaltlichen Abstimmung. Sie ersetzt weder das bisherige Konzept noch die bestehenden Standard-Downloads."
+}
