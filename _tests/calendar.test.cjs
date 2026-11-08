@@ -207,10 +207,12 @@ for (const year of [2026, 2027]) {
   });
 }
 
-test('real form iframe and direct fallback remain byte-identical to PR #3', () => {
+test('real iframe attributes except accessible title and direct fallback remain unchanged', () => {
   const html = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
   const baseline = execFileSync('git', ['show', '36b76c088ca2b123729ddf108ef3b80f082e8a03:index.html'], { cwd: root, encoding: 'utf8' });
-  assert.equal(html.match(/<iframe\b[\s\S]*?<\/iframe>/)[0], baseline.match(/<iframe\b[\s\S]*?<\/iframe>/)[0]);
+  const iframe = text => text.match(/<iframe\b[\s\S]*?<\/iframe>/)[0].replace(/title="[^"]*"/, 'title=""');
+  assert.equal(iframe(html), iframe(baseline));
+  assert.match(html, /title="Interessenanfrage Lerncoaching ZH"/);
   assert.equal(html.match(/<p class="form-fallback">[\s\S]*?<\/p>/)[0], baseline.match(/<p class="form-fallback">[\s\S]*?<\/p>/)[0]);
   assert.ok(html.includes(`href="${fixture.registrationUrl}"`));
   assert.ok(!/<(?:input|textarea)\b[^>]*\bdisabled\b/i.test(html), 'No disabled example registration fields');

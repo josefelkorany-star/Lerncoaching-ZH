@@ -1,0 +1,9 @@
+.clasp.json
+.clasprc.json
+.clasprc*.json
+.env
+.env.*
+private/
+backups/
+headers.json
+*.log

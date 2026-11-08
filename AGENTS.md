@@ -39,6 +39,18 @@ Pflege die bestehende Lerncoaching-ZH-Website zuverlässig, verständlich und mi
 
 ## GitHub und Veröffentlichung
 
+### Anfrageverfahren – Entscheidung vom 08.11.2026
+
+- Das künftige öffentliche Formular ist eine jederzeit erreichbare unverbindliche Interessenanfrage, auch ohne freie Plätze. Es erzeugt weder Vertrag, bestätigten Termin, Reservierung, Zahlungspflicht noch automatische Aufnahme. Josef entscheidet persönlich; verbindlich wird die Buchung erst mit ausdrücklicher Bestätigung und separater unterschriebener Vereinbarung.
+- Website, FAQ, Formular, Rückmeldungen und neue Dokumentfassungen müssen denselben Ablauf beschreiben. Kein Vertragszustimmungsfeld, keine automatische Buchung des nächsten Samstags und keine erfundene Zustimmung in Anfragezeilen. Historische Daten und individuelle Verträge bleiben unverändert.
+- Script-ID, Tabellen-ID, Deployment-ID und öffentliche URL sind unterschiedliche Kennungen. Beigefügter Quellcode ist kein Beweis des produktiven Stands. Vor jedem Apps-Script-Push tatsächlichen Stand, Manifest, Deploymentversion und Konfiguration privat sichern und vergleichen. Nur ausdrücklich erlaubte Projektdateien übertragen; keine Geheimnisse, Testdaten oder Auditdateien.
+- Kein öffentlich erreichbares Setup, Löschen oder Umordnen der Tabelle. Zielblatt ausdrücklich wählen, Änderungen an Spalten erst nach Schemaabgleich. Speichern serverseitig bestätigen; Validierung, Formelsicherheit, Idempotenz und Parallelzugriff mit isolierten Daten und abgefangenen Benachrichtigungen prüfen.
+- Entwicklung, private Vorschau und Veröffentlichung getrennt halten. Die lokale Formularvorschau verwendet nur Testdaten im Speicher. Sie ist kein echtes Formular und darf nicht auf Pages erscheinen. Unterstrich-Verzeichnisse sind im öffentlichen Repository nicht vertraulich; Rechtsprüfungen und unfreigegebene PDF-Entwürfe ausschliesslich ausserhalb des Repositorys aufbewahren.
+- Der Kalender-/Aufnahme-Release aus PR #4 ist separat freigegeben. Das neue Anfrageverfahren und neue Vertragsbedingungen sind zunächst nur vorzubereiten. Eine spätere Umstellung muss Website und bestehende Apps-Script-Bereitstellung koordiniert aktualisieren und einen geprüften Rücksetzweg enthalten. Keine Veröffentlichung allein der neuen Website-Texte bei altem verbindlichem Formular.
+- Die bestehende /exec-URL, Tabelle und Benachrichtigungsadresse erhalten. Kein neues Skriptprojekt oder Ersatzdeployment. Ein Code-Push ist kein Nachweis einer aktualisierten versionierten Web-App.
+- Standardtarife und Dreimonatsquartale erhalten. CHF 160/280/360 sind Vier-Samstage-Referenzen. Offene Gebühren-/Rabatt-/Teilquartals-/Geschwisterfragen nicht automatisch entscheiden. Neue Bedingungen sind ENTWURF, erfordern Version, Geltungsdatum und separate Zustimmung; PDF-Austausch ändert keine bestehenden Verträge.
+- Ohne bestätigten direkten Google-Bewertungslink bleibt der Bewertungsaufruf öffentlich verborgen.
+
 - Arbeite standardmässig auf einem separaten `codex/…`-Branch. Erhalte fremde oder bereits vorhandene Änderungen; kein destruktives Zurücksetzen und kein Force-Push ohne ausdrücklichen Auftrag.
 - Wenn ein Auftrag GitHub-Änderungen umfasst und die Berechtigungen verfügbar sind, erstelle nachvollziehbare Commits und einen Pull Request mit Zusammenfassung und Prüfergebnissen.
 - Führe keinen Merge nach `main` und keine Live-Veröffentlichung aus, solange der konkrete Auftrag die Veröffentlichung nicht ausdrücklich erlaubt. Eine Aufforderung zum Bearbeiten oder Prüfen allein ist keine Veröffentlichungsfreigabe.
