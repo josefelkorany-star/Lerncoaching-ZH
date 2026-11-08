@@ -4,6 +4,17 @@
 
 Pflege die bestehende Lerncoaching-ZH-Website zuverlässig, verständlich und mit möglichst wenig manuellem Aufwand für den Auftraggeber. Antworte auf Deutsch, knapp und konkret. Unterscheide erledigte Arbeit, Vorschläge, Annahmen und blockierte Schritte. Diese Datei ist eine Arbeitsanweisung, keine technische Freischaltung von Werkzeugen oder Berechtigungen.
 
+## Browserzugriff – verbindliche Regel ab 08.11.2026
+
+- Sämtliche browserbasierten Online-Zugriffe, Anmeldungen, Website-Prüfungen und Debugging ausschliesslich in einem nachweislich isolierten Cloud-Browser ausführen. Dies gilt auch für Vorschau-/Responsivtests, Google Apps Script, GitHub, Google-Unternehmensprofil und OAuth-/clasp-Anmeldungen.
+- Den persönlichen Browser auf dem Computer des Auftraggebers nicht verwenden: keine lokalen Browserfenster oder Tabs öffnen, fernsteuern, auslesen, verändern oder schliessen. Keine Browserprofile, Cookies oder bestehenden Browsersitzungen übernehmen und keine Remote-Debugging-Verbindung zu einem lokalen Browser herstellen. Auch eine Browserinventur darf keine persönlichen Tabs auslesen.
+- Ein eingebetteter oder automatisierter Browser gilt nicht allein deshalb als isolierter Cloud-Browser. Vor seiner Verwendung müssen Isolation und Umgebung feststehen; lokale oder persönlich angemeldete Browser sind kein Ersatz.
+- Bei notwendiger Anmeldung oder zusätzlicher Autorisierung eine geeignete Cloud-Browsersitzung zur manuellen Übernahme bereitstellen. Der Auftraggeber meldet sich selbst direkt beim Anbieter an. Keine Passwörter, Tokens, Bestätigungscodes oder Autorisierungs-Rückleitungs-URLs im Chat anfordern.
+- Verhindern, dass Anmeldebefehle den lokalen Standardbrowser automatisch öffnen. Insbesondere den normalen `clasp login` und bisherige lokale Login-Starter nicht ausführen. Eine erneute Anmeldung erst bei konkret nachgewiesenem fehlendem Zugriff in Betracht ziehen; keinen Einrichtungsneustart auf Verdacht.
+- Fehlt ein geeigneter isolierter Cloud-Browser oder die manuelle Übernahme, die konkrete Einschränkung nennen. Nicht auf den persönlichen Browser ausweichen. Unabhängig mögliche Arbeiten über bereits autorisierte APIs oder ohne Browser fortsetzen. Die ausdrücklich freigegebene bestehende clasp-/API-Autorisierung darf weiterverwendet werden; sie ist keine Übernahme einer Browsersitzung.
+- Diese Beschränkung vor jeder Delegation an alle beteiligten Subagents weitergeben und auch bei deren Werkzeugwahl und Prüfung durchsetzen.
+- Die Browserregel erweitert keine Veröffentlichungs-, Daten- oder sonstige Freigabe. Bestehende Grenzen, insbesondere kein Apps-Script-Produktivdeployment der neuen Anfrageversion ohne Abnahme, bleiben unverändert. Die tatsächlich verwendete Umgebung und nicht ausführbare Browserprüfungen ehrlich benennen.
+
 ## Projekt zuerst verstehen
 
 - Repository: `josefelkorany-star/Lerncoaching-ZH`; Standardbranch zum Zeitpunkt der Einrichtung: `main`. Prüfe vor Änderungen den aktuellen Stand, den Arbeitsbranch und bereits vorhandene Änderungen.
