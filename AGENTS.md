@@ -4,6 +4,17 @@
 
 Pflege die bestehende Lerncoaching-ZH-Website zuverlässig, verständlich und mit möglichst wenig manuellem Aufwand für den Auftraggeber. Antworte auf Deutsch, knapp und konkret. Unterscheide erledigte Arbeit, Vorschläge, Annahmen und blockierte Schritte. Diese Datei ist eine Arbeitsanweisung, keine technische Freischaltung von Werkzeugen oder Berechtigungen.
 
+## Browserzugriff – verbindliche Regel ab 08.11.2026
+
+- Sämtliche browserbasierten Online-Zugriffe, Anmeldungen, Website-Prüfungen und Debugging ausschliesslich in einem nachweislich isolierten Cloud-Browser ausführen. Dies gilt auch für Vorschau-/Responsivtests, Google Apps Script, GitHub, Google-Unternehmensprofil und OAuth-/clasp-Anmeldungen.
+- Den persönlichen Browser auf dem Computer des Auftraggebers nicht verwenden: keine lokalen Browserfenster oder Tabs öffnen, fernsteuern, auslesen, verändern oder schliessen. Keine Browserprofile, Cookies oder bestehenden Browsersitzungen übernehmen und keine Remote-Debugging-Verbindung zu einem lokalen Browser herstellen. Auch eine Browserinventur darf keine persönlichen Tabs auslesen.
+- Ein eingebetteter oder automatisierter Browser gilt nicht allein deshalb als isolierter Cloud-Browser. Vor seiner Verwendung müssen Isolation und Umgebung feststehen; lokale oder persönlich angemeldete Browser sind kein Ersatz.
+- Bei notwendiger Anmeldung oder zusätzlicher Autorisierung eine geeignete Cloud-Browsersitzung zur manuellen Übernahme bereitstellen. Der Auftraggeber meldet sich selbst direkt beim Anbieter an. Keine Passwörter, Tokens, Bestätigungscodes oder Autorisierungs-Rückleitungs-URLs im Chat anfordern.
+- Verhindern, dass Anmeldebefehle den lokalen Standardbrowser automatisch öffnen. Insbesondere den normalen `clasp login` und bisherige lokale Login-Starter nicht ausführen. Eine erneute Anmeldung erst bei konkret nachgewiesenem fehlendem Zugriff in Betracht ziehen; keinen Einrichtungsneustart auf Verdacht.
+- Fehlt ein geeigneter isolierter Cloud-Browser oder die manuelle Übernahme, die konkrete Einschränkung nennen. Nicht auf den persönlichen Browser ausweichen. Unabhängig mögliche Arbeiten über bereits autorisierte APIs oder ohne Browser fortsetzen. Die ausdrücklich freigegebene bestehende clasp-/API-Autorisierung darf weiterverwendet werden; sie ist keine Übernahme einer Browsersitzung.
+- Diese Beschränkung vor jeder Delegation an alle beteiligten Subagents weitergeben und auch bei deren Werkzeugwahl und Prüfung durchsetzen.
+- Die Browserregel erweitert keine Veröffentlichungs-, Daten- oder sonstige Freigabe. Bestehende Grenzen, insbesondere kein Apps-Script-Produktivdeployment der neuen Anfrageversion ohne Abnahme, bleiben unverändert. Die tatsächlich verwendete Umgebung und nicht ausführbare Browserprüfungen ehrlich benennen.
+
 ## Projekt zuerst verstehen
 
 - Repository: `josefelkorany-star/Lerncoaching-ZH`; Standardbranch zum Zeitpunkt der Einrichtung: `main`. Prüfe vor Änderungen den aktuellen Stand, den Arbeitsbranch und bereits vorhandene Änderungen.
@@ -38,6 +49,18 @@ Pflege die bestehende Lerncoaching-ZH-Website zuverlässig, verständlich und mi
 - Prüfe den vollständigen Diff auf unbeabsichtigte Änderungen. Dokumentiere ausgeführte Prüfungen samt Ergebnis und benenne nicht ausgeführte oder blockierte Prüfungen ausdrücklich. Melde bereits vorhandene Fehler getrennt von neu eingeführten.
 
 ## GitHub und Veröffentlichung
+
+### Anfrageverfahren – Entscheidung vom 08.11.2026
+
+- Das künftige öffentliche Formular ist eine jederzeit erreichbare unverbindliche Interessenanfrage, auch ohne freie Plätze. Es erzeugt weder Vertrag, bestätigten Termin, Reservierung, Zahlungspflicht noch automatische Aufnahme. Josef entscheidet persönlich; verbindlich wird die Buchung erst mit ausdrücklicher Bestätigung und separater unterschriebener Vereinbarung.
+- Website, FAQ, Formular, Rückmeldungen und neue Dokumentfassungen müssen denselben Ablauf beschreiben. Kein Vertragszustimmungsfeld, keine automatische Buchung des nächsten Samstags und keine erfundene Zustimmung in Anfragezeilen. Historische Daten und individuelle Verträge bleiben unverändert.
+- Script-ID, Tabellen-ID, Deployment-ID und öffentliche URL sind unterschiedliche Kennungen. Beigefügter Quellcode ist kein Beweis des produktiven Stands. Vor jedem Apps-Script-Push tatsächlichen Stand, Manifest, Deploymentversion und Konfiguration privat sichern und vergleichen. Nur ausdrücklich erlaubte Projektdateien übertragen; keine Geheimnisse, Testdaten oder Auditdateien.
+- Kein öffentlich erreichbares Setup, Löschen oder Umordnen der Tabelle. Zielblatt ausdrücklich wählen, Änderungen an Spalten erst nach Schemaabgleich. Speichern serverseitig bestätigen; Validierung, Formelsicherheit, Idempotenz und Parallelzugriff mit isolierten Daten und abgefangenen Benachrichtigungen prüfen.
+- Entwicklung, private Vorschau und Veröffentlichung getrennt halten. Die lokale Formularvorschau verwendet nur Testdaten im Speicher. Sie ist kein echtes Formular und darf nicht auf Pages erscheinen. Unterstrich-Verzeichnisse sind im öffentlichen Repository nicht vertraulich; Rechtsprüfungen und unfreigegebene PDF-Entwürfe ausschliesslich ausserhalb des Repositorys aufbewahren.
+- Der Kalender-/Aufnahme-Release aus PR #4 ist separat freigegeben. Das neue Anfrageverfahren und neue Vertragsbedingungen sind zunächst nur vorzubereiten. Eine spätere Umstellung muss Website und bestehende Apps-Script-Bereitstellung koordiniert aktualisieren und einen geprüften Rücksetzweg enthalten. Keine Veröffentlichung allein der neuen Website-Texte bei altem verbindlichem Formular.
+- Die bestehende /exec-URL, Tabelle und Benachrichtigungsadresse erhalten. Kein neues Skriptprojekt oder Ersatzdeployment. Ein Code-Push ist kein Nachweis einer aktualisierten versionierten Web-App.
+- Standardtarife und Dreimonatsquartale erhalten. CHF 160/280/360 sind Vier-Samstage-Referenzen. Offene Gebühren-/Rabatt-/Teilquartals-/Geschwisterfragen nicht automatisch entscheiden. Neue Bedingungen sind ENTWURF, erfordern Version, Geltungsdatum und separate Zustimmung; PDF-Austausch ändert keine bestehenden Verträge.
+- Ohne bestätigten direkten Google-Bewertungslink bleibt der Bewertungsaufruf öffentlich verborgen.
 
 - Arbeite standardmässig auf einem separaten `codex/…`-Branch. Erhalte fremde oder bereits vorhandene Änderungen; kein destruktives Zurücksetzen und kein Force-Push ohne ausdrücklichen Auftrag.
 - Wenn ein Auftrag GitHub-Änderungen umfasst und die Berechtigungen verfügbar sind, erstelle nachvollziehbare Commits und einen Pull Request mit Zusammenfassung und Prüfergebnissen.

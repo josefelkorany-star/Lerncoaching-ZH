@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <base target="_top">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Platz anfragen – Lerncoaching ZH</title>
+  <style>
+    :root{font-family:Arial,sans-serif;color:#0b2244;line-height:1.6;background:#f5f7fa}*{box-sizing:border-box}body{margin:0;padding:1rem}main{max-width:620px;margin:auto;background:white;border-radius:14px;box-shadow:0 4px 24px #0b224412}header{background:#0b2244;color:white;padding:1.8rem;border-radius:14px 14px 0 0}h1{font-size:1.7rem;line-height:1.2;margin:.3rem 0}header p{margin:.6rem 0 0;color:#dbe8e2}.brand{font-size:.75rem;letter-spacing:.12em;color:#9fe1cb;font-weight:bold}.body{padding:1.6rem}p{margin:.7rem 0}.notice{padding:1rem;background:#e1f5ee;border-left:4px solid #1d9e75;border-radius:6px;margin-bottom:1.4rem;font-size:.9rem}label{display:block;font-size:.9rem;font-weight:bold;margin:1rem 0 .35rem}input,select,textarea{width:100%;min-width:0;padding:.8rem;border:1px solid #bbc8d0;border-radius:7px;font:inherit;color:#0b2244;background:#f8fafb}input:focus-visible,select:focus-visible,textarea:focus-visible,button:focus-visible,a:focus-visible,summary:focus-visible{outline:3px solid #167e61;outline-offset:3px}textarea{min-height:100px;resize:vertical}small,.help{display:block;font-size:.8rem;color:#536577;margin:.4rem 0;line-height:1.6}button{width:100%;min-height:48px;padding:.85rem;border:0;border-radius:7px;font:inherit;font-weight:bold;color:white;background:#137e5e;cursor:pointer;margin-top:1rem}button:disabled{opacity:.65;cursor:wait}.error{padding:.8rem;border:1px solid #a52f24;color:#78241c;background:#fff2ef;border-radius:7px;margin-top:1rem}.success{padding:1rem;background:#e1f5ee;border-radius:9px}.success h2{font-size:1.3rem;margin:.2rem 0}.success p{overflow-wrap:anywhere}details{border-top:1px solid #dbe4e1;margin-top:1.4rem;padding-top:.8rem;font-size:.82rem}summary{cursor:pointer;font-weight:bold}a{color:#0f6e56;text-underline-offset:3px}.honey{position:absolute;left:-10000px;top:auto;width:1px;height:1px;overflow:hidden}[hidden]{display:none!important}.footer{font-size:.75rem;color:#718074;text-align:center;margin:1.2rem}.local-preview{max-width:620px;margin:0 auto 1rem;padding:1rem;background:#fff8e7;border:1px solid #e9d49a;border-radius:8px}.local-preview select{margin-top:.4rem}@media(max-width:375px){header,.body{padding:1.15rem}h1{font-size:1.5rem}body{padding:.65rem}}
+  </style>
+</head>
+<body>
+<main>
+  <header><div class="brand">LERNCOACHING ZH</div><h1>Platz anfragen</h1><p>Unverbindliches Interesse – persönliche Rückmeldung.</p></header>
+  <div class="body">
+    <div id="form-wrap">
+      <div class="notice">Mit dieser Anfrage entsteht <strong>kein Vertrag, bestätigter Termin, reservierter Platz und keine Zahlungspflicht</strong>. Josef prüft die Verfügbarkeit und entscheidet persönlich über die Aufnahme. Eine verbindliche Buchung erfolgt erst nach ausdrücklicher Bestätigung und Abschluss der separaten unterschriebenen Vereinbarung.</div>
+      <p class="help">Du kannst jederzeit Interesse bekunden, auch wenn gerade keine Plätze frei sind. Eine Warteliste ist keine Aufnahmebestätigung.</p>
+      <form id="interest-form">
+        <label for="name">Name des Kindes / der Person *</label><input id="name" name="name" maxlength="120" autocomplete="name" required>
+        <label for="level">Schulstufe *</label><select id="level" name="level" required><option value="">Bitte wählen…</option></select>
+        <div id="other-wrap" hidden><label for="levelOther">Schulstufe / Ausbildung beschreiben *</label><input id="levelOther" name="levelOther" maxlength="160" disabled></div>
+        <label for="offer">Gewünschtes Angebot *</label><select id="offer" name="offer" required><option value="">Bitte wählen…</option></select>
+        <p id="offer-note" class="help">Deine Auswahl ist ein Interesse, keine Buchung.</p>
+        <label for="contact">Kontaktperson mit Telefonnummer oder E-Mail *</label><input id="contact" name="contact" maxlength="240" autocomplete="off" required><small>Bei Minderjährigen: Kontakt eines Elternteils oder einer erziehungsberechtigten Person.</small>
+        <label for="desiredDate">Wunschdatum (optional, noch nicht bestätigt)</label><input id="desiredDate" name="desiredDate" type="date"><small>Vor Ort samstags gemäss <a href="https://lerncoaching-zh.ch/#stundenplan" target="_blank" rel="noopener noreferrer">veröffentlichtem Kursplan</a>; online nach Absprache. Ein Wunschdatum reserviert keinen Termin.</small>
+        <label for="message">Fächer / Nachricht (optional)</label><textarea id="message" name="message" maxlength="1500" placeholder="Welche Fächer oder organisatorischen Wünsche möchtest du uns mitteilen?"></textarea><small>Bitte keine Diagnosen, Gesundheitsdetails, Zeugnisse oder sonstigen vertraulichen Unterlagen eintragen. Adress- und Vertragsangaben klären wir erst bei einer tatsächlichen Aufnahme.</small>
+        <div class="honey" aria-hidden="true"><label for="website">Website</label><input id="website" name="website" tabindex="-1" autocomplete="off"></div>
+        <p class="help">Es wird hier keine Zustimmung zu einem Kursvertrag verlangt oder gespeichert. Mit dem Senden werden deine Anfrageangaben zur Bearbeitung an Lerncoaching ZH übermittelt. Bitte lies den <a href="#privacy">Datenschutzhinweis</a>.</p>
+        <div id="error" class="error" role="alert" hidden tabindex="-1"></div>
+        <button id="submit" type="submit">Unverbindliche Anfrage senden</button>
+      </form>
+      <noscript><p>Für die sichere Übermittlung wird JavaScript benötigt. Du erreichst Lerncoaching ZH auch direkt per Telefon oder WhatsApp.</p></noscript>
+    </div>
+    <section id="success" class="success" hidden tabindex="-1" aria-labelledby="success-title"><h2 id="success-title">Anfrage eingegangen</h2><p id="success-message"></p><p id="receipt"></p><p>Wir melden uns persönlich. Bitte sende dieselbe Anfrage nicht erneut.</p><button id="another-request" type="button">Eine weitere Anfrage beginnen</button></section>
+    <details id="privacy"><summary>Datenschutzhinweis für die Anfrage</summary><p>Verantwortlich: Lerncoaching ZH, Josef El Korany, Dörflistrasse 67, 8050 Zürich; Kontakt: <a href="mailto:zhlerncoaching@gmail.com">zhlerncoaching@gmail.com</a>.</p><p>Die Angaben dienen der Prüfung deiner Anfrage, der Kontaktaufnahme und gegebenenfalls einer vereinbarten Warteliste. Für Formular und Speicherung werden Google Apps Script und Google Sheets verwendet. Lerncoaching ZH erhält eine E-Mail-Benachrichtigung mit den für die Bearbeitung nötigen Angaben. Technische Vorgangskennungen, Eingangszeit und Version dieser Anfrageinformationen werden mitgespeichert, um Wiederholungen zu erkennen und den Ablauf nachvollziehen zu können. Eine Vertragsannahme wird dadurch nicht erfasst.</p><p>Fragen zur Aufbewahrung sowie Auskunfts-, Berichtigungs- oder Löschanliegen kannst du über den genannten Kontakt stellen. Dieser Hinweis macht keine Zusicherung zu einem bestimmten Speicherland oder einer Zertifizierung.</p><p id="versions" class="help"></p></details>
+  </div>
+</main>
+<p class="footer">Lerncoaching ZH · Josef El Korany · <a href="https://wa.me/41762829244" target="_blank" rel="noopener noreferrer">Direkter Kontakt</a></p>
+<script>
+  'use strict';
+  const boot = <?!= bootJson ?>;
+  const form = document.getElementById('interest-form');
+  const level = document.getElementById('level');
+  const offer = document.getElementById('offer');
+  const other = document.getElementById('levelOther');
+  const button = document.getElementById('submit');
+  const error = document.getElementById('error');
+  const notes = {
+    probetag:'Ersttermin CHF 20.–: konkretes Datum und separate Vereinbarung erst nach persönlicher Bestätigung. Keine Quartalsbindung oder Absagegebühr allein durch diese Anfrage.',
+    quartal:'Die Aufnahme erfolgt erst nach Prüfung und Abschluss der separaten unterschriebenen Quartalsvereinbarung. CHF 160/280/360 sind die Referenz für vier angebotene Samstage; der Standardbeitrag richtet sich nach den angebotenen Doppellektionen.',
+    online:'Online ist dies eine Terminanfrage, keine Stundenbuchung. Eine Absagegebühr entsteht nicht vor einer tatsächlichen Terminvereinbarung.'
+  };
+  for (const [value,text] of Object.entries(boot.levels)) level.add(new Option(text,value));
+  for (const [value,text] of Object.entries(boot.offers)) offer.add(new Option(text,value));
+  document.getElementById('desiredDate').min = boot.today;
+  document.getElementById('versions').textContent = 'Anfrageinformationen: '+boot.infoVersion+' · Datenschutzhinweis: '+boot.privacyVersion;
+  level.addEventListener('change',()=>{const required=level.value==='sonstiges';document.getElementById('other-wrap').hidden=!required;other.disabled=!required;other.required=required;if(!required)other.value='';});
+  offer.addEventListener('change',()=>{document.getElementById('offer-note').textContent=offer.value==='probetag'?notes.probetag:offer.value.startsWith('quartal_')?notes.quartal:offer.value.startsWith('online_')?notes.online:'Deine Auswahl ist ein Interesse, keine Buchung.';});
+  // Nur technische Kennungen, nie Namen/Kontakte/Nachrichten im Browser speichern.
+  const storageKey='lc-interest-attempt-v1';
+  let attempt={requestId:boot.requestId,token:boot.token,issued:boot.issued};
+  function rememberAttempt(){try{sessionStorage.setItem(storageKey,JSON.stringify(attempt));}catch(_){/* Aktuelle Seite bleibt auch ohne Browserspeicher idempotent. */}}
+  function forgetAttempt(){try{sessionStorage.removeItem(storageKey);}catch(_){/* Kein Browserspeicher verfügbar. */}}
+  try {const previous=JSON.parse(sessionStorage.getItem(storageKey)||'null');if(previous&&previous.requestId&&previous.token&&Number.isFinite(previous.issued))attempt=previous;}catch(_){/* Kein gültiger Browserspeicher verfügbar. */}
+  rememberAttempt();
+  document.getElementById('another-request').addEventListener('click',()=>{forgetAttempt();window.location.reload();});
+  let pending=false;
+  function failed(message){pending=false;button.disabled=false;button.textContent='Unverbindliche Anfrage senden';error.textContent=message;error.hidden=false;error.focus();}
+  function response(result){
+    if(result&&result.code==='EXPIRED'&&result.saved===false&&result.retry&&result.retry.requestId===attempt.requestId&&typeof result.retry.token==='string'&&Number.isFinite(result.retry.issued)){attempt=result.retry;rememberAttempt();}
+    if(result&&result.code==='ID_CONFLICT')forgetAttempt(); // Die alte Anfrage wurde bestätigt gespeichert; Reload kann eine weitere beginnen.
+    if(!result||result.ok!==true||result.saved!==true||typeof result.inquiryId!=='string'||!result.inquiryId.startsWith('INQ-'))return failed(result&&result.message||'Das Speichern konnte nicht bestätigt werden. Bitte versuche dieselbe Anfrage nochmals.');
+    document.getElementById('success-message').textContent=result.message;
+    document.getElementById('receipt').textContent='Vorgangs-ID: '+result.inquiryId;
+    document.getElementById('form-wrap').hidden=true;document.getElementById('success').hidden=false;document.getElementById('success').focus();
+    forgetAttempt(); // Erst die bestätigte Quittung beendet den Versuch; unbestätigte Retries behalten ihre ID.
+  }
+  form.addEventListener('submit',event=>{
+    event.preventDefault();if(pending||!form.reportValidity())return;
+    if(!window.google||!google.script||!google.script.run)return failed('Die Übermittlung ist hier nicht verfügbar. Bitte öffne das echte Anfrageformular oder kontaktiere uns direkt.');
+    const data=Object.fromEntries(new FormData(form).entries());
+    data.requestId=attempt.requestId;data.token=attempt.token;data.infoVersion=boot.infoVersion;data.privacyVersion=boot.privacyVersion;
+    pending=true;button.disabled=true;button.textContent='Anfrage wird gespeichert…';error.hidden=true;
+    google.script.run.withSuccessHandler(response).withFailureHandler(()=>failed('Das Speichern konnte nicht bestätigt werden. Bitte versuche dieselbe Anfrage nochmals.')).submitInterest(data);
+  });
+</script>
+</body>
+</html>

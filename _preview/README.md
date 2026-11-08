@@ -46,3 +46,19 @@ Der Generator veröffentlicht nichts. `_preview/` und `_tests/` sind durch den b
 - Keine CI-Workflowtests im Repository vorhanden. Keine Tests auf realer Smartphone-Hardware, Safari, Firefox oder mit Screenreader; kein Import in reale Kalenderprogramme. Externer Formularversand und Speicherung ausdrücklich nicht getestet.
 
 Kein Merge nach main und keine Live-Veröffentlichung sind Teil dieses Auftrags.
+## Neuer Anfrageentwurf vom 08.11.2026
+
+Der Kalender-/Aufnahme-Stand aus PR #4 ist inzwischen separat veröffentlicht (Merge `49635cee41ffb4ea40ea2a10ec28e4fe852bf316`). Die nachfolgenden ursprünglichen Prüfnotizen dokumentieren den damaligen Vorbereitungsstand. Der neue Anfrageablauf auf diesem Arbeitsbranch ist **nicht veröffentlicht** und darf nicht allein vor dem externen Formular umgestellt werden.
+
+Zusammenpassende private Vorschau:
+
+```powershell
+node _preview/build-inquiry-preview.mjs
+node _apps-script/preview/server.cjs
+# In einem zweiten Terminal:
+node _preview/serve-preview.mjs "../private/konsolidierung-20261108/website-vorschau"
+```
+
+Danach `http://127.0.0.1:4176/vorschau.html` öffnen. Das eingebettete Formular und der Direktlink führen dort nur zum lokalen Simulator auf Port 4175. Ausschliesslich synthetische Testdaten verwenden; Speicherung und Benachrichtigungen bleiben im lokalen Prozess. `index.html` im Vorschaupaket ist dagegen bytegleich mit dem vorgesehenen Website-Code und enthält weiterhin die unveränderte echte `/exec`-URL: dort keine Testanfragen absenden. Private Vertrags-/Konzeptentwürfe sind absichtlich nicht Teil dieses Pakets oder des öffentlichen Repositorys.
+
+29 isolierte Formularprüfungen: `node --test _apps-script/tests/requests.test.cjs`. Der Betriebs-/Rücksetzplan und die noch fehlenden echten Integrationstests stehen in `_apps-script/README.md`. Vor Veröffentlichung fehlen insbesondere bestätigter Script-/Deploymentabgleich, Sicherung, autorisierter Zugriff und die Aufbewahrungsentscheidung. Standard-Downloads und bestehende Verträge wurden nicht ersetzt.
