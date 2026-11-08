@@ -1,6 +1,6 @@
 # Website-Vorschau und Konfiguration
 
-Dieses Update baut auf PR #3 (`36b76c088ca2b123729ddf108ef3b80f082e8a03`) und damit auf dem veröffentlichten PR-2-Stand auf. Flyer, Standard-PDFs und der separate Konzeptentwurf werden unverändert übernommen. `konzept.pdf` bleibt das bestehende Download-Konzept; `entwuerfe/konzept-entwurf.pdf` bleibt ein Entwurf.
+Dieses Update baut auf PR #3 (`36b76c088ca2b123729ddf108ef3b80f082e8a03`) und damit auf dem veröffentlichten PR-2-Stand auf. Flyer und Standard-PDFs werden unverändert übernommen. `konzept.pdf` bleibt das bestehende Download-Konzept. Der unfreigegebene Konzeptentwurf wurde vor der Veröffentlichung ausserhalb des Repositorys gesichert und aus dem aktuellen Dateibaum entfernt; ältere öffentliche Git-Versionen bleiben davon unberührt.
 
 ## Produktionsdateien
 

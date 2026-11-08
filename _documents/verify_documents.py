@@ -82,14 +82,9 @@ def main():
     assert read(ROOT/"konzept.pdf").count(DATA["admission"])==1
     results.append({"file":"konzept.pdf","pages":4,"all_original_text_preserved":True,"only_added_admission":True})
 
-    draft=PdfReader(ROOT/"entwuerfe"/"konzept-entwurf.pdf")
-    assert len(draft.pages)==2,len(draft.pages)
-    assert all("ENTWURF" in p.extract_text() for p in draft.pages)
-    text=read(ROOT/"entwuerfe"/"konzept-entwurf.pdf")
-    assert DATA["admission"] in text
-    assert "maximal vier Schüler:innen je Betreuungsperson" in text
-    assert "höchstens zwölf Plätze" in text
-    results.append({"file":"entwuerfe/konzept-entwurf.pdf","pages":2,"draft_mark_on_each_page":True})
+    assert not (ROOT/"entwuerfe"/"konzept-entwurf.pdf").exists(), "Unapproved draft in public output"
+    assert not (HERE/"draft_content.json").exists(), "Draft content in public repository"
+    results.append({"unapproved_concept_draft_absent_from_current_tree":True})
     print(json.dumps({"status":"passed","checks":results},ensure_ascii=False,indent=2))
 
 if __name__=="__main__":
