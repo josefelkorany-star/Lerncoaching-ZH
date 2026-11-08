@@ -1,0 +1,26 @@
+Lerncoaching ZH - offene Entscheidungen und Zugriffspunkte
+Stand: 26.10.2026. Fragen zur fachlichen Abstimmung, keine neuen Bedingungen und keine Rechtsberatung.
+
+1. Preisreferenz und Monatsabrechnung
+Die Website-Preiskarten nennen CHF 160/280/360 pro Monat, während Stundenplan und Vertrag nach tatsächlich angebotenen Samstagen rechnen. Soll die Vier-Samstage-Referenz in den Karten ausdrücklich genannt werden? Die Beträge wurden nicht geändert.
+
+2. Anmeldegebühr und Treuerabatt
+Die Vorlagen nennen CHF 12.50 Anmeldegebühr, aber nicht eindeutig pro Kind oder pro Familie. Welcher Bezug ist gewollt? Der Treuerabatt nennt CHF 145 statt CHF 160 für das 1-Kind-Paket bei vier Samstagen. Wie soll er bei einer anderen Anzahl Samstage angewandt werden? Gebühr und Rabatt fehlen bislang im HTML; keine Antwort wurde vorweggenommen.
+
+3. Eintritt, erste Periode und Tarifauswahl
+Soll die blanke Anmeldung künftig Eintrittsdatum, erstes gebuchtes Quartal und gewähltes Paket ausdrücklich dokumentieren? Wie wird die anteilige erste Rechnung bestimmt? Solche Felder und Regeln wurden im reinen Layoutauftrag nicht neu eingeführt.
+
+4. Ersttermin und Folgeanmeldung
+Die Ersttermin-Vereinbarung begründet keine Quartalsbindung; der Hauptvertrag setzt eine ausdrückliche schriftliche Quartalsanmeldung voraus. Über welchen bestehenden Schritt wird diese Folgeanmeldung eindeutig festgehalten? Es wurde kein automatischer Vertragsbeginn ergänzt.
+
+5. Kündigung, Absenzen und Ausschluss
+Sind die bestehende automatische Verlängerung, Kündigungsfristen, freiwillige Krankheitskulanz und Ausschlussregelungen fachlich weiterhin gewollt? Bei einer künftigen rechtlichen Überarbeitung sollten sie zusammen mit den Kommunikationsabläufen geprüft werden. Der Wortlaut ist hier unverändert geblieben.
+
+6. Datenschutz und externe Dienste
+Website und Vertrag beschreiben die Weitergabe an technische Dienstleister unterschiedlich. Welche konkrete Datenbearbeitung findet im Formular, Google Sheet und weiteren eingebundenen Diensten statt, und welche abgestimmte Beschreibung soll künftig gelten? Keine Datenschutz- oder Haftungsformulierung wurde ohne Prüfung geändert.
+
+7. Externes Anmeldeformular: Aufnahmegrenze noch offen
+Das öffentliche Google-Apps-Script-Formular zeigt weiterhin die Option „Primarschule (3.–6. Kl.)“. Für Konsistenz wäre „Primarschule (4.–6. Kl.)“ erforderlich. Der Apps-Script-Quellcode liegt nicht im Repository; ein Bearbeitungszugriff/Editorlink ist derzeit nicht verfügbar. Vor Änderung prüfen, ob Anzeige-Label und interner Wert getrennt sind, damit Versand, Auswertung und Speicherziel unverändert bleiben. Keine Formulardaten wurden eingegeben oder abgesendet und kein Formular-Deployment ausgelöst. Dies ist nicht als behoben zu verstehen.
+
+8. Neuer Konzeptentwurf
+Der separate zweiseitige Entwurf soll inhaltlich freigegeben werden, bevor er das bisherige Konzept ersetzt. Insbesondere Betreuungsschlüssel (maximal vier Schüler:innen je Betreuungsperson), Gesamtteam gegenüber gleichzeitig eingesetzter Besetzung sowie die beschriebenen Lern- und Kommunikationsabläufe bestätigen. Der Entwurf macht keine neuen Personal-, Ergebnis- oder Berichtszusagen.

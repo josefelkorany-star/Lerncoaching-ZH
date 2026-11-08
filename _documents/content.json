@@ -1,0 +1,68 @@
+{
+  "admission": "Aufnahme ab der 4. Primarklasse.",
+  "layout_version": "Layoutstand 26.10.2026",
+  "footer": "Lerncoaching ZH · Dörflistrasse 67, 8050 Zürich · +41 76 282 92 44 · zhlerncoaching@gmail.com · www.lerncoaching-zh.ch",
+  "regular": {
+    "version": "Version 2026 / 2.4",
+    "legal": "Rechtlicher Hinweis: Dieser Vertrag untersteht Schweizer Recht (OR). Gerichtsstand ist, soweit gesetzlich zulässig, Zürich.",
+    "parties_intro": "Dieser Vertrag wird geschlossen zwischen:",
+    "provider": "Josef El Korany, handelnd unter Lerncoaching ZH Dörflistrasse 67, 8050 Zürich | +41 76 282 92 44 zhlerncoaching@gmail.com (nachfolgend: «Lerncoaching ZH»)",
+    "subject": "Lerncoaching ZH erbringt wöchentliche, gruppenbasierte Nachhilfe- und Coaching-Leistungen samstags (09:30–11:30 Uhr) am Standort Dörflistrasse 67, 8050 Zürich.",
+    "double_lesson": "Ausschliesslich Doppellektionen (09:30–11:30 Uhr, inkl. Pause). Eine Buchung einzelner Lektionen ist ausgeschlossen.",
+    "services": [
+      "Individueller Lernplan (Diagnostik, Zielsetzung, Fortschrittskontrolle)",
+      "Fachliche Nachhilfe in vereinbarten Fächern",
+      "Soft Skills: Problemlösung, Organisation, Selbstregulation, Kommunikation",
+      "Eltern-Feedback auf Anfrage"
+    ],
+    "holidays": "Ferienregelung & Kulanz: Massgebend ist der Schulferienplan der Stadt Zürich. Schüler:innen aus Nachbargemeinden (z.B. Opfikon/Glattbrugg, Dübendorf, Uster) können um eine Woche abweichende Ferien haben. Aus Kulanz erlässt Lerncoaching ZH solchen Schüler:innen pro Ferienperiode maximal einen Samstag kostenfrei, falls dieser durch die eine Woche Abweichung in ihre Ferien fällt; dieser Samstag wird dann nicht verrechnet. Im Übrigen gilt einheitlich der Lerncoaching-ZH-Stundenplan nach Zürcher Kalender.",
+    "team": "Teambasierte Betreuung: Begleitung durch das Team Lerncoaching ZH. Bei Ausfall stehen mind. 5 Ersatzlehrpersonen (ETH, UZH, ZHAW, PH) bereit. Bei Totalausfall ohne Ersatz: Gutschrift.",
+    "term": "Der Vertrag gilt für ein Quartal (3 Monate) und verlängert sich automatisch, sofern keine schriftliche Kündigung bis spätestens zum letzten Tag des laufenden Quartals erfolgt.",
+    "termination": "Kündigung schriftlich per E-Mail (zhlerncoaching@gmail.com) oder WhatsApp (+41 76 282 92 44). Mündliche Kündigungen sind ungültig.",
+    "registration_fee": "Einmalige Anmeldungsgebühr: CHF 12.50 (auch falls bereits einmal registrierte:r Schüler:in). Diese wird bei der erstmaligen Anmeldung fällig. Wer den Vertrag nicht per Quartalsende kündigt, ist automatisch verbindlich für das nächste Quartal angemeldet und entrichtet die Anmeldungsgebühr somit nur einmal. Wer hingegen vollständig kündigt und sich später erneut anmeldet, entrichtet die Anmeldungsgebühr erneut.",
+    "trial": "Ersttermin / Probetag: Der Quartalsvertrag beginnt erst mit ausdrücklicher schriftlicher Anmeldung zum Quartal. Der Ersttermin (CHF 20.–) wird separat geregelt und begründet keine Quartalsbindung.",
+    "entry": "Eintritt jederzeit möglich; der Eintrittsmonat wird anteilsmässig (pro rata temporis) berechnet.",
+    "pricing": "Der Monatsbeitrag richtet sich nach der Anzahl der im jeweiligen Monat tatsächlich angebotenen regulären Nachhilfesamstage (gemäss Ferienplan der Stadt Zürich). Preisreferenz pro Doppellektion:",
+    "loyalty": "Treuerabatt: Wer zwei Quartale ununterbrochen dabei bleibt, profitiert ab dem dritten Quartal von einem Treuerabatt. Das 1-Kind-Paket kostet dann nur noch CHF 145.– statt CHF 160.– pro Monat (bei vier regulären Samstagen). Der Rabatt entfällt bei einer Unterbrechung der Anmeldung.",
+    "payment": "Die Zahlung erfolgt monatlich im Voraus, spätestens bis zum 1. des Monats, wahlweise per TWINT, E-Banking oder bar. Bei Barzahlung stellt Lerncoaching ZH eine Quittung aus. Massgebend ist der rechtzeitige Zahlungseingang bzw. bei Barzahlung die quittierte Zahlung. Mit der Unterzeichnung anerkennt die unterzeichnende Partei die vereinbarten Zahlungsforderungen als geschuldet.",
+    "late_intro": "Bei ausbleibender Zahlung gilt folgendes Verfahren:",
+    "late_steps": [
+      "1. Zahlungserinnerung nach ca. 7 Tagen Verzug — kostenlos.",
+      "2. 1. Mahnung nach 10 Tagen Verzug — Mahngebühr CHF 20.–.",
+      "3. 2. Mahnung nach weiteren 10 Tagen — zusätzliche Mahngebühr CHF 30.–, Androhung der Unterrichts-Suspendierung sowie der Betreibung.",
+      "4. Danach Einleitung der Betreibung über das Betreibungsamt."
+    ],
+    "late_end": "Die Mahngebühren dienen ausschliesslich der Deckung des administrativen Aufwands. Es wird kein Verzugszins erhoben.",
+    "absence": "Wie bei einem regulären Kurs werden Plätze verbindlich reserviert und Lehrpersonen im Voraus eingeplant. Bei Abwesenheit — insbesondere wegen Krankheit, Ferien, Sport, privaten Terminen oder sonstigen Gründen — besteht grundsätzlich kein Anspruch auf Rückerstattung, Gutschrift oder Nachholunterricht. Der Monatsbeitrag bleibt vollumfänglich geschuldet.",
+    "illness": "Lerncoaching ZH kann bei krankheitsbedingter Abwesenheit im Einzelfall und nach vorgängiger oder zeitnaher Absprache freiwillig eine Kulanzlösung anbieten. Daraus entsteht kein Rechtsanspruch und keine Präjudizwirkung.",
+    "cancellation": "Ausfall durch Lerncoaching ZH: Fällt eine Doppellektion aus Gründen aus, die Lerncoaching ZH zu vertreten hat, wird sie nachgeholt oder anteilsmässig gutgeschrieben. Bei höherer Gewalt: faire Ersatzlösung.",
+    "conduct": "Von allen Teilnehmenden wird ein respektvoller, konstruktiver Umgang erwartet. Lerncoaching ZH kann Schüler:innen bei wiederholtem störendem Verhalten, respektlosem Umgang, Gefährdung anderer oder grober Missachtung der Regeln nach vorgängiger Verwarnung vom Unterricht ausschliessen. Bereits fällige Beiträge bleiben geschuldet. In schweren Fällen ist ein sofortiger Ausschluss möglich.",
+    "liability": "Lerncoaching ZH schuldet sorgfältige Unterstützung, jedoch keinen bestimmten schulischen Erfolg, keine Noten und kein Prüfungsergebnis. Bemühenspflicht, keine Erfolgspflicht. Haftung für leichte Fahrlässigkeit, soweit zulässig, auf den bezahlten Monatsbeitrag beschränkt.",
+    "supervision": "Die Aufsichtspflicht beschränkt sich auf die vereinbarte Unterrichtszeit am Unterrichtsort. Für den Hin- und Rückweg sowie Aufenthalte vor/nach der Unterrichtszeit sind die Erziehungsberechtigten verantwortlich.",
+    "privacy": "Personendaten (inkl. Wohnadresse) werden ausschliesslich zur Organisation, Durchführung und Abrechnung verwendet. Zur digitalen Abwicklung werden Dienste wie Google Forms und Google Sheets genutzt. Keine Weitergabe an Dritte ohne Einwilligung, ausser zur technischen Bereitstellung erforderlich. Auskunft/Löschung: zhlerncoaching@gmail.com (DSG SR 235.1).",
+    "online": "Online-Nachhilfe ist nicht Bestandteil dieses Samstagsvertrags und wird separat vereinbart und abgerechnet. Keine Quartalsbindung; Preise, Termine und Bedingungen individuell per WhatsApp/E-Mail. Massgebend sind die auf der Website publizierten aktuellen Konditionen.",
+    "law": "Einzelne nichtige Bestimmungen berühren die übrigen nicht. Schweizer Recht. Gerichtsstand: Zürich (soweit gesetzlich zulässig).",
+    "signature": "Mit der Unterzeichnung bestätigen beide Parteien, diesen Vertrag vollständig gelesen und akzeptiert zu haben. Die unterzeichnende Partei erkennt die vereinbarten Zahlungsforderungen als geschuldet an.",
+    "source_footer": "Josef El Korany, handelnd unter Lerncoaching ZH · Anmeldevertrag Version 2026/2.4 · Gerichtsstand Zürich"
+  },
+  "trial": {
+    "version": "Version 2026",
+    "intro": "Diese Vereinbarung regelt verbindlich die Teilnahme an der Probedoppellektion von Lerncoaching ZH sowie die damit verbundenen Zahlungspflichten. Mit Unterzeichnung erkennen beide Parteien die nachfolgenden Bedingungen als rechtsverbindlich an (Schweizer Recht, OR).",
+    "provider": "Josef El Korany, handelnd unter Lerncoaching ZH · zhlerncoaching@gmail.com",
+    "subject": "Lerncoaching ZH erbringt eine einmalige Probedoppellektion am Standort Dörflistrasse 67, 8050 Zürich, samstags von 09:30–11:30 Uhr (inkl. Zwischenpause).",
+    "fee_label": "CHF 20.– · einmalige Gebühr für die Probedoppellektion",
+    "fee": "Die Gebühr von CHF 20.– ist am Tag des Ersttermins in bar oder per TWINT zu entrichten. Die Zahlungspflicht besteht unabhängig davon, ob anschliessend ein Quartal gebucht wird.",
+    "deadline": "Verbindliche Stornierungsfrist: Donnerstag 18:00 Uhr Eine kostenlose Absage ist ausschliesslich bis Donnerstag 18:00 Uhr vor dem gebuchten Samstag schriftlich per E-Mail (zhlerncoaching@gmail.com) oder WhatsApp (+41 76 282 92 44) möglich. Nach Ablauf dieser Frist ist die Gebühr von CHF 20.– in jedem Fall geschuldet.",
+    "absence_intro": "Die Zahlungspflicht gilt ausdrücklich auch bei:",
+    "absence_reasons": [
+      "Krankheit oder sonstiger Verhinderung des Kindes",
+      "Vergessen oder kurzfristiger Planänderung",
+      "Abwesenheit ohne Absage (No-Show)"
+    ],
+    "explanation": "Begründung: Mit der Anmeldung werden Lehrpersonen verbindlich eingeplant, Gruppenaufteilungen vorgenommen und Ressourcen reserviert. Kurzfristige Ausfälle verursachen Planungs-, Organisations- und Opportunitätskosten (Art. 97 OR). Bei Nichtbezahlung behält sich Lerncoaching ZH die Geltendmachung auf dem Betreibungsweg vor (SchKG).",
+    "followup": "Die Probedoppellektion begründet kein Recht auf Folgebuchungen. Eine quartalsweise Anmeldung erfolgt separat und untersteht dem regulären Anmeldevertrag.",
+    "law": "Schweizer Recht. Gerichtsstand: Zürich (soweit gesetzlich zulässig).",
+    "signature": "Mit Unterzeichnung bestätigen beide Parteien, diese Vereinbarung gelesen und akzeptiert zu haben.",
+    "source_footer": "Josef El Korany, handelnd unter Lerncoaching ZH · Ersttermin-Vereinbarung Version 2026 · Gerichtsstand Zürich"
+  }
+}
