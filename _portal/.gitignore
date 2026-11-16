@@ -1,0 +1,9 @@
+node_modules/
+.env
+.env.*
+*.local.json
+*.log
+test-artifacts/
+supabase/.temp/
+supabase/.branches/
+supabase/.env

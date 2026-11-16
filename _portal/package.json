@@ -1,0 +1,10 @@
+{
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@electric-sql/pglite": "0.5.16",
+    "@supabase/supabase-js": "2.119.0",
+    "linkedom": "0.18.15",
+    "pg": "8.23.1"
+  }
+}

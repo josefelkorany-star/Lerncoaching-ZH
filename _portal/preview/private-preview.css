@@ -1,0 +1,4 @@
+.private-preview{margin:0;padding:1rem clamp(1rem,4vw,3rem);background:#e7f6ee;color:#173d38;border-bottom:1px solid #a3ccbb;font-family:'DM Sans',sans-serif}
+.private-preview p{margin:.35rem 0;font-size:.86rem;line-height:1.5}
+.private-preview label{display:block;font-weight:700;margin:.75rem 0 .25rem}
+.private-preview select{box-sizing:border-box;width:100%;max-width:30rem;padding:.65rem;border:1px solid #779f90;border-radius:.5rem;background:white;color:#173d38;font:inherit}

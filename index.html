@@ -19,6 +19,7 @@
   .nav-logo span{color:var(--teal);}
   .nav-links{display:flex;gap:2rem;}
   .nav-links[hidden],.nav-toggle[hidden]{display:none;}
+  .nav-links a[data-portal-link][hidden]{display:none;}
   .nav-links a{color:var(--muted);text-decoration:none;font-size:0.9rem;font-weight:500;transition:color .2s;}
   .nav-links a:hover{color:var(--teal);}
   .nav-cta{background:var(--teal);color:#fff;padding:.5rem 1.3rem;border-radius:5px;text-decoration:none;font-weight:600;font-size:.9rem;transition:background .2s;white-space:nowrap;flex-shrink:0;}
@@ -198,6 +199,7 @@
     <a href="#faq">FAQ</a>
     <a href="#preise">Preise</a>
     <a href="#kontakt">Kontakt</a>
+    <a href="portal.html" data-portal-link hidden>Portal</a>
   </div>
   <a href="#kontakt" class="nav-cta">Jetzt anmelden</a>
 </nav>
@@ -1082,6 +1084,7 @@ document.querySelectorAll('[data-modal-open]').forEach(function(opener){
 
 <script src="course-data.js"></script>
 <script src="site-config.js"></script>
+<script src="portal-link.js" defer></script>
 <script src="calendar.js"></script>
 </body>
 
