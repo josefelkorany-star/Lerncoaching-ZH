@@ -31,14 +31,21 @@
   .schedule-rules > div{min-width:0;overflow-wrap:anywhere;}
   .form-fallback{margin:0;padding:1rem;font-size:.9rem;line-height:1.6;}
   .form-fallback a{color:var(--teal-mid);text-underline-offset:.15em;}
+  .download-link{max-width:100%;min-width:0;min-height:44px;overflow-wrap:anywhere;white-space:normal;}
+  .first-term-copy{min-width:0;}
+  @media(max-width:480px){.quarter-panel{padding:1.2rem!important;}.first-term-card{flex-direction:column;}}
   .modal{position:fixed;inset:0;width:100%;max-width:none;height:100%;max-height:none;margin:0;border:0;background:transparent;color:var(--text);overflow-y:auto;overscroll-behavior:contain;overflow-wrap:anywhere;padding:2rem 1rem;}
   .modal::backdrop{background:rgba(11,34,68,.6);}
 
-  .hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:8rem 2rem 4rem;background:var(--bg2);position:relative;overflow:hidden;}
+  .hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:8rem 2rem 4rem;background:var(--bg2);position:relative;}
   .hero::after{content:'';position:absolute;top:0;right:0;width:42%;height:100%;background:linear-gradient(135deg,#dff4ec 0%,#b8e8d4 100%);clip-path:polygon(18% 0,100% 0,100% 100%,0% 100%);z-index:0;}
-  .hero-content{position:relative;z-index:1;}
+  .hero-content{position:relative;z-index:1;display:grid;grid-template-columns:minmax(0,1.12fr) minmax(0,1fr);align-items:center;gap:1.5rem;width:100%;}
+  .hero-copy,.hero-visual{min-width:0;}
+  .hero-visual{margin:0;}
+  .hero-visual img{display:block;width:100%;height:auto;object-fit:contain;}
+  .hero-copy .btn-group>a{max-width:100%;overflow-wrap:anywhere;}
   .hero-eyebrow{font-size:.82rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--teal);margin-bottom:1rem;}
-  .hero h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(3.8rem,9vw,8rem);line-height:.92;margin-bottom:1.5rem;color:var(--navy);}
+  .hero h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(3.8rem,7.8vw,7.1rem);line-height:.92;margin-bottom:1.5rem;color:var(--navy);}
   .hero h1 span{color:var(--teal);}
   .hero-sub{font-size:1.1rem;color:var(--muted);max-width:520px;margin-bottom:2.5rem;font-weight:300;line-height:1.8;}
   .hero-sub strong{color:var(--navy);font-weight:600;}
@@ -90,7 +97,11 @@
   .phase-tag{font-size:.75rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;margin-bottom:.8rem;}
   .phase-a .phase-tag{color:var(--teal);}
   .phase-b .phase-tag{color:var(--navy);}
-  .phase-c .phase-tag{color:#E07B39;}
+  .phase-c .phase-tag{color:#995020;}
+  .parents-note{margin-top:1.5rem;padding:1.5rem;background:#f0f8f4;border:1px solid #c6e5d8;border-radius:8px;display:grid;grid-template-columns:minmax(0,.7fr) minmax(0,1.3fr);gap:1.5rem;}
+  .parents-note h3{font-family:'Bebas Neue',sans-serif;font-size:2rem;line-height:1.1;}
+  .parents-note p{font-size:.93rem;line-height:1.75;color:var(--muted);}
+  @media(max-width:768px){.parents-note{grid-template-columns:minmax(0,1fr);gap:.8rem;}}
   .phase-title{font-family:'Bebas Neue',sans-serif;font-size:1.8rem;margin-bottom:.5rem;color:var(--navy);}
   .phase-subtitle{font-size:.82rem;color:var(--muted);margin-bottom:1rem;}
   .phase-items{list-style:none;display:flex;flex-direction:column;gap:.5rem;}
@@ -159,6 +170,10 @@
     .versprechen-grid,.kontakt-inner,.poster-wrap{grid-template-columns:1fr;}
     .schedule-rules{grid-template-columns:minmax(0,1fr);}
     .hero::after{display:none;}
+    .hero-content{grid-template-columns:minmax(0,1fr);}
+    .hero-visual{background:linear-gradient(135deg,#dff4ec,#b8e8d4);border-radius:12px;padding:1rem;}
+    .hero-visual img{max-width:400px;margin:auto;}
+    .hero h1{font-size:clamp(3.8rem,12vw,5.7rem);}
   }
   @media(max-width:480px){
     .nav-links{grid-template-columns:repeat(2,minmax(0,1fr));}
@@ -204,6 +219,7 @@
 
 <section class="hero">
   <div class="container hero-content">
+    <div class="hero-copy">
     <p class="hero-eyebrow">Zürich · Mindset-Coaching & Nachhilfe</p>
     <h1>Keinen Bock<br/>auf <span>Lernen?</span></h1>
     <p class="hero-sub">Mathe macht keinen Sinn? Lehrer haben keinen Plan? ChatGPT checkt's auch nicht?<br/><strong>Dann bist du bei uns richtig.</strong> Wir sind engagierte Student:innen — und wir waren auch mal dort.</p>
@@ -221,6 +237,8 @@
       <span class="badge">Samstags in Zürich</span>
       <span class="badge" style="color:var(--teal);font-weight:600;">Erstes Mal CHF 20.–</span>
     </div>
+    </div>
+    <figure class="hero-visual" aria-hidden="true"><img src="lerncoaching-hero.webp" width="1000" height="1000" alt="" fetchpriority="high"/></figure>
   </div>
 </section>
 
@@ -365,7 +383,7 @@
           <span style="background:var(--teal-light);border:1px solid #9FE1CB;border-radius:30px;padding:.45rem 1.1rem;font-size:.875rem;font-weight:500;color:var(--teal-mid)">Sekundarschule</span>
           <span style="background:var(--teal-light);border:1px solid #9FE1CB;border-radius:30px;padding:.45rem 1.1rem;font-size:.875rem;font-weight:500;color:var(--teal-mid)">Gymnasium</span>
           <span style="background:var(--teal-light);border:1px solid #9FE1CB;border-radius:30px;padding:.45rem 1.1rem;font-size:.875rem;font-weight:500;color:var(--teal-mid)">Berufsschule</span>
-          <span style="background:var(--teal-light);border:1px solid #9FE1CB;border-radius:30px;padding:.45rem 1.1rem;font-size:.875rem;font-weight:500;color:var(--teal-mid)">BMS & HMS</span>
+          <span style="background:var(--teal-light);border:1px solid #9FE1CB;border-radius:30px;padding:.45rem 1.1rem;font-size:.875rem;font-weight:500;color:var(--teal-mid)">BMS, HMS und FMS</span>
         </div>
       </div>
     </div>
@@ -394,27 +412,32 @@
   <div class="container">
     <p class="section-label">Der Samstags-Zyklus</p>
     <h2 class="section-title">Jeder Samstag hat ein Ziel</h2>
-    <p class="section-desc">Dein Quartal folgt einer klaren, strategischen Route — kein blinder Aktionismus.</p>
+    <p class="section-desc">Beim Einstieg machen wir eine ausführliche Standortbestimmung. Jeden Samstag schauen wir kurz zurück: Was stand in der Schule an, wie liefen Prüfungen, was braucht heute Aufmerksamkeit?</p>
     <div class="zyklus-phases">
       <div class="phase-card phase-a">
-        <div class="phase-tag">Phase A · Kick-off</div>
+        <div class="phase-tag">Phase A · Einstieg</div>
         <div class="phase-title">Lernstand- &amp; Strategie-Check</div>
-        <div class="phase-subtitle">Erster Samstag im Quartal</div>
-        <ul class="phase-items"><li>Stärken / Schwächen-Analyse</li><li>Zielsetzung bis nächste Ferien</li><li>Lernplan & Soft-Skill-Auswahl</li></ul>
+        <div class="phase-subtitle">Beim Einstieg bzw. am ersten besuchten Samstag des Quartals</div>
+        <ul class="phase-items"><li>Stärken und Lücken erkennen</li><li>Zielsetzung</li><li>Individueller Lernplan (bei Bedarf: einen passenden Soft Skill auswählen)</li></ul>
       </div>
       <div class="phase-card phase-b">
         <div class="phase-tag">Phase B · Training</div>
         <div class="phase-title">Integration & Fokus</div>
         <div class="phase-subtitle">Reguläre Samstage</div>
-        <ul class="phase-items"><li>Schulische Herausforderungen bearbeiten</li><li>Soft Skills am Fachstoff üben</li><li>Verstehen vor Erledigen</li></ul>
+        <ul class="phase-items"><li>Kurz zurückblicken: Was stand in der Schule an, wie liefen Prüfungen, was braucht heute Aufmerksamkeit?</li><li>Aktuelle Schulaufgaben oder Prüfungsthemen bearbeiten</li><li>Verstehen vor Erledigen</li><li>Wenn es hilft: am Schulstoff üben, eine Aufgabe zu planen oder den eigenen Lösungsweg zu erklären.</li></ul>
       </div>
       <div class="phase-card phase-c">
-        <div class="phase-tag">Phase C · Pre-Ferien</div>
+        <div class="phase-tag">Phase C · Rückblick</div>
         <div class="phase-title">Reflexion & Abschluss</div>
-        <div class="phase-subtitle">Letzter Samstag vor den Ferien</div>
-        <ul class="phase-items"><li>Soll / Ist-Vergleich mit Phase-A-Zielen</li><li>Diagnose-Check: Schwächen abgebaut?</li><li>Fokus auf letzte Prüfungen</li></ul>
+        <div class="phase-subtitle">Letzter Kurssamstag vor den Ferien</div>
+        <ul class="phase-items"><li>Vereinbarte Ziele und Fortschritte vergleichen</li><li>Letzte Prüfungen besprechen</li><li>Den nächsten Schritt vereinbaren</li></ul>
       </div>
     </div>
+    <p style="margin-top:1rem;color:var(--muted);font-size:.9rem;">Ob wir zusätzlich eine Lernstrategie üben, hängt von Fach, Alter und Bedarf ab. Es gibt dafür keine starre Altersgrenze.</p>
+    <aside class="parents-note" aria-labelledby="parents-title">
+      <div><p class="section-label">Zusammenarbeit mit Eltern</p><h3 id="parents-title">Welche Noten helfen uns?</h3></div>
+      <p>Bitte teilen Sie der zuständigen Betreuungsperson die zuletzt verfügbaren Zeugnisnoten in den begleiteten Fächern von sich aus mit: beim Eintritt und danach am ersten besuchten Kurssamstag jedes weiteren Quartals. Halten Sie neue Prüfungsnoten fest und nennen Sie uns den aktuellen Stand auf Anfrage nach bestem Wissen korrekt. Liegt noch keine Note vor, genügt ein Hinweis. Eine persönliche Mitteilung reicht; eine Zeugniskopie ist nicht nötig. Volljährige Teilnehmende geben selbst Auskunft. Schriftlich nutzen wir einen vereinbarten Kanal im Einzelkontakt; WhatsApp ist keine Voraussetzung.</p>
+    </aside>
   </div>
 </section>
 
@@ -454,7 +477,7 @@
       <div class="versprechen-text">
         <h2>Beziehung<br/>vor <span>Inhalt.</span></h2>
         <p>Wir sind Mentoren, keine Aufgabenhelfer. Familiäre Atmosphäre, Augenhöhe — aber gleichzeitig konsequent fordernd.</p>
-        <p style="margin-top:1rem;">Wir nutzen modernste KI-Evaluation, um Lernfortschritte objektiv zu messen und Übungen perfekt auf dich zuzuschneiden.</p>
+        <p style="margin-top:1rem;">Wir besprechen Aufgaben und Prüfungsergebnisse und passen den Lernplan daran an.</p>
       </div>
       <div class="versprechen-points">
         <div class="vp"><div class="vp-icon">❤️</div><div class="vp-text"><strong>Beziehung vor Inhalt</strong><span>Ein Schüler, der sich sicher fühlt, lernt besser.</span></div></div>
@@ -652,28 +675,28 @@
       <p style="font-size:.9rem;color:#5A3A00;line-height:1.7;"><strong>Immer Doppellektion — keine Einzellektion möglich.</strong> Der Unterricht findet ausschliesslich als Doppellektion statt (09:30–11:30 Uhr, mit Pause). Eine Buchung einzelner Lektionen ist nicht möglich.</p>
     </div>
 
-    <div style="background:var(--bg2);border:1.5px solid var(--border);border-radius:10px;padding:1.5rem 2rem;margin-top:1.5rem;margin-bottom:.5rem;">
+    <div class="quarter-panel" style="background:var(--bg2);border:1.5px solid var(--border);border-radius:10px;padding:1.5rem 2rem;margin-top:1.5rem;margin-bottom:.5rem;">
       <p style="font-weight:700;color:var(--navy);font-size:.95rem;margin-bottom:1rem;">📅 Quartalseinteilung</p>
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1rem;margin-bottom:1.2rem;">
         <div style="background:var(--teal-light);border-radius:8px;padding:.9rem 1rem;text-align:center;">
           <p style="font-weight:700;color:var(--teal-mid);font-size:.85rem;">Q1</p>
           <p style="font-size:.9rem;color:var(--navy);font-weight:600;">August – Oktober</p>
-          <p style="font-size:.75rem;color:var(--muted);margin-top:.2rem;">Abmeldung bis 31. Oktober</p>
+          <p style="font-size:.75rem;color:var(--muted);margin-top:.2rem;">Kostenlose Kündigung per Quartalsende: Eingang bis 31. Oktober</p>
         </div>
         <div style="background:var(--teal-light);border-radius:8px;padding:.9rem 1rem;text-align:center;">
           <p style="font-weight:700;color:var(--teal-mid);font-size:.85rem;">Q2</p>
           <p style="font-size:.9rem;color:var(--navy);font-weight:600;">November – Januar</p>
-          <p style="font-size:.75rem;color:var(--muted);margin-top:.2rem;">Abmeldung bis 31. Januar</p>
+          <p style="font-size:.75rem;color:var(--muted);margin-top:.2rem;">Kostenlose Kündigung per Quartalsende: Eingang bis 31. Januar</p>
         </div>
         <div style="background:var(--teal-light);border-radius:8px;padding:.9rem 1rem;text-align:center;">
           <p style="font-weight:700;color:var(--teal-mid);font-size:.85rem;">Q3</p>
           <p style="font-size:.9rem;color:var(--navy);font-weight:600;">Februar – April</p>
-          <p style="font-size:.75rem;color:var(--muted);margin-top:.2rem;">Abmeldung bis 30. April</p>
+          <p style="font-size:.75rem;color:var(--muted);margin-top:.2rem;">Kostenlose Kündigung per Quartalsende: Eingang bis 30. April</p>
         </div>
         <div style="background:var(--teal-light);border-radius:8px;padding:.9rem 1rem;text-align:center;">
           <p style="font-weight:700;color:var(--teal-mid);font-size:.85rem;">Q4</p>
           <p style="font-size:.9rem;color:var(--navy);font-weight:600;">Mai – Juli</p>
-          <p style="font-size:.75rem;color:var(--muted);margin-top:.2rem;">Abmeldung bis 31. Juli</p>
+          <p style="font-size:.75rem;color:var(--muted);margin-top:.2rem;">Kostenlose Kündigung per Quartalsende: Eingang bis 31. Juli</p>
         </div>
       </div>
       <div style="display:flex;flex-direction:column;gap:.6rem;">
@@ -687,13 +710,13 @@
         </div>
 
         <!-- Probelektion Stornierungsregel -->
-        <div style="display:flex;gap:.8rem;align-items:flex-start;margin-top:.4rem;background:#FFF3CD;border-left:3px solid #E07B39;border-radius:0 8px 8px 0;padding:.9rem 1.1rem;">
+        <div class="first-term-card" style="display:flex;gap:.8rem;align-items:flex-start;margin-top:.4rem;background:#FFF3CD;border-left:3px solid #E07B39;border-radius:0 8px 8px 0;padding:.9rem 1.1rem;">
           <span style="font-size:1rem;flex-shrink:0;">⚠️</span>
-          <div style="flex:1;">
+          <div class="first-term-copy" style="flex:1;">
             <p style="font-size:.875rem;font-weight:700;color:var(--navy);margin-bottom:.35rem;">Stornierung Ersttermins (CHF 20.–)</p>
             <p style="font-size:.85rem;color:var(--muted);line-height:1.7;">Eine kostenlose Absage ist ausschliesslich bis <strong style="color:var(--navy);">Donnerstag 18:00 Uhr</strong> vor dem gebuchten Samstag möglich. Wer sich nicht fristgerecht abmeldet oder krankheitsbedingt ausfällt, schuldet die vollen CHF 20.– — unabhängig vom Grund. Hintergrund: Lehrpersonen werden fix eingeplant, Gruppen aufgeteilt und Ressourcen reserviert. Kurzfristige Ausfälle verursachen Planungs-, Organisations- und Opportunitätskosten, die mit einem Team von 4 Lehrpersonen nicht einfach aufgefangen werden können.</p>
             <div style="margin-top:.9rem;">
-              <a href="vertrag_ersttermin.pdf" download
+              <a class="download-link" href="vertrag_ersttermin.pdf" download
                  style="display:inline-flex;align-items:center;gap:.5rem;background:var(--navy);color:#fff;padding:.6rem 1.2rem;border-radius:6px;text-decoration:none;font-weight:600;font-size:.82rem;transition:background .2s;"
                  onmouseover="this.style.background='#1a3a6e'" onmouseout="this.style.background='#0B2244'">
                 ⬇ Ersttermin-Vereinbarung herunterladen
@@ -771,7 +794,7 @@
           2. Lade es auf GitHub ins gleiche Repository wie index.html hoch
           3. Der Download-Button funktioniert dann automatisch
         -->
-        <a href="konzept.pdf" download
+        <a class="download-link" href="konzept.pdf" download
            style="display:inline-flex;align-items:center;gap:.5rem;background:var(--teal);color:#fff;padding:.7rem 1.3rem;border-radius:6px;text-decoration:none;font-weight:600;font-size:.875rem;width:fit-content;transition:background .2s;"
            onmouseover="this.style.background='#0F6E56'" onmouseout="this.style.background='#1D9E75'">
           ⬇ Konzept herunterladen
@@ -791,7 +814,7 @@
           2. Lade es auf GitHub ins gleiche Repository wie index.html hoch
           3. Der Download-Button funktioniert dann automatisch
         -->
-        <a href="vertrag.pdf" download
+        <a class="download-link" href="vertrag.pdf" download
            style="display:inline-flex;align-items:center;gap:.5rem;background:var(--navy);color:#fff;padding:.7rem 1.3rem;border-radius:6px;text-decoration:none;font-weight:600;font-size:.875rem;width:fit-content;transition:background .2s;"
            onmouseover="this.style.background='#1a3a6e'" onmouseout="this.style.background='#0B2244'">
           ⬇ Vertrag herunterladen
@@ -813,7 +836,7 @@
         <summary style="padding:1.1rem 1.4rem;font-weight:600;font-size:.95rem;color:var(--navy);cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;">
           Für welche Schulstufen ist Lerncoaching ZH geeignet? <span class="faq-icon"></span>
         </summary>
-        <p style="padding:.2rem 1.4rem 1.1rem;font-size:.9rem;color:var(--muted);line-height:1.75;">Wir begleiten Schüler:innen ab der 4. Primarklasse, Sekundarschüler:innen, Gymnasiast:innen, Lernende in der Berufslehre sowie BMS- und HMS-Studierende. Bei Fragen zu einer spezifischen Stufe einfach via WhatsApp melden.</p>
+        <p style="padding:.2rem 1.4rem 1.1rem;font-size:.9rem;color:var(--muted);line-height:1.75;">Wir begleiten Schüler:innen ab der 4. Primarklasse, Sekundarschüler:innen, Gymnasiast:innen, Lernende in der Berufslehre sowie Lernende an BMS, HMS und FMS. Bei Fragen zu einer spezifischen Stufe einfach via WhatsApp melden.</p>
       </details>
 
       <details style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;overflow:hidden;">
@@ -848,7 +871,7 @@
         <summary style="padding:1.1rem 1.4rem;font-weight:600;font-size:.95rem;color:var(--navy);cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;">
           Wie läuft der erste Samstag ab? <span class="faq-icon"></span>
         </summary>
-        <p style="padding:.2rem 1.4rem 1.1rem;font-size:.9rem;color:var(--muted);line-height:1.75;">Der erste Samstag ist unser Kick-off: Wir machen einen Lernstand- &amp; Strategie-Check, klären Stärken und Lücken, setzen gemeinsam Ziele und erstellen daraus einen individuellen Lernplan. Kein Frontalunterricht — wir hören erst zu.</p>
+        <p style="padding:.2rem 1.4rem 1.1rem;font-size:.9rem;color:var(--muted);line-height:1.75;">Beim Einstieg machen wir eine ausführliche Standortbestimmung: Wir erkennen Stärken und Lücken, setzen Ziele und erstellen einen individuellen Lernplan. Bei Bedarf wählen wir eine passende Lernstrategie aus. Am ersten besuchten Samstag eines weiteren Quartals überprüfen wir Ziele und Plan. Jeden Samstag folgt nach einem kurzen Rückblick die Arbeit an aktuellen Schulaufgaben oder Prüfungsthemen. Vor den Ferien vergleichen wir Ziele und Fortschritte, besprechen letzte Prüfungen und vereinbaren den nächsten Schritt.</p>
       </details>
 
       <details style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;overflow:hidden;">
