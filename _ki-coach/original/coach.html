@@ -1,0 +1,1031 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#0B2244">
+<title>KI-Coach – Lerncoaching ZH</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{--navy:#0B2244;--teal:#1D9E75;--teal-mid:#0F6E56;--teal-light:#E1F5EE;--bg:#F5F7FA;--bg2:#FFFFFF;--border:rgba(11,34,68,0.1);--text:#0B2244;--muted:#5A6F8A;--rot:#B42318;--rot-bg:#FEF3F2;--gelb-bg:#FFF8E6;--gelb:#8A5A00;--vh:1vh;}
+  *{margin:0;padding:0;-webkit-box-sizing:border-box;box-sizing:border-box;}
+  [hidden]{display:none !important;}
+  html,body{height:100%;}
+  body{background:var(--bg);color:var(--text);font-family:'DM Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased;-webkit-text-size-adjust:100%;text-size-adjust:100%;-webkit-tap-highlight-color:rgba(29,158,117,0.15);}
+  button,input,textarea,select{font:inherit;color:inherit;-webkit-appearance:none;-moz-appearance:none;appearance:none;border-radius:0;}
+  button{cursor:pointer;background:none;border:0;}
+  input[type="checkbox"],input[type="radio"]{-webkit-appearance:auto;-moz-appearance:auto;appearance:auto;}
+  a{color:var(--teal-mid);}
+  .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;}
+  :focus{outline:none;}
+  :focus-visible{outline:3px solid var(--teal);outline-offset:2px;}
+  input:focus,textarea:focus{border-color:var(--teal) !important;-webkit-box-shadow:0 0 0 3px rgba(29,158,117,0.18);box-shadow:0 0 0 3px rgba(29,158,117,0.18);}
+
+  /* Grundbausteine */
+  .btn{display:-webkit-inline-box;display:-webkit-inline-flex;display:inline-flex;-webkit-box-align:center;-webkit-align-items:center;align-items:center;-webkit-box-pack:center;-webkit-justify-content:center;justify-content:center;min-height:46px;padding:.6rem 1.2rem;border-radius:8px;font-weight:600;font-size:.95rem;text-decoration:none;-webkit-transition:background .2s,color .2s;transition:background .2s,color .2s;}
+  .btn-primary{background:var(--teal);color:#fff;}
+  .btn-primary:hover{background:var(--teal-mid);}
+  .btn-primary[disabled]{background:#9CCFBE;cursor:default;}
+  .btn-ghost{background:#fff;color:var(--navy);border:1px solid var(--border);}
+  .btn-ghost:hover{border-color:var(--teal);color:var(--teal-mid);}
+  .btn-block{display:-webkit-box;display:-webkit-flex;display:flex;width:100%;}
+  .link{color:var(--teal-mid);font-weight:600;font-size:.88rem;text-decoration:underline;text-underline-offset:2px;padding:.2rem 0;}
+  .icon-btn{display:-webkit-inline-box;display:-webkit-inline-flex;display:inline-flex;-webkit-box-align:center;-webkit-align-items:center;align-items:center;-webkit-box-pack:center;-webkit-justify-content:center;justify-content:center;width:44px;height:44px;border-radius:10px;color:var(--navy);-webkit-flex-shrink:0;flex-shrink:0;}
+  .icon-btn:hover{background:var(--teal-light);color:var(--teal-mid);}
+  .icon-btn svg{width:22px;height:22px;}
+  .brand{display:-webkit-inline-box;display:-webkit-inline-flex;display:inline-flex;-webkit-box-align:center;-webkit-align-items:center;align-items:center;text-decoration:none;}
+  .brand img{display:block;height:34px;width:auto;}
+  .brand-text{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;letter-spacing:.06em;color:var(--navy);}
+  .brand-text b{color:var(--teal);font-weight:400;}
+  .pill{display:inline-block;background:var(--teal-light);color:var(--teal-mid);font-weight:700;font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;padding:.25rem .6rem;border-radius:99px;margin-left:.7rem;white-space:nowrap;}
+
+  /* Anmeldung */
+  .login{min-height:100%;display:-webkit-box;display:-webkit-flex;display:flex;-webkit-box-align:center;-webkit-align-items:center;align-items:center;-webkit-box-pack:center;-webkit-justify-content:center;justify-content:center;padding:2rem 1rem;background:var(--bg2);position:relative;overflow:hidden;}
+  .login::after{content:'';position:absolute;top:0;right:0;width:42%;height:100%;background:-webkit-linear-gradient(315deg,#dff4ec 0%,#b8e8d4 100%);background:linear-gradient(135deg,#dff4ec 0%,#b8e8d4 100%);-webkit-clip-path:polygon(18% 0,100% 0,100% 100%,0% 100%);clip-path:polygon(18% 0,100% 0,100% 100%,0% 100%);z-index:0;}
+  .login-card{position:relative;z-index:1;width:100%;max-width:440px;background:#fff;border:1px solid var(--border);border-radius:16px;padding:2rem 1.6rem;-webkit-box-shadow:0 20px 50px rgba(11,34,68,0.10);box-shadow:0 20px 50px rgba(11,34,68,0.10);}
+  .login-card .brand img{height:52px;}
+  .login h1{font-family:'Bebas Neue',sans-serif;font-weight:400;font-size:3.4rem;line-height:.95;letter-spacing:.01em;margin:1.2rem 0 .5rem;color:var(--navy);}
+  .login h1 span{color:var(--teal);}
+  .sub{color:var(--muted);font-size:.95rem;margin-bottom:1.4rem;}
+  label.feld{display:block;font-weight:600;font-size:.9rem;margin-bottom:.4rem;}
+  .code-input{display:block;width:100%;min-height:52px;padding:.7rem .9rem;border:1.5px solid rgba(11,34,68,0.2);border-radius:10px;background:#fff;font-size:1.15rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;}
+  .code-input::-webkit-input-placeholder{letter-spacing:.12em;color:#A3B0C2;font-weight:500;}
+  .code-input::placeholder{letter-spacing:.12em;color:#A3B0C2;font-weight:500;}
+  .check{display:block;font-size:.9rem;color:var(--muted);margin:.9rem 0 .2rem;cursor:pointer;}
+  .check input{margin-right:.45rem;vertical-align:-2px;width:16px;height:16px;}
+  .err{color:var(--rot);font-size:.9rem;font-weight:600;min-height:1.4em;margin:.5rem 0;}
+  .ai-box{margin-top:1.3rem;background:var(--teal-light);border-left:4px solid var(--teal);border-radius:0 10px 10px 0;padding:.85rem 1rem;font-size:.86rem;color:var(--navy);line-height:1.6;}
+  .login-links{margin-top:1rem;font-size:.88rem;color:var(--muted);}
+  .login-links .link{margin-right:.9rem;}
+  .login-foot{margin-top:1rem;font-size:.82rem;color:var(--muted);}
+  .demo{margin-top:1rem;background:var(--gelb-bg);color:var(--gelb);border-radius:10px;padding:.7rem .9rem;font-size:.84rem;}
+  .demo code{background:#fff;border-radius:4px;padding:.05rem .35rem;font-weight:700;}
+
+  /* App-Gerüst */
+  #v-chat{display:-webkit-box;display:-webkit-flex;display:flex;-webkit-box-orient:vertical;-webkit-flex-direction:column;flex-direction:column;height:100vh;height:calc(var(--vh) * 100);overflow:hidden;}
+  .topbar{display:-webkit-box;display:-webkit-flex;display:flex;-webkit-box-align:center;-webkit-align-items:center;align-items:center;-webkit-flex-shrink:0;flex-shrink:0;height:62px;padding:0 1rem;background:rgba(255,255,255,0.97);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);z-index:20;}
+  .spacer{-webkit-box-flex:1;-webkit-flex:1 1 auto;flex:1 1 auto;}
+  .meter{text-align:right;font-size:.8rem;color:var(--muted);line-height:1.25;margin-left:.8rem;}
+  #meter-kurz{display:none;font-weight:600;}
+  .meter-bar{display:block;width:150px;height:6px;border-radius:99px;background:#E3E9F0;margin-top:.3rem;margin-left:auto;overflow:hidden;}
+  .meter-bar span{display:block;height:100%;width:0;background:var(--teal);border-radius:99px;-webkit-transition:width .4s;transition:width .4s;}
+  .meter.warn .meter-bar span{background:#E0A21B;}
+  .meter.voll .meter-bar span{background:var(--rot);}
+  .layout{display:-webkit-box;display:-webkit-flex;display:flex;-webkit-box-flex:1;-webkit-flex:1 1 auto;flex:1 1 auto;min-height:0;position:relative;}
+  #sidebar{width:290px;-webkit-flex:0 0 290px;flex:0 0 290px;background:#fff;border-right:1px solid var(--border);display:-webkit-box;display:-webkit-flex;display:flex;-webkit-box-orient:vertical;-webkit-flex-direction:column;flex-direction:column;padding:1rem;overflow:hidden;}
+  .side-label{font-size:.72rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin:1.2rem .2rem .5rem;}
+  #chatliste{list-style:none;-webkit-box-flex:1;-webkit-flex:1 1 auto;flex:1 1 auto;overflow-y:auto;-webkit-overflow-scrolling:touch;margin:0 -.4rem;padding:0 .4rem;}
+  #chatliste li{position:relative;margin-bottom:.25rem;}
+  .chat-item{display:block;width:100%;text-align:left;padding:.6rem 2.2rem .6rem .7rem;border-radius:10px;color:var(--navy);}
+  .chat-item:hover{background:var(--bg);}
+  .chat-item.aktiv{background:var(--teal-light);}
+  .chat-item .t{display:block;font-weight:600;font-size:.9rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .chat-item .m{display:block;font-size:.76rem;color:var(--muted);margin-top:.1rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:.4rem;vertical-align:1px;}
+  .chat-del{position:absolute;top:50%;right:.3rem;margin-top:-16px;height:32px;min-width:32px;padding:0 .4rem;border-radius:8px;color:var(--muted);font-size:1.1rem;line-height:32px;}
+  .chat-del:hover{background:var(--rot-bg);color:var(--rot);}
+  .chat-del.sicher{background:var(--rot);color:#fff;font-size:.75rem;font-weight:700;}
+  .liste-leer{font-size:.85rem;color:var(--muted);padding:.4rem .3rem;}
+  .side-foot{border-top:1px solid var(--border);padding-top:.9rem;margin-top:.6rem;}
+  .side-foot .link{display:block;margin-bottom:.25rem;}
+  .who{margin:.7rem 0 .6rem;font-size:.85rem;color:var(--muted);}
+  .who b{color:var(--navy);display:block;font-size:.95rem;}
+  .scrim{position:absolute;top:0;right:0;bottom:0;left:0;background:rgba(11,34,68,0.35);z-index:29;}
+  .only-mobile{display:none;}
+
+  /* Chatbereich */
+  #chat{-webkit-box-flex:1;-webkit-flex:1 1 auto;flex:1 1 auto;min-width:0;display:-webkit-box;display:-webkit-flex;display:flex;-webkit-box-orient:vertical;-webkit-flex-direction:column;flex-direction:column;}
+  .chat-head{display:-webkit-box;display:-webkit-flex;display:flex;-webkit-box-align:center;-webkit-align-items:center;align-items:center;-webkit-flex-shrink:0;flex-shrink:0;min-height:50px;padding:.5rem 1.2rem;border-bottom:1px solid var(--border);background:var(--bg);}
+  .fach-badge{display:inline-block;background:#fff;border:1px solid var(--border);border-radius:99px;padding:.2rem .7rem;font-size:.8rem;font-weight:600;white-space:nowrap;margin-right:.7rem;}
+  .chat-title{font-weight:600;font-size:.95rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0;-webkit-box-flex:1;-webkit-flex:1 1 auto;flex:1 1 auto;}
+  .verlauf{-webkit-box-flex:1;-webkit-flex:1 1 auto;flex:1 1 auto;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:1.4rem 1.2rem 1rem;}
+  .verlauf-in{max-width:760px;margin:0 auto;}
+  .msg{margin-bottom:1rem;overflow:hidden;}
+  .msg-label{font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--teal-mid);margin:0 0 .3rem .2rem;}
+  .msg-label .ki{display:inline-block;background:var(--navy);color:#fff;border-radius:4px;padding:0 .3rem;margin-left:.35rem;font-size:.62rem;letter-spacing:.08em;vertical-align:1px;}
+  .bubble{display:inline-block;max-width:88%;padding:.75rem 1rem;border-radius:16px;font-size:.98rem;line-height:1.6;word-wrap:break-word;overflow-wrap:break-word;text-align:left;}
+  .msg-user{text-align:right;}
+  .msg-user .bubble{background:var(--navy);color:#fff;border-bottom-right-radius:4px;white-space:pre-wrap;}
+  .msg-ai .bubble{background:#fff;border:1px solid var(--border);border-left:3px solid var(--teal);border-top-left-radius:4px;max-width:100%;}
+  .foto-chip{display:inline-block;background:rgba(255,255,255,0.16);border-radius:6px;padding:.05rem .45rem;font-size:.8rem;margin-bottom:.3rem;}
+  .foto-mini{display:block;max-width:180px;max-height:180px;border-radius:8px;margin:0 0 .4rem auto;}
+  .md p{margin:0 0 .6rem;}
+  .md p:last-child,.md ul:last-child,.md ol:last-child{margin-bottom:0;}
+  .md ul,.md ol{margin:0 0 .6rem 1.3rem;}
+  .md li{margin-bottom:.25rem;}
+  .md h4{font-size:1rem;margin:.2rem 0 .4rem;}
+  .md code{background:var(--bg);border:1px solid var(--border);border-radius:4px;padding:0 .3rem;font-size:.9em;font-family:ui-monospace,Menlo,Consolas,monospace;}
+  .md pre{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:.7rem;overflow-x:auto;margin:0 0 .6rem;}
+  .md pre code{border:0;padding:0;background:none;}
+  .md strong{color:var(--navy);}
+  .msg-actions{margin:.35rem 0 0 .2rem;font-size:.78rem;}
+  .msg-actions button{color:var(--muted);font-weight:600;padding:.2rem .1rem;margin-right:1rem;}
+  .msg-actions button:hover{color:var(--teal-mid);}
+  .msg-actions .gemeldet{color:var(--teal-mid);font-weight:600;}
+  .gekuerzt{display:block;margin-top:.5rem;font-size:.82rem;color:var(--muted);font-style:italic;}
+  .tippt{min-width:64px;}
+  .tippt i{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--teal);margin-right:5px;opacity:.3;-webkit-animation:punkt 1.2s infinite;animation:punkt 1.2s infinite;}
+  .tippt i:nth-child(2){-webkit-animation-delay:.2s;animation-delay:.2s;}
+  .tippt i:nth-child(3){-webkit-animation-delay:.4s;animation-delay:.4s;margin-right:0;}
+  .tippt small{display:block;color:var(--muted);font-size:.78rem;margin-top:.35rem;}
+  @-webkit-keyframes punkt{0%,80%,100%{opacity:.3;-webkit-transform:translateY(0);}40%{opacity:1;-webkit-transform:translateY(-3px);}}
+  @keyframes punkt{0%,80%,100%{opacity:.3;transform:translateY(0);}40%{opacity:1;transform:translateY(-3px);}}
+
+  /* Leerer Chat */
+  .leer{padding:1rem 0 .5rem;}
+  .leer h2{font-family:'Bebas Neue',sans-serif;font-weight:400;font-size:2.4rem;line-height:1;margin-bottom:.5rem;}
+  .leer h2 span{color:var(--teal);}
+  .leer p{color:var(--muted);font-size:.95rem;margin-bottom:1rem;}
+  .leer-label{font-size:.72rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin:1.1rem 0 .55rem;}
+  .chip{display:inline-block;margin:0 .45rem .5rem 0;padding:.45rem .85rem;border:1.5px solid var(--border);border-radius:99px;background:#fff;font-size:.88rem;font-weight:600;color:var(--navy);}
+  .chip:hover{border-color:var(--teal);}
+  .chip.an{background:var(--navy);border-color:var(--navy);color:#fff;}
+  .vorschlag{display:block;width:100%;text-align:left;margin-bottom:.5rem;padding:.75rem 1rem;border:1px solid var(--border);border-radius:12px;background:#fff;font-size:.92rem;color:var(--navy);}
+  .vorschlag:hover{border-color:var(--teal);background:#FBFEFD;}
+  .vorschlag b{color:var(--teal-mid);margin-right:.35rem;}
+  .leer-tipp{margin-top:1rem;font-size:.85rem !important;background:var(--teal-light);color:var(--navy) !important;border-radius:10px;padding:.7rem .9rem;}
+
+  /* Eingabe */
+  .hinweis{-webkit-flex-shrink:0;flex-shrink:0;margin:0 1.2rem .6rem;padding:.7rem .9rem;border-radius:10px;background:var(--rot-bg);color:var(--rot);font-size:.9rem;font-weight:500;}
+  .hinweis.info{background:var(--gelb-bg);color:var(--gelb);}
+  .hinweis button{font-weight:700;text-decoration:underline;margin-left:.6rem;color:inherit;}
+  .composer{-webkit-flex-shrink:0;flex-shrink:0;padding:.7rem 1.2rem;padding-bottom:calc(.7rem + env(safe-area-inset-bottom));background:#fff;border-top:1px solid var(--border);}
+  .composer-in{max-width:760px;margin:0 auto;}
+  .composer-row{display:-webkit-box;display:-webkit-flex;display:flex;-webkit-box-align:end;-webkit-align-items:flex-end;align-items:flex-end;background:var(--bg);border:1.5px solid rgba(11,34,68,0.14);border-radius:14px;padding:.3rem;}
+  .composer-row:focus-within{border-color:var(--teal);}
+  #eingabe{-webkit-box-flex:1;-webkit-flex:1 1 auto;flex:1 1 auto;min-width:0;border:0;background:transparent;resize:none;font-size:16px;line-height:1.5;padding:.6rem .5rem;max-height:160px;margin:0 .3rem;}
+  #eingabe:focus{-webkit-box-shadow:none;box-shadow:none;}
+  .send-btn{display:-webkit-inline-box;display:-webkit-inline-flex;display:inline-flex;-webkit-box-align:center;-webkit-align-items:center;align-items:center;-webkit-box-pack:center;-webkit-justify-content:center;justify-content:center;width:44px;height:44px;border-radius:10px;background:var(--teal);color:#fff;-webkit-flex-shrink:0;flex-shrink:0;}
+  .send-btn:hover{background:var(--teal-mid);}
+  .send-btn[disabled]{background:#9CCFBE;cursor:default;}
+  .send-btn svg{width:20px;height:20px;}
+  .composer-note{font-size:.74rem;color:var(--muted);text-align:center;margin-top:.45rem;}
+  .bild-vorschau{position:relative;display:inline-block;margin:0 0 .5rem .2rem;}
+  .bild-vorschau img{display:block;height:72px;width:auto;max-width:160px;border-radius:8px;border:1px solid var(--border);}
+  .bild-vorschau button{position:absolute;top:-8px;right:-8px;width:26px;height:26px;border-radius:50%;background:var(--navy);color:#fff;font-size:.95rem;line-height:26px;text-align:center;}
+
+  /* Fenster */
+  .modal{position:fixed;top:0;right:0;bottom:0;left:0;z-index:100;background:rgba(11,34,68,0.45);overflow-y:auto;-webkit-overflow-scrolling:touch;padding:1.2rem .8rem;}
+  .modal-box{position:relative;max-width:620px;margin:1.5rem auto;background:#fff;border-radius:14px;padding:1.8rem 1.5rem 1.5rem;-webkit-box-shadow:0 24px 60px rgba(11,34,68,0.25);box-shadow:0 24px 60px rgba(11,34,68,0.25);}
+  .modal-box.klein{max-width:440px;}
+  .modal h2{font-family:'Bebas Neue',sans-serif;font-weight:400;font-size:2rem;line-height:1;margin:0 2.2rem 1rem 0;}
+  .modal h3{font-size:.95rem;margin:1.1rem 0 .3rem;}
+  .modal p,.modal li{font-size:.9rem;color:#33475F;line-height:1.65;}
+  .modal ul{margin:.3rem 0 0 1.2rem;}
+  .modal-x{position:absolute;top:.8rem;right:.8rem;width:40px;height:40px;border-radius:8px;background:var(--bg);font-size:1.2rem;color:var(--navy);}
+  .hilfe-box{margin-top:1.1rem;background:var(--teal-light);border-radius:10px;padding:.8rem 1rem;}
+  .radio{display:block;padding:.55rem .7rem;border:1px solid var(--border);border-radius:10px;margin-bottom:.45rem;font-size:.92rem;cursor:pointer;}
+  .radio input{margin-right:.5rem;vertical-align:-1px;}
+  .modal textarea{display:block;width:100%;min-height:80px;border:1.5px solid rgba(11,34,68,0.2);border-radius:10px;padding:.6rem .7rem;font-size:16px;margin:.6rem 0 1rem;resize:vertical;}
+  .modal .btn{margin-top:.4rem;}
+  .status-ok{color:var(--teal-mid);font-weight:600;font-size:.9rem;margin-top:.6rem;}
+
+  @media (max-width:860px){
+    .only-mobile{display:-webkit-inline-box;display:-webkit-inline-flex;display:inline-flex;}
+    #sidebar{position:absolute;top:0;bottom:0;left:0;z-index:30;-webkit-transform:translateX(-105%);transform:translateX(-105%);-webkit-transition:-webkit-transform .25s ease;transition:transform .25s ease;-webkit-box-shadow:0 0 40px rgba(11,34,68,0.2);box-shadow:0 0 40px rgba(11,34,68,0.2);width:300px;max-width:86%;}
+    #sidebar.offen{-webkit-transform:translateX(0);transform:translateX(0);}
+    .topbar{padding:0 .5rem;}
+    .brand img{height:28px;}
+    .pill{margin-left:.4rem;}
+    .meter-bar{width:90px;}
+    .chat-head,.verlauf{padding-left:.9rem;padding-right:.9rem;}
+    .composer{padding-left:.6rem;padding-right:.6rem;}
+    .hinweis{margin-left:.7rem;margin-right:.7rem;}
+    .bubble{max-width:92%;}
+    .login::after{width:100%;height:38%;-webkit-clip-path:polygon(0 0,100% 0,100% 70%,0 100%);clip-path:polygon(0 0,100% 0,100% 70%,0 100%);}
+  }
+  @media (max-width:420px){
+    .meter #meter-text{display:none;}
+    .meter #meter-kurz{display:block;}
+    .login h1{font-size:2.9rem;}
+    .login-card{padding:1.6rem 1.2rem;}
+  }
+  @media print{
+    .topbar,#sidebar,.composer,.msg-actions,.chat-head{display:none !important;}
+    #v-chat{height:auto;}
+    .verlauf{overflow:visible;}
+  }
+</style>
+</head>
+<body>
+<noscript><p style="padding:2rem;font-family:Arial,sans-serif">Der KI-Coach braucht JavaScript. Bitte aktiviere JavaScript in deinem Browser.</p></noscript>
+
+<!-- ========== Anmeldung ========== -->
+<main id="v-login" class="login view" hidden>
+  <div class="login-card">
+    <a class="brand" href="https://lerncoaching-zh.ch/" aria-label="Zur Website von Lerncoaching ZH">
+      <img src="logo.png" alt="Lerncoaching ZH" data-logo>
+      <span class="brand-text" hidden>Lerncoaching <b>ZH</b></span>
+    </a>
+    <h1>KI-<span>Coach</span></h1>
+    <p class="sub">Dein Lerncoach für zwischen den Samstagen. Für Schüler:innen und Lehrpersonen von Lerncoaching ZH.</p>
+    <form id="login-form" novalidate>
+      <label class="feld" for="code">Dein persönlicher Code</label>
+      <input id="code" class="code-input" name="code" type="text" autocomplete="off" autocapitalize="characters" autocorrect="off" spellcheck="false" placeholder="LC-XXXX-XXXX" maxlength="20">
+      <label class="check"><input type="checkbox" id="bleiben" checked> Auf diesem Gerät angemeldet bleiben</label>
+      <p class="err" id="login-err" role="alert"></p>
+      <button class="btn btn-primary btn-block" id="btn-login" type="submit">Anmelden</button>
+    </form>
+    <div class="ai-box"><b>Du schreibst mit einer KI, nicht mit einem Menschen.</b> Der Coach gibt dir Tipps statt fertiger Lösungen und kann Fehler machen. Gib keine persönlichen Daten ein.</div>
+    <p class="login-links"><button type="button" class="link" data-open="m-regeln">Tipps &amp; Regeln</button><button type="button" class="link" data-open="m-info">Datenschutz &amp; Sicherheit</button></p>
+    <p class="login-foot">Noch keinen Code? Frag das Team von Lerncoaching ZH. · <a href="https://lerncoaching-zh.ch/">Zur Website</a></p>
+    <div class="demo" id="demo-hinweis" hidden><b>Vorschau:</b> Noch nicht mit dem Server verbunden. Zum Ausprobieren <code>DEMO</code> (Schüler) oder <code>DEMO-LP</code> (Lehrperson) eingeben.</div>
+  </div>
+</main>
+
+<!-- ========== Coach ========== -->
+<div id="v-chat" class="view" hidden>
+  <header class="topbar">
+    <button type="button" class="icon-btn only-mobile" id="btn-menu" aria-label="Chats anzeigen" aria-controls="sidebar" aria-expanded="false">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+    </button>
+    <a class="brand" href="https://lerncoaching-zh.ch/" aria-label="Zur Website von Lerncoaching ZH">
+      <img src="logo.png" alt="Lerncoaching ZH" data-logo>
+      <span class="brand-text" hidden>Lerncoaching <b>ZH</b></span>
+    </a>
+    <span class="pill">KI-Coach</span>
+    <span class="spacer"></span>
+    <div class="meter" id="meter" aria-live="polite">
+      <span id="meter-text"></span>
+      <span id="meter-kurz"></span>
+      <span class="meter-bar" id="meter-bar"><span id="meter-fill"></span></span>
+    </div>
+  </header>
+
+  <div class="layout">
+    <aside id="sidebar" aria-label="Deine Chats">
+      <button type="button" class="btn btn-primary btn-block" id="btn-neu">+ Neuer Chat</button>
+      <p class="side-label">Deine Chats</p>
+      <ul id="chatliste"></ul>
+      <div class="side-foot">
+        <button type="button" class="link" data-open="m-regeln">Tipps &amp; Regeln</button>
+        <button type="button" class="link" data-open="m-info">Datenschutz &amp; Sicherheit</button>
+        <p class="who"><b id="who-name"></b><span id="who-rolle"></span></p>
+        <button type="button" class="btn btn-ghost btn-block" id="btn-logout" data-open="m-logout">Abmelden</button>
+      </div>
+    </aside>
+    <div class="scrim" id="scrim" hidden></div>
+
+    <main id="chat">
+      <div class="chat-head">
+        <span class="fach-badge" id="fach-badge"></span>
+        <span class="chat-title" id="chat-title"></span>
+      </div>
+      <div class="verlauf" id="verlauf" aria-label="Chatverlauf">
+        <div class="verlauf-in" id="verlauf-in"></div>
+      </div>
+      <div class="hinweis" id="hinweis" role="alert" hidden></div>
+      <div class="sr" id="ansage" aria-live="polite"></div>
+      <form class="composer" id="composer" novalidate>
+        <div class="composer-in">
+          <div class="bild-vorschau" id="bild-vorschau" hidden>
+            <img id="bild-img" alt="Vorschau des Fotos">
+            <button type="button" id="bild-weg" aria-label="Foto entfernen">×</button>
+          </div>
+          <div class="composer-row">
+            <button type="button" class="icon-btn" id="btn-foto" aria-label="Foto einer Aufgabe hinzufügen" title="Foto einer Aufgabe">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg>
+            </button>
+            <input type="file" id="datei" class="sr" accept="image/*" tabindex="-1" aria-hidden="true">
+            <label for="eingabe" class="sr">Deine Nachricht</label>
+            <textarea id="eingabe" rows="1" placeholder="Schreib deine Frage …"></textarea>
+            <button type="submit" class="send-btn" id="btn-senden" aria-label="Nachricht senden">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6"/></svg>
+            </button>
+          </div>
+          <p class="composer-note">Du schreibst mit einer KI. Sie kann Fehler machen, prüfe Wichtiges mit deiner Lehrperson.</p>
+        </div>
+      </form>
+    </main>
+  </div>
+</div>
+
+<!-- ========== Fenster: Tipps & Regeln ========== -->
+<div class="modal" id="m-regeln" role="dialog" aria-modal="true" aria-labelledby="m-regeln-t" hidden>
+  <div class="modal-box">
+    <button type="button" class="modal-x" data-close aria-label="Schliessen">×</button>
+    <h2 id="m-regeln-t">Tipps &amp; Regeln</h2>
+    <h3>So hilft dir der Coach am meisten</h3>
+    <ul>
+      <li>Sag, worum es geht: Fach, Aufgabe und was du schon versucht hast.</li>
+      <li>Schick ein Foto der Aufgabe, wenn das Abtippen lange dauert.</li>
+      <li>Rechne und schreib selbst mit. Der Coach gibt dir Tipps und Leitfragen statt fertiger Lösungen, damit du es wirklich verstehst.</li>
+      <li>Frag nach, wenn du etwas nicht verstehst. Du kannst auch schreiben: «Erklär es einfacher.»</li>
+    </ul>
+    <h3>Wichtig</h3>
+    <ul>
+      <li>Du schreibst mit einer KI, nicht mit einem Menschen. Sie kann Fehler machen. Prüfe wichtige Antworten mit deiner Lehrperson.</li>
+      <li>Gib keine persönlichen Daten ein: keinen vollen Namen, keine Adresse, Telefonnummer, Passwörter oder Fotos von Personen.</li>
+      <li>Nicht schummeln: In Prüfungen hilft dir der Coach nicht.</li>
+      <li>Dein Code ist persönlich. Gib ihn nicht weiter.</li>
+      <li>Stimmt eine Antwort nicht oder ist sie unpassend? Klick darunter auf «Antwort melden».</li>
+    </ul>
+    <div class="hilfe-box">
+      <p><b>Wenn dich etwas belastet</b><br>Sprich mit deinen Eltern, deiner Lehrperson oder dem Team von Lerncoaching ZH. Rund um die Uhr, gratis und vertraulich hilft Pro Juventute: Telefon <b>147</b>, WhatsApp oder <a href="https://www.147.ch/" target="_blank" rel="noopener">147.ch</a>. Im Notfall: <b>144</b> (Sanität) oder <b>117</b> (Polizei).</p>
+    </div>
+  </div>
+</div>
+
+<!-- ========== Fenster: Datenschutz & Sicherheit ========== -->
+<div class="modal" id="m-info" role="dialog" aria-modal="true" aria-labelledby="m-info-t" hidden>
+  <div class="modal-box">
+    <button type="button" class="modal-x" data-close aria-label="Schliessen">×</button>
+    <h2 id="m-info-t">Datenschutz &amp; Sicherheit</h2>
+    <h3>Verantwortlich</h3>
+    <p>Josef El Korany, handelnd unter Lerncoaching ZH, Dörflistrasse 67, 8050 Zürich, <a href="mailto:zhlerncoaching@gmail.com">zhlerncoaching@gmail.com</a>, +41 76 282 92 44.</p>
+    <h3>Was ist der KI-Coach?</h3>
+    <p>Ein Lernhelfer auf Basis des KI-Modells Claude der Firma Anthropic. Du schreibst mit einer KI, nicht mit einem Menschen. Den Coach nutzen nur Schüler:innen und Lehrpersonen von Lerncoaching ZH mit persönlichem Code. Kinder und Jugendliche nutzen ihn nur mit dem Einverständnis ihrer Eltern.</p>
+    <h3>Welche Daten wir bearbeiten</h3>
+    <p>Deinen Code, deinen Namen und deine Stufe (bei Lerncoaching ZH hinterlegt), das gewählte Fach, deine Nachrichten und Fotos sowie die Antworten. Dazu Zeitpunkt und Anzahl der Nachrichten für die Limits.</p>
+    <h3>Wohin die Daten gehen</h3>
+    <p>Die Anfragen laufen über Google Apps Script und werden in einem passwortgeschützten Google Sheet von Lerncoaching ZH protokolliert (Google LLC, USA). Für die Antwort gehen Nachricht, Foto, Stufe und Fach an Anthropic (USA). <b>Dein Name geht nicht an Anthropic.</b> Anthropic verwendet diese Daten nicht zum Trainieren seiner KI und löscht sie in der Regel innerhalb von 30 Tagen. Ausnahme: Inhalte, die Anthropics Sicherheitssysteme markieren, können bis zu zwei Jahre aufbewahrt werden.</p>
+    <h3>Wie lange wir speichern</h3>
+    <p>Fragen und Antworten speichern wir zur Sicherheit und Qualitätskontrolle höchstens <span data-tage>30</span> Tage, dann werden sie automatisch gelöscht. Markierte oder gemeldete Nachrichten bewahren wir bis zu 180 Tage auf. Einsicht hat nur die Leitung von Lerncoaching ZH. Deine Chatliste speichert nur dein Browser auf diesem Gerät. Du kannst sie jederzeit löschen.</p>
+    <h3>Schutz für Kinder und Jugendliche</h3>
+    <ul>
+      <li>Der Coach folgt altersgerechten Regeln und lenkt bei ungeeigneten Themen aufs Lernen zurück.</li>
+      <li>Er gibt Tipps statt fertiger Lösungen und weist auf Hilfsangebote hin, wenn jemand Sorgen hat.</li>
+      <li>Nachrichten mit Hinweisen auf eine Gefährdung werden automatisch markiert, damit die Leitung reagieren kann.</li>
+      <li>Jede Antwort lässt sich melden. Limits pro Tag und Monat verhindern übermässige Nutzung.</li>
+    </ul>
+    <h3>Deine Rechte</h3>
+    <p>Du kannst Auskunft, Berichtigung und Löschung deiner Daten verlangen (Art. 25 DSG): <a href="mailto:zhlerncoaching@gmail.com">zhlerncoaching@gmail.com</a>.</p>
+    <h3>Grundlagen</h3>
+    <p>Lerncoaching ZH betreibt den KI-Coach nach dem Schweizer Datenschutzgesetz (DSG, SR 235.1), den Vorschriften zum Schutz von Kindern und Jugendlichen und den Vorgaben von Anthropic für Angebote, die Minderjährige nutzen.</p>
+  </div>
+</div>
+
+<!-- ========== Fenster: Antwort melden ========== -->
+<div class="modal" id="m-melden" role="dialog" aria-modal="true" aria-labelledby="m-melden-t" hidden>
+  <div class="modal-box klein">
+    <button type="button" class="modal-x" data-close aria-label="Schliessen">×</button>
+    <h2 id="m-melden-t">Antwort melden</h2>
+    <p>Was stimmt mit dieser Antwort nicht? Das Team von Lerncoaching ZH schaut sie sich an.</p>
+    <div role="radiogroup" aria-label="Grund" style="margin-top:.8rem">
+      <label class="radio"><input type="radio" name="grund" value="Falsch oder fehlerhaft" checked> Falsch oder fehlerhaft</label>
+      <label class="radio"><input type="radio" name="grund" value="Unpassend oder verletzend"> Unpassend oder verletzend</label>
+      <label class="radio"><input type="radio" name="grund" value="Etwas anderes"> Etwas anderes</label>
+    </div>
+    <label for="melden-text" class="sr">Bemerkung</label>
+    <textarea id="melden-text" maxlength="1000" placeholder="Optional: Was ist dir aufgefallen?"></textarea>
+    <button type="button" class="btn btn-primary btn-block" id="btn-melden">Meldung senden</button>
+    <p class="status-ok" id="melden-status" role="status"></p>
+  </div>
+</div>
+
+<!-- ========== Fenster: Abmelden ========== -->
+<div class="modal" id="m-logout" role="dialog" aria-modal="true" aria-labelledby="m-logout-t" hidden>
+  <div class="modal-box klein">
+    <button type="button" class="modal-x" data-close aria-label="Schliessen">×</button>
+    <h2 id="m-logout-t">Abmelden</h2>
+    <p>Deine Chats bleiben auf diesem Gerät gespeichert, bis du sie löschst. Benutzt noch jemand dieses Gerät? Dann lösch sie beim Abmelden.</p>
+    <button type="button" class="btn btn-primary btn-block" id="btn-abmelden">Abmelden</button>
+    <button type="button" class="btn btn-ghost btn-block" id="btn-abmelden-loeschen" style="margin-top:.6rem">Abmelden und Chats auf diesem Gerät löschen</button>
+  </div>
+</div>
+
+<script>
+(function () {
+  'use strict';
+
+  /* ===== Einstellungen ===== */
+  var KONFIG = {
+    API_URL: '',             // HIER die Web-App-URL aus Google Apps Script einfügen (endet auf /exec)
+    PROTOKOLL_TAGE: 30,      // muss zur Einstellung «Protokoll aufbewahren (Tage)» im Google Sheet passen
+    MAX_CHATS: 40,
+    MAX_VERLAUF: 24,
+    TIMEOUT_MS: 95000
+  };
+
+  var FAECHER = [
+    { n: 'Mathematik', f: '#1D9E75' },
+    { n: 'Deutsch', f: '#E4572E' },
+    { n: 'Französisch', f: '#3B6FE0' },
+    { n: 'Englisch', f: '#8E44AD' },
+    { n: 'NMG / Natur und Technik', f: '#2E8B57' },
+    { n: 'Biologie', f: '#5DAE3B' },
+    { n: 'Chemie', f: '#E08E0B' },
+    { n: 'Physik', f: '#0B7FAB' },
+    { n: 'Geografie / Geschichte', f: '#A0522D' },
+    { n: 'Lernen und Organisation', f: '#C9A000' },
+    { n: 'Allgemein', f: '#5A6F8A' },
+    { n: 'Unterrichtsvorbereitung', f: '#0B2244', lp: true },
+    { n: 'Elternkommunikation', f: '#C2185B', lp: true }
+  ];
+
+  var VORSCHLAEGE = {
+    'Schüler': [
+      { t: 'Ich verstehe eine Aufgabe nicht.', z: 'Ich verstehe diese Aufgabe nicht. Kannst du mir einen Tipp geben?', foto: true },
+      { t: 'Erklär mir ein Thema mit einem Beispiel.', z: 'Kannst du mir das Thema … mit einem einfachen Beispiel erklären?' },
+      { t: 'Mach mit mir einen Lernplan für die Prüfung.', z: 'Ich habe am … eine Prüfung über … Hilf mir, einen Lernplan zu machen.' },
+      { t: 'Frag mich Wörter ab.', z: 'Frag mich bitte Wörter ab. Ich lerne gerade diese Wörter: …' }
+    ],
+    'Lehrperson': [
+      { t: 'Übungen mit Lösungen erstellen', z: 'Erstelle 6 Übungen zu … für die … Klasse, mit Lösungen und steigender Schwierigkeit.' },
+      { t: 'Doppellektion planen', z: 'Plane eine Doppellektion (2 × 45 Min.) zum Thema … für eine gemischte Samstagsgruppe (…).' },
+      { t: 'Rückmeldung an Eltern formulieren', z: 'Formuliere eine kurze, freundliche Rückmeldung an Eltern: Schüler A hat diesen Samstag …' },
+      { t: 'Thema einfach erklären', z: 'Wie erkläre ich … einem Kind der … Klasse einfach und anschaulich?' }
+    ]
+  };
+
+  var SITZUNG = 'lcCoach.v1.sitzung';
+
+  /* ===== Zustand ===== */
+  var S = {
+    code: '', nutzer: null, verbrauch: null, dauerhaft: true,
+    chats: [], aktivId: null, entwurf: null, fachWahl: 'Allgemein',
+    laeuft: false, bild: null, letzteAnfrage: null, meldenIdx: -1, zuletztFokus: null
+  };
+
+  /* ===== Hilfen ===== */
+  function $(id) { return document.getElementById(id); }
+  function alle(sel, wurzel) { return Array.prototype.slice.call((wurzel || document).querySelectorAll(sel)); }
+  function esc(s) {
+    return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+  }
+  function zwei(n) { return (n < 10 ? '0' : '') + n; }
+  function zeitText(ts) {
+    var d = new Date(ts), jetzt = new Date(), gestern = new Date(jetzt.getTime() - 864e5);
+    if (d.toDateString() === jetzt.toDateString()) return zwei(d.getHours()) + ':' + zwei(d.getMinutes());
+    if (d.toDateString() === gestern.toDateString()) return 'gestern';
+    return zwei(d.getDate()) + '.' + zwei(d.getMonth() + 1) + '.';
+  }
+  function normCode(c) {
+    var s = String(c || '').toUpperCase().replace(/[^A-Z0-9]/g, '');
+    if (s.length === 8 && s.indexOf('DEMO') !== 0) s = 'LC' + s;
+    return s;
+  }
+  function zeigeCode(n) { return n.length === 10 && n.indexOf('LC') === 0 ? 'LC-' + n.slice(2, 6) + '-' + n.slice(6) : n; }
+  function fnv(s) {
+    var h = 0x811c9dc5;
+    for (var i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = (h + ((h << 1) + (h << 4) + (h << 7) + (h << 8) + (h << 24))) >>> 0; }
+    return ('0000000' + h.toString(16)).slice(-8);
+  }
+  function neueId() { return Date.now().toString(36) + Math.random().toString(36).slice(2, 7); }
+  function fachFarbe(n) {
+    for (var i = 0; i < FAECHER.length; i++) if (FAECHER[i].n === n) return FAECHER[i].f;
+    return '#5A6F8A';
+  }
+  function istLp() { return S.nutzer && S.nutzer.rolle === 'Lehrperson'; }
+  function istTouch() { return ('ontouchstart' in window) || (navigator.maxTouchPoints > 0); }
+  function scrolleNachUnten(sanft) {
+    var el = $('verlauf');
+    try { el.scrollTo({ top: el.scrollHeight, behavior: sanft ? 'smooth' : 'auto' }); }
+    catch (e) { el.scrollTop = el.scrollHeight; }
+  }
+
+  /* ===== Speicher (localStorage oder sessionStorage) ===== */
+  function ablage(dauerhaft) {
+    try { return dauerhaft ? window.localStorage : window.sessionStorage; } catch (e) { return null; }
+  }
+  function lies(key, dauerhaft) {
+    try { var a = ablage(dauerhaft); var v = a && a.getItem(key); return v ? JSON.parse(v) : null; } catch (e) { return null; }
+  }
+  function schreib(key, wert, dauerhaft) {
+    try { var a = ablage(dauerhaft); if (!a) return false; a.setItem(key, JSON.stringify(wert)); return true; } catch (e) { return false; }
+  }
+  function entferne(key) {
+    try { window.localStorage.removeItem(key); } catch (e) {}
+    try { window.sessionStorage.removeItem(key); } catch (e) {}
+  }
+  function chatKey() { return 'lcCoach.v1.chats.' + fnv(S.code); }
+  function ladeChats() {
+    var c = lies(chatKey(), S.dauerhaft);
+    S.chats = Array.isArray(c) ? c : [];
+  }
+  function speichereChats() {
+    S.chats.sort(function (a, b) { return b.geaendert - a.geaendert; });
+    if (S.chats.length > KONFIG.MAX_CHATS) S.chats.length = KONFIG.MAX_CHATS;
+    var sauber = S.chats.map(function (c) {
+      return { id: c.id, fach: c.fach, titel: c.titel, erstellt: c.erstellt, geaendert: c.geaendert,
+        nachrichten: c.nachrichten.map(function (m) { return { rolle: m.rolle, text: m.text, zeit: m.zeit, bild: !!m.bild, gemeldet: !!m.gemeldet, gekuerzt: !!m.gekuerzt }; }) };
+    });
+    var ok = schreib(chatKey(), sauber, S.dauerhaft);
+    while (!ok && sauber.length > 1) { sauber.length = Math.ceil(sauber.length / 2); ok = schreib(chatKey(), sauber, S.dauerhaft); }
+  }
+  function speichereSitzung() {
+    entferne(SITZUNG);
+    schreib(SITZUNG, { code: S.code, nutzer: S.nutzer, verbrauch: S.verbrauch, dauerhaft: S.dauerhaft }, S.dauerhaft);
+  }
+
+  /* ===== Server ===== */
+  function api(daten) {
+    if (!KONFIG.API_URL) return demoApi(daten);
+    return new Promise(function (resolve, reject) {
+      var ctrl = (typeof AbortController !== 'undefined') ? new AbortController() : null;
+      var fertig = false;
+      var uhr = setTimeout(function () { if (fertig) return; fertig = true; if (ctrl) ctrl.abort(); reject(new Error('TIMEOUT')); }, KONFIG.TIMEOUT_MS);
+      var opt = { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(daten), redirect: 'follow' };
+      if (ctrl) opt.signal = ctrl.signal;
+      fetch(KONFIG.API_URL, opt)
+        .then(function (r) { return r.text(); })
+        .then(function (txt) {
+          if (fertig) return; fertig = true; clearTimeout(uhr);
+          var d; try { d = JSON.parse(txt); } catch (e) { reject(new Error('FORMAT')); return; }
+          resolve(d);
+        })
+        .catch(function (e) { if (fertig) return; fertig = true; clearTimeout(uhr); reject(e); });
+    });
+  }
+  function netzMeldung(e) {
+    var m = e && e.message;
+    if (m === 'TIMEOUT') return 'Das hat zu lange gedauert. Bitte versuche es nochmals.';
+    if (m === 'FORMAT') return 'Der Server hat unerwartet geantwortet. Bitte versuche es gleich nochmals.';
+    return 'Keine Verbindung zum Server. Prüfe dein Internet und versuche es nochmals.';
+  }
+
+  /* ===== Vorschau ohne Server ===== */
+  var demoZaehler = 3;
+  function demoApi(d) {
+    return new Promise(function (resolve) {
+      setTimeout(function () {
+        var c = normCode(d.code);
+        var lp = c === 'DEMOLP';
+        if (c !== 'DEMO' && c !== 'DEMOLP') { resolve({ ok: false, fehler: 'CODE', meldung: 'Dieser Code ist ungültig oder nicht aktiv.' }); return; }
+        var verbrauch = { heute: demoZaehler, tagesLimit: lp ? 100 : 40, monatProzent: 12, monatUsd: lp ? 1.2 : 0.36, monatBudget: lp ? 10 : 3 };
+        if (d.aktion === 'login') {
+          resolve({ ok: true, status: 'AKTIV', verbrauch: verbrauch,
+            nutzer: lp ? { name: 'Demo Lehrperson', vorname: 'Demo', rolle: 'Lehrperson', stufe: '' } : { name: 'Demo Schüler', vorname: 'Demo', rolle: 'Schüler', stufe: '1. Sek A' } });
+        } else if (d.aktion === 'chat') {
+          demoZaehler++; verbrauch.heute = demoZaehler;
+          resolve({ ok: true, verbrauch: verbrauch, antwort: lp
+            ? '**Vorschau-Modus:** Hier antwortet bald Claude.\n\nSo könnte eine Antwort aussehen:\n\n**Übung 1** (selbst erstellt)\nBerechne 15 % von 80.\n\n**Lösung**\n10 % von 80 = 8\n5 % von 80 = 4\n15 % von 80 = 8 + 4 = **12**'
+            : '**Vorschau-Modus:** Hier antwortet bald Claude.\n\nSo könnte eine Coach-Antwort aussehen:\n\nGuter Start! Bevor ich dir die Lösung zeige, probier es kurz selbst:\n1. Was ist der gemeinsame Nenner von 3/4 und 1/8?\n2. Wie schreibst du 3/4 mit diesem Nenner?\n\nSchreib mir deinen Rechenweg, dann schauen wir ihn zusammen an. 💪' });
+        } else {
+          resolve({ ok: true });
+        }
+      }, d.aktion === 'chat' ? 1100 : 350);
+    });
+  }
+
+  /* ===== Darstellung von Antworten (sicheres Markdown) ===== */
+  function inline(s) {
+    return s.replace(/`([^`]+)`/g, '<code>$1</code>').replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+  }
+  function md(text) {
+    var bloecke = [];
+    var t = esc(text).replace(/```[a-zA-Z]*\n?([\s\S]*?)```/g, function (_, code) {
+      bloecke.push('<pre><code>' + code.replace(/\n$/, '') + '</code></pre>');
+      return '\n\u0000' + (bloecke.length - 1) + '\u0000\n';
+    });
+    var zeilen = t.split('\n'), html = '', liste = '', absatz = [];
+    function absatzEnde() { if (absatz.length) { html += '<p>' + absatz.join('<br>') + '</p>'; absatz = []; } }
+    function listeEnde() { if (liste) { html += '</' + liste + '>'; liste = ''; } }
+    for (var i = 0; i < zeilen.length; i++) {
+      var z = zeilen[i], m;
+      if (/^\s*$/.test(z)) { absatzEnde(); listeEnde(); continue; }
+      if ((m = z.match(/^\u0000(\d+)\u0000$/))) { absatzEnde(); listeEnde(); html += bloecke[+m[1]]; continue; }
+      if ((m = z.match(/^\s{0,3}#{1,4}\s+(.*)$/))) { absatzEnde(); listeEnde(); html += '<h4>' + inline(m[1]) + '</h4>'; continue; }
+      if ((m = z.match(/^\s*[-*•]\s+(.*)$/))) { absatzEnde(); if (liste !== 'ul') { listeEnde(); html += '<ul>'; liste = 'ul'; } html += '<li>' + inline(m[1]) + '</li>'; continue; }
+      if ((m = z.match(/^\s*(\d{1,2})[.)]\s+(.*)$/))) { absatzEnde(); if (liste !== 'ol') { listeEnde(); html += '<ol start="' + m[1] + '">'; liste = 'ol'; } html += '<li>' + inline(m[2]) + '</li>'; continue; }
+      listeEnde(); absatz.push(inline(z));
+    }
+    absatzEnde(); listeEnde();
+    return html;
+  }
+
+  /* ===== Ansichten ===== */
+  function zeigeLogin(meldung) {
+    $('v-chat').hidden = true;
+    $('v-login').hidden = false;
+    $('demo-hinweis').hidden = !!KONFIG.API_URL;
+    $('login-err').textContent = meldung || '';
+    try { $('code').focus(); } catch (e) {}
+  }
+
+  function anmelden(code, nutzer, verbrauch) {
+    S.code = code; S.nutzer = nutzer; S.verbrauch = verbrauch || null;
+    ladeChats();
+    S.chats.sort(function (a, b) { return b.geaendert - a.geaendert; });
+    S.aktivId = null; S.entwurf = null;
+    S.fachWahl = S.chats.length ? S.chats[0].fach : (istLp() ? 'Unterrichtsvorbereitung' : 'Allgemein');
+    $('who-name').textContent = nutzer.name;
+    $('who-rolle').textContent = nutzer.rolle + (nutzer.stufe ? ' · ' + nutzer.stufe : '');
+    $('eingabe').placeholder = istLp() ? 'Was brauchst du?' : 'Schreib deine Frage …';
+    $('v-login').hidden = true;
+    $('v-chat').hidden = false;
+    neuerChat();
+    renderMeter();
+    setzeVh();
+  }
+
+  function abmelden(loeschen, meldung) {
+    if (loeschen && S.code) entferne(chatKey());
+    entferne(SITZUNG);
+    S.code = ''; S.nutzer = null; S.chats = []; S.aktivId = null; S.entwurf = null; S.bild = null; S.laeuft = false;
+    $('code').value = '';
+    schliesseAlle();
+    schliesseSidebar();
+    zeigeHinweis('');
+    zeigeLogin(meldung);
+  }
+
+  function aktuellerChat() {
+    if (S.aktivId) for (var i = 0; i < S.chats.length; i++) if (S.chats[i].id === S.aktivId) return S.chats[i];
+    return S.entwurf;
+  }
+
+  function neuerChat() {
+    S.aktivId = null;
+    S.entwurf = { id: neueId(), fach: S.fachWahl, titel: '', erstellt: Date.now(), geaendert: Date.now(), nachrichten: [] };
+    entferneBild();
+    zeigeHinweis('');
+    renderListe(); renderChat();
+    $('verlauf').scrollTop = 0;
+    schliesseSidebar();
+  }
+
+  function oeffneChat(id) {
+    S.aktivId = id; S.entwurf = null;
+    zeigeHinweis('');
+    renderListe(); renderChat();
+    schliesseSidebar();
+    scrolleNachUnten(false);
+  }
+
+  function renderMeter() {
+    var v = S.verbrauch, box = $('meter');
+    if (!v) { box.hidden = true; return; }
+    box.hidden = false;
+    var rest = Math.max(0, v.tagesLimit - v.heute);
+    var prozent = Math.max(0, Math.min(100, v.monatProzent || 0));
+    $('meter-text').textContent = istLp()
+      ? 'Monat: ' + Number(v.monatUsd || 0).toFixed(2) + ' von ' + v.monatBudget + ' USD'
+      : 'Heute noch ' + rest + (rest === 1 ? ' Nachricht' : ' Nachrichten');
+    $('meter-kurz').textContent = istLp()
+      ? Number(v.monatUsd || 0).toFixed(2) + ' / ' + v.monatBudget + ' USD'
+      : rest + ' übrig heute';
+    $('meter-fill').style.width = prozent + '%';
+    $('meter-bar').title = 'Monatsguthaben zu ' + prozent + ' % gebraucht';
+    box.className = 'meter' + (prozent >= 100 || rest === 0 ? ' voll' : (prozent >= 80 ? ' warn' : ''));
+  }
+
+  function renderListe() {
+    var ul = $('chatliste');
+    if (!S.chats.length) { ul.innerHTML = '<li class="liste-leer">Noch keine Chats. Stell einfach deine erste Frage.</li>'; return; }
+    ul.innerHTML = S.chats.map(function (c) {
+      return '<li><button type="button" class="chat-item' + (c.id === S.aktivId ? ' aktiv' : '') + '" data-chat="' + esc(c.id) + '">' +
+        '<span class="t">' + esc(c.titel || 'Neuer Chat') + '</span>' +
+        '<span class="m"><span class="dot" style="background:' + fachFarbe(c.fach) + '"></span>' + esc(c.fach) + ' · ' + zeitText(c.geaendert) + '</span></button>' +
+        '<button type="button" class="chat-del" data-del="' + esc(c.id) + '" aria-label="Chat löschen" title="Chat löschen">×</button></li>';
+    }).join('');
+  }
+
+  function renderChat() {
+    var c = aktuellerChat();
+    var badge = $('fach-badge');
+    badge.innerHTML = '<span class="dot" style="background:' + fachFarbe(c.fach) + '"></span>' + esc(c.fach);
+    $('chat-title').textContent = c.titel || 'Neuer Chat';
+    var box = $('verlauf-in');
+    if (!c.nachrichten.length) { box.innerHTML = leerAnsicht(c); return; }
+    var html = c.nachrichten.map(function (m, i) {
+      if (m.rolle === 'user') {
+        var foto = m._vorschau ? '<img class="foto-mini" src="' + m._vorschau + '" alt="Gesendetes Foto">' : (m.bild ? '<span class="foto-chip">📷 Foto</span>' + (m.text ? '\n' : '') : '');
+        return '<div class="msg msg-user"><div class="bubble">' + foto + esc(m.text) + '</div></div>';
+      }
+      return '<div class="msg msg-ai"><div class="msg-label">KI-Coach<span class="ki">KI</span></div>' +
+        '<div class="bubble md">' + md(m.text) + (m.gekuerzt ? '<span class="gekuerzt">Die Antwort wurde gekürzt. Schreib «weiter», wenn du mehr willst.</span>' : '') + '</div>' +
+        '<div class="msg-actions">' + (m.gemeldet ? '<span class="gemeldet">Gemeldet ✓</span>' : '<button type="button" data-melden="' + i + '">Antwort melden</button>') +
+        (istLp() ? '<button type="button" data-kopieren="' + i + '">Kopieren</button>' : '') + '</div></div>';
+    }).join('');
+    if (S.laeuft) html += '<div class="msg msg-ai" id="tippt"><div class="msg-label">KI-Coach<span class="ki">KI</span></div><div class="bubble tippt" aria-label="Der KI-Coach schreibt"><i></i><i></i><i></i><small id="tippt-lang" hidden>Dauert etwas länger …</small></div></div>';
+    box.innerHTML = html;
+  }
+
+  function leerAnsicht(c) {
+    var lp = istLp();
+    var vorname = (S.nutzer && S.nutzer.vorname) || '';
+    var chips = FAECHER.filter(function (f) { return lp || !f.lp; }).map(function (f) {
+      return '<button type="button" class="chip' + (f.n === c.fach ? ' an' : '') + '" data-fach="' + esc(f.n) + '" aria-pressed="' + (f.n === c.fach) + '">' + esc(f.n) + '</button>';
+    }).join('');
+    var vor = (VORSCHLAEGE[lp ? 'Lehrperson' : 'Schüler'] || []).map(function (v, i) {
+      return '<button type="button" class="vorschlag" data-vorschlag="' + i + '"><b>' + (v.foto ? '📷' : '→') + '</b>' + esc(v.t) + '</button>';
+    }).join('');
+    return '<div class="leer"><h2>Hallo ' + esc(vorname) + '! <span>' + (lp ? 'Woran arbeitest du?' : 'Wobei kann ich helfen?') + '</span></h2>' +
+      '<p>' + (lp ? 'Wähl ein Thema und beschreib, was du brauchst. Vollständige Lösungen sind für Lehrpersonen erlaubt.' : 'Wähl zuerst dein Fach. Dann schreib deine Frage oder schick ein Foto deiner Aufgabe.') + '</p>' +
+      '<p class="leer-label">' + (lp ? 'Thema' : 'Fach') + '</p><div role="group" aria-label="Fach wählen">' + chips + '</div>' +
+      '<p class="leer-label">Zum Beispiel</p>' + vor +
+      (lp ? '' : '<p class="leer-tipp">Ich gebe dir Tipps und Leitfragen, damit du selbst auf die Lösung kommst. So bleibt es auch in der Prüfung hängen.</p>') +
+      '</div>';
+  }
+
+  function zeigeHinweis(text, art, nochmals) {
+    var h = $('hinweis');
+    if (!text) { h.hidden = true; h.innerHTML = ''; return; }
+    h.className = 'hinweis' + (art === 'info' ? ' info' : '');
+    h.innerHTML = esc(text) + (nochmals ? '<button type="button" id="btn-nochmals">Nochmals versuchen</button>' : '');
+    h.hidden = false;
+  }
+
+  /* ===== Senden ===== */
+  function verlaufFuerServer(c) {
+    var n = c.nachrichten.slice(-KONFIG.MAX_VERLAUF);
+    return n.map(function (m, i) {
+      var text = m.text || '';
+      if (m.bild && i < n.length - 1) text = (text ? text + '\n' : '') + '[Foto gesendet]';
+      return { rolle: m.rolle, text: text };
+    });
+  }
+
+  function senden() {
+    if (S.laeuft) return;
+    var feld = $('eingabe');
+    var text = feld.value.replace(/\s+$/, '');
+    if (!text.trim() && !S.bild) { try { feld.focus(); } catch (e) {} return; }
+    var c = aktuellerChat();
+    if (!S.aktivId) { S.chats.unshift(c); S.aktivId = c.id; S.entwurf = null; }
+    var nachricht = { rolle: 'user', text: text.trim(), zeit: Date.now(), bild: !!S.bild };
+    if (S.bild) nachricht._vorschau = S.bild.vorschau;
+    c.nachrichten.push(nachricht);
+    if (!c.titel) c.titel = (text.trim() || 'Foto einer Aufgabe').replace(/\s+/g, ' ').slice(0, 50);
+    c.geaendert = Date.now();
+    var anfrage = { aktion: 'chat', code: S.code, fach: c.fach, nachrichten: verlaufFuerServer(c),
+      bild: S.bild ? { typ: S.bild.typ, daten: S.bild.daten } : null };
+    feld.value = ''; passeHoeheAn();
+    entferneBild();
+    speichereChats();
+    schicke(c, anfrage);
+  }
+
+  function schicke(c, anfrage) {
+    S.letzteAnfrage = { chatId: c.id, anfrage: anfrage };
+    S.laeuft = true;
+    $('btn-senden').disabled = true;
+    zeigeHinweis('');
+    renderListe(); renderChat(); scrolleNachUnten(true);
+    var langsam = setTimeout(function () { var t = $('tippt-lang'); if (t) t.hidden = false; }, 15000);
+    api(anfrage).then(function (d) {
+      clearTimeout(langsam);
+      S.laeuft = false; $('btn-senden').disabled = false;
+      if (d && d.ok) {
+        c.nachrichten.push({ rolle: 'assistant', text: d.antwort, zeit: Date.now(), gekuerzt: !!d.abgeschnitten });
+        $('ansage').textContent = 'Antwort vom KI-Coach: ' + String(d.antwort || '').slice(0, 300);
+        c.geaendert = Date.now();
+        S.letzteAnfrage = null;
+        if (d.verbrauch) { S.verbrauch = d.verbrauch; speichereSitzung(); renderMeter(); }
+        speichereChats();
+        renderListe(); renderChat(); scrolleNachUnten(true);
+        return;
+      }
+      renderChat();
+      var f = (d && d.fehler) || '';
+      if (f === 'CODE') { abmelden(false, 'Dein Code ist nicht mehr aktiv. Frag das Team von Lerncoaching ZH.'); return; }
+      var nochmals = ['SERVER', 'NETZ', 'UEBERLASTET', 'ANDRANG', 'API', 'SCHNELL'].indexOf(f) >= 0;
+      zeigeHinweis((d && d.meldung) || 'Das hat nicht geklappt.', (f === 'PAUSE' || f === 'TAG' || f === 'BUDGET' || f === 'BUDGET_GESAMT' || f === 'GUTHABEN') ? 'info' : '', nochmals);
+      if (f === 'TAG' || f === 'BUDGET') { if (S.verbrauch && f === 'TAG') S.verbrauch.heute = S.verbrauch.tagesLimit; if (S.verbrauch && f === 'BUDGET') S.verbrauch.monatProzent = 100; renderMeter(); }
+    }).catch(function (e) {
+      clearTimeout(langsam);
+      S.laeuft = false; $('btn-senden').disabled = false;
+      renderChat();
+      zeigeHinweis(netzMeldung(e), '', true);
+    });
+  }
+
+  function nochmals() {
+    var l = S.letzteAnfrage;
+    if (!l || S.laeuft) return;
+    var c = null;
+    for (var i = 0; i < S.chats.length; i++) if (S.chats[i].id === l.chatId) c = S.chats[i];
+    if (!c) return;
+    if (S.aktivId !== c.id) oeffneChat(c.id);
+    schicke(c, l.anfrage);
+  }
+
+  /* ===== Fotos ===== */
+  function bildVorbereiten(datei) {
+    return new Promise(function (resolve, reject) {
+      if (!datei || (datei.type && datei.type.indexOf('image/') !== 0)) { reject(new Error('TYP')); return; }
+      var URLx = window.URL || window.webkitURL;
+      var url = URLx.createObjectURL(datei);
+      var img = new Image();
+      img.onload = function () {
+        try {
+          var max = 1568, w = img.naturalWidth || img.width, h = img.naturalHeight || img.height;
+          var f = Math.min(1, max / Math.max(w, h));
+          var cw = Math.max(1, Math.round(w * f)), ch = Math.max(1, Math.round(h * f));
+          var cv = document.createElement('canvas'); cv.width = cw; cv.height = ch;
+          var ctx = cv.getContext('2d'); ctx.fillStyle = '#ffffff'; ctx.fillRect(0, 0, cw, ch); ctx.drawImage(img, 0, 0, cw, ch);
+          var gross = cv.toDataURL('image/jpeg', 0.82);
+          var klein = document.createElement('canvas'), kf = Math.min(1, 360 / Math.max(cw, ch));
+          klein.width = Math.max(1, Math.round(cw * kf)); klein.height = Math.max(1, Math.round(ch * kf));
+          klein.getContext('2d').drawImage(cv, 0, 0, klein.width, klein.height);
+          URLx.revokeObjectURL(url);
+          resolve({ typ: 'image/jpeg', daten: gross.split(',')[1], vorschau: klein.toDataURL('image/jpeg', 0.7) });
+        } catch (e) { reject(e); }
+      };
+      img.onerror = function () { URLx.revokeObjectURL(url); reject(new Error('LADEN')); };
+      img.src = url;
+    });
+  }
+  function entferneBild() {
+    S.bild = null;
+    $('bild-vorschau').hidden = true;
+    $('bild-img').removeAttribute('src');
+    $('datei').value = '';
+  }
+
+  /* ===== Fenster ===== */
+  function oeffne(id) {
+    S.zuletztFokus = document.activeElement;
+    var m = $(id); m.hidden = false;
+    var ziel = m.querySelector('[data-close]');
+    try { ziel.focus(); } catch (e) {}
+  }
+  function schliesse(m) {
+    m.hidden = true;
+    if (S.zuletztFokus && S.zuletztFokus.focus) { try { S.zuletztFokus.focus(); } catch (e) {} }
+  }
+  function schliesseAlle() { alle('.modal').forEach(function (m) { m.hidden = true; }); }
+  function oeffneSidebar() { $('sidebar').className = 'offen'; $('scrim').hidden = false; $('btn-menu').setAttribute('aria-expanded', 'true'); }
+  function schliesseSidebar() { $('sidebar').className = ''; $('scrim').hidden = true; $('btn-menu').setAttribute('aria-expanded', 'false'); }
+
+  /* ===== Diverses ===== */
+  function passeHoeheAn() {
+    var t = $('eingabe');
+    t.style.height = 'auto';
+    t.style.height = Math.min(t.scrollHeight, 160) + 'px';
+  }
+  function setzeVh() {
+    var h = (window.visualViewport && window.visualViewport.height) || window.innerHeight;
+    document.documentElement.style.setProperty('--vh', (h * 0.01) + 'px');
+  }
+  function kopiere(text, knopf) {
+    function fertig() { var alt = knopf.textContent; knopf.textContent = 'Kopiert ✓'; setTimeout(function () { knopf.textContent = alt; }, 1500); }
+    if (navigator.clipboard && navigator.clipboard.writeText) { navigator.clipboard.writeText(text).then(fertig, function () {}); return; }
+    var ta = document.createElement('textarea'); ta.value = text; ta.setAttribute('readonly', ''); ta.style.position = 'absolute'; ta.style.left = '-9999px';
+    document.body.appendChild(ta); ta.select();
+    try { document.execCommand('copy'); fertig(); } catch (e) {}
+    document.body.removeChild(ta);
+  }
+
+  /* ===== Ereignisse ===== */
+  function verbinde() {
+    $('login-form').addEventListener('submit', function (ev) {
+      ev.preventDefault();
+      var code = normCode($('code').value);
+      if (code.length < 4) { $('login-err').textContent = 'Bitte gib deinen Code ein, z.B. LC-AB12-CD34.'; return; }
+      var knopf = $('btn-login');
+      knopf.disabled = true; knopf.textContent = 'Prüfe …'; $('login-err').textContent = '';
+      api({ aktion: 'login', code: code }).then(function (d) {
+        knopf.disabled = false; knopf.textContent = 'Anmelden';
+        if (!d || !d.ok) { $('login-err').textContent = (d && d.meldung) || 'Anmeldung fehlgeschlagen.'; return; }
+        S.dauerhaft = $('bleiben').checked;
+        S.code = code; S.nutzer = d.nutzer; S.verbrauch = d.verbrauch;
+        speichereSitzung();
+        anmelden(code, d.nutzer, d.verbrauch);
+        if (d.status === 'PAUSE') zeigeHinweis('Der KI-Coach ist gerade pausiert. Bitte versuche es später nochmals.', 'info');
+      }).catch(function (e) {
+        knopf.disabled = false; knopf.textContent = 'Anmelden';
+        $('login-err').textContent = netzMeldung(e);
+      });
+    });
+    $('code').addEventListener('blur', function () {
+      var n = normCode(this.value);
+      if (n.length === 10) this.value = zeigeCode(n);
+    });
+
+    $('composer').addEventListener('submit', function (ev) { ev.preventDefault(); senden(); });
+    $('eingabe').addEventListener('input', passeHoeheAn);
+    $('eingabe').addEventListener('keydown', function (ev) {
+      if (ev.key === 'Enter' && !ev.shiftKey && !ev.isComposing && !istTouch()) { ev.preventDefault(); senden(); }
+    });
+    $('btn-foto').addEventListener('click', function () { $('datei').click(); });
+    $('datei').addEventListener('change', function () {
+      var f = this.files && this.files[0];
+      if (!f) return;
+      zeigeHinweis('');
+      bildVorbereiten(f).then(function (b) {
+        S.bild = b;
+        $('bild-img').src = b.vorschau;
+        $('bild-vorschau').hidden = false;
+        try { $('eingabe').focus(); } catch (e) {}
+      }).catch(function () {
+        entferneBild();
+        zeigeHinweis('Dieses Foto konnte ich nicht öffnen. Bitte ein anderes Foto (JPG oder PNG) wählen.');
+      });
+    });
+    $('bild-weg').addEventListener('click', entferneBild);
+    $('btn-neu').addEventListener('click', neuerChat);
+    $('btn-menu').addEventListener('click', function () { if ($('sidebar').className === 'offen') schliesseSidebar(); else oeffneSidebar(); });
+    $('scrim').addEventListener('click', schliesseSidebar);
+    $('btn-abmelden').addEventListener('click', function () { abmelden(false); });
+    $('btn-abmelden-loeschen').addEventListener('click', function () { abmelden(true); });
+
+    $('btn-melden').addEventListener('click', function () {
+      var c = aktuellerChat(), i = S.meldenIdx;
+      if (!c || i < 0 || !c.nachrichten[i]) return;
+      var knopf = this;
+      var grund = (document.querySelector('input[name="grund"]:checked') || {}).value || 'Etwas anderes';
+      var frage = '';
+      for (var j = i - 1; j >= 0; j--) if (c.nachrichten[j].rolle === 'user') { frage = c.nachrichten[j].text; break; }
+      knopf.disabled = true;
+      api({ aktion: 'melden', code: S.code, grund: grund, kommentar: $('melden-text').value, frage: frage, antwort: c.nachrichten[i].text })
+        .then(function (d) {
+          knopf.disabled = false;
+          if (d && (d.ok || d.fehler === 'SCHNELL')) {
+            c.nachrichten[i].gemeldet = true; speichereChats(); renderChat();
+            $('melden-status').textContent = 'Danke! Deine Meldung ist angekommen.';
+            setTimeout(function () { schliesse($('m-melden')); }, 1300);
+          } else {
+            $('melden-status').textContent = (d && d.meldung) || 'Das hat nicht geklappt. Bitte nochmals versuchen.';
+          }
+        })
+        .catch(function (e) { knopf.disabled = false; $('melden-status').textContent = netzMeldung(e); });
+    });
+
+    document.addEventListener('click', function (ev) {
+      var el = ev.target;
+      while (el && el !== document && !(el.getAttribute && (el.hasAttribute('data-open') || el.hasAttribute('data-close') || el.hasAttribute('data-chat') ||
+        el.hasAttribute('data-del') || el.hasAttribute('data-fach') || el.hasAttribute('data-vorschlag') || el.hasAttribute('data-melden') ||
+        el.hasAttribute('data-kopieren') || el.id === 'btn-nochmals' || (el.className === 'modal' && el === ev.target)))) el = el.parentNode;
+      if (!el || el === document) return;
+      if (el.id === 'btn-nochmals') { nochmals(); return; }
+      if (el.className === 'modal') { schliesse(el); return; }
+      if (el.hasAttribute('data-open')) { oeffne(el.getAttribute('data-open')); return; }
+      if (el.hasAttribute('data-close')) { var m = el; while (m && m.className !== 'modal') m = m.parentNode; if (m) schliesse(m); return; }
+      if (el.hasAttribute('data-chat')) { oeffneChat(el.getAttribute('data-chat')); return; }
+      if (el.hasAttribute('data-del')) {
+        if (el.className.indexOf('sicher') < 0) {
+          el.className = 'chat-del sicher'; el.textContent = 'Löschen?';
+          setTimeout(function () { if (el.parentNode) { el.className = 'chat-del'; el.textContent = '×'; } }, 3000);
+          return;
+        }
+        var id = el.getAttribute('data-del');
+        S.chats = S.chats.filter(function (c) { return c.id !== id; });
+        speichereChats();
+        if (S.aktivId === id) neuerChat(); else renderListe();
+        return;
+      }
+      if (el.hasAttribute('data-fach')) {
+        var c = aktuellerChat();
+        if (c && !c.nachrichten.length) { c.fach = el.getAttribute('data-fach'); S.fachWahl = c.fach; renderChat(); }
+        return;
+      }
+      if (el.hasAttribute('data-vorschlag')) {
+        var v = (VORSCHLAEGE[istLp() ? 'Lehrperson' : 'Schüler'] || [])[+el.getAttribute('data-vorschlag')];
+        if (!v) return;
+        $('eingabe').value = v.z; passeHoeheAn();
+        if (v.foto) $('datei').click();
+        try { $('eingabe').focus(); } catch (e) {}
+        return;
+      }
+      if (el.hasAttribute('data-melden')) {
+        S.meldenIdx = +el.getAttribute('data-melden');
+        $('melden-text').value = ''; $('melden-status').textContent = '';
+        oeffne('m-melden');
+        return;
+      }
+      if (el.hasAttribute('data-kopieren')) {
+        var ch = aktuellerChat(), msg = ch && ch.nachrichten[+el.getAttribute('data-kopieren')];
+        if (msg) kopiere(msg.text, el);
+      }
+    });
+
+    document.addEventListener('keydown', function (ev) {
+      if (ev.key !== 'Escape') return;
+      var offen = alle('.modal').filter(function (m) { return !m.hidden; });
+      if (offen.length) { schliesse(offen[offen.length - 1]); return; }
+      schliesseSidebar();
+    });
+
+    window.addEventListener('resize', setzeVh);
+    if (window.visualViewport) window.visualViewport.addEventListener('resize', setzeVh);
+
+    alle('img[data-logo]').forEach(function (img) {
+      function ersetze() { img.hidden = true; var t = img.nextElementSibling; if (t) t.hidden = false; }
+      img.addEventListener('error', ersetze);
+      if (img.complete && !img.naturalWidth) ersetze();
+    });
+  }
+
+  /* ===== Start ===== */
+  function start() {
+    alle('[data-tage]').forEach(function (el) { el.textContent = String(KONFIG.PROTOKOLL_TAGE); });
+    verbinde();
+    setzeVh();
+    var sitz = lies(SITZUNG, true) || lies(SITZUNG, false);
+    if (sitz && sitz.code && sitz.nutzer) {
+      S.dauerhaft = sitz.dauerhaft !== false;
+      anmelden(sitz.code, sitz.nutzer, sitz.verbrauch);
+      api({ aktion: 'login', code: sitz.code }).then(function (d) {
+        if (d && d.ok) {
+          S.nutzer = d.nutzer; S.verbrauch = d.verbrauch; speichereSitzung(); renderMeter();
+          $('who-name').textContent = d.nutzer.name;
+          if (d.status === 'PAUSE') zeigeHinweis('Der KI-Coach ist gerade pausiert. Bitte versuche es später nochmals.', 'info');
+        } else if (d && d.fehler === 'CODE') {
+          abmelden(false, 'Dein Code ist nicht mehr aktiv. Frag das Team von Lerncoaching ZH.');
+        }
+      }).catch(function () {});
+    } else {
+      zeigeLogin();
+    }
+  }
+
+  start();
+})();
+</script>
+</body>
+</html>

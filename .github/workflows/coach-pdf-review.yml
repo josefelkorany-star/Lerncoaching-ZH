@@ -1,0 +1,40 @@
+name: Coach – PDF and isolated cloud browser
+on:
+  push:
+    branches: [codex/ki-coach-pdf-20261117, main]
+    paths: [coach.html, _ki-coach/**, assets/vendor/**, .github/workflows/coach-pdf-review.yml]
+  workflow_dispatch:
+    inputs:
+      live:
+        description: Read-only check of the published Coach (no real login or model call)
+        type: boolean
+        default: false
+permissions:
+  contents: read
+jobs:
+  checks:
+    if: github.repository == 'josefelkorany-star/Lerncoaching-ZH' && github.event.repository.private == false
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    env:
+      COACH_DEPENDENCY_ROOT: ${{ runner.temp }}/coach-tools
+      PLAYWRIGHT_BROWSERS_PATH: ${{ runner.temp }}/coach-browsers
+      COACH_CLOUD_QA: 'true'
+      COACH_LIVE_QA: ${{ (inputs.live || github.ref == 'refs/heads/main') && 'true' || 'false' }}
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+      - name: Install temporary pinned test tools
+        run: |
+          npm install --prefix "$COACH_DEPENDENCY_ROOT" --no-package-lock --ignore-scripts --no-audit --no-fund playwright@1.65.1 linkedom@0.18.12
+          node "$COACH_DEPENDENCY_ROOT/node_modules/playwright/cli.js" install --with-deps chromium
+      - name: Run all Coach regression tests
+        run: node --test _ki-coach/tests/*.test.mjs
+      - name: Test attachments in isolated cloud Chromium
+        run: node _ki-coach/tests/cloud-browser.cjs
+      # Standard free public-repository runner. No credentials, artifacts,
+      # private data, model calls, repository writes, or deployments.

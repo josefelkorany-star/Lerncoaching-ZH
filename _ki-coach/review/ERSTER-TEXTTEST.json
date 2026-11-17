@@ -1,0 +1,21 @@
+{
+  "status": "Historischer Texttestplan; nicht als aktuelle Ausführungsfreigabe verwenden",
+  "person": {
+    "name": "Testkind Birke",
+    "rolle": "Schüler",
+    "stufe": "5. Primar"
+  },
+  "fach": "Mathematik",
+  "text": "Wie rechne ich 3/4 + 1/8? Gib mir bitte nur den ersten Schritt.",
+  "bilder": 0,
+  "vorherigeNachrichten": 0,
+  "zusatzanweisung": "",
+  "modell": "claude-sonnet-5-5",
+  "maximaleBezahlteAufrufe": 1,
+  "maximaleAusgabeTokens": 900,
+  "kalkulierteEingabeReserveTokens": 1032,
+  "kalkulierteReserveMikroUSD": 11064,
+  "geplanteKostenobergrenzeUSD": 0.025,
+  "hinweis": "Lokales Rechenbeispiel mit erfundener count_tokens-Antwort. Vor einem echten Aufruf ist die kostenlose Anbieterzählung verbindlich; ohne gültige Antwort wird nicht gesendet. Reserve: gezählte Eingabe plus max. 32 Tokens oder 2 Prozent Puffer und maximale Ausgabe. Keine automatische Wiederholung.",
+  "zaehlFixtureEingabeTokens": 1000
+}
