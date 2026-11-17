@@ -40,11 +40,11 @@ function fixture(role='parent'){
     derived:{summary:{level:3,progress:1,present:1,absent:1,unrecorded:2},priorities:[],
       subjects:[{id:'math-now',name:'Mathematik',topic:'Brüche',level:3,target:4}],competencies:[],
       subjectPeriods:[{id:'math-old',name:'Mathematik zuvor',active_from:'2026-10-01',active_until:'2026-11-07'},{id:'math-now',name:'Mathematik',active_from:'2026-11-08',active_until:null}],
-      history:[{date:'2026-10-24',value:2,status:'rated'},{date:'2026-10-31',value:null,status:'unrated'},{date:'2026-11-07',value:3,status:'rated'}],
+      history:[{date:'2026-10-24',value:2,status:'rated'},{date:'2026-10-31',value:null,status:'absent'},{date:'2026-11-07',value:3,status:'rated'}],
       attendance:[{date:'2026-11-07',status:'present'},{date:'2026-11-14',status:'missing'}],
       feedback:[{course_day:'2026-11-07',subject_id:'math-old',subject:'Mathematik zuvor',worked_on:'Gemeinsam geübt',went_well:'Erklärt',next_step:'Weiterüben',arrival_review:false,pause_review:true,understanding:3,effort:4,parent_note:'PARENT_SECRET',new_level:3}],
       internal:[{course_day:'2026-11-07',note:'TEAM_SECRET'}],events:[],
-      team:{lastCourseDay:'2026-11-14',openFeedback:1,examCount:0,absenceCount:0,rows:[{id:'child',display_name:'Testkind',feedbackStatus:'Offen',absence:false,attendanceStatus:'missing',priority:'In Arbeit'}]}
+      team:{lastCourseDay:'2026-11-14',openFeedback:1,feedbackCount:0,feedbackTotal:1,attendanceOpen:1,examCount:0,absenceCount:0,rows:[{id:'child',display_name:'Testkind',feedbackStatus:'Anwesenheit offen',absence:false,attendanceStatus:'missing',priority:'In Arbeit'}]}
     },admin:{families:[{id:'family',label:'Testfamilie'}],profiles:[{id:'parent',display_name:'Testeltern',username:'testeltern',role:'parent',active:true,core_team:false}],students:[],subjects:[],competencies:[],appointments:[],grants:[]}
   };
 }
@@ -106,11 +106,16 @@ test('chart supports keyboard crosshair and an equivalent table, leaving null va
   const {root,render,event}=setup();render(fixture());const chart=root.querySelector('#portal-chart');assert.equal(chart.getAttribute('tabindex'),'0');assert.equal(root.querySelectorAll('.chart-table tbody tr').length,3);
   assert.equal(chart.querySelectorAll('polyline').length,2);event(chart,'keydown',{key:'End'});assert.match(root.querySelector('#chart-readout').textContent,/07\.11\.2026.*3 von 5/);event(chart,'keydown',{key:'Home'});assert.match(root.querySelector('#chart-readout').textContent,/24\.10\.2026.*2 von 5/);
 });
-test('only admin receives constrained management forms and not account-creation controls',()=>{
+test('only admin receives constrained management and account controls, never admin creation',()=>{
   const {root,render}=setup(),vm=fixture('admin');vm.selectedStudent=null;render(vm);
   const actions=[...root.querySelectorAll('[data-admin-action]')].map(form=>form.dataset.adminAction);
   assert.deepEqual(actions,['family','student','profile','access_grant','revoke_access','subject','close_subject','competency','close_competency','competency_level','appointment','delete_appointment']);
   assert.equal(root.querySelector('#ap-role option[value=admin]'),null);assert.equal(root.querySelector('#ap-username').hasAttribute('readonly'),true);assert.equal(root.querySelector('#aa-title').getAttribute('maxlength'),'250');
+  assert.deepEqual([...root.querySelectorAll('[data-account-action]')].map(form=>form.dataset.accountAction),['create','reset','disable','enable']);
+  assert.equal(root.querySelector('#account-role option[value=admin]'),null);
+  assert.equal(root.querySelector('#ap-active'),null);
+  assert.match(root.textContent,/Passwort zurücksetzen und Konto sperren/);
+  vm.profile.role='teacher';render(vm);assert.equal(root.querySelector('[data-account-action]'),null);
 });
 test('child selection clears the prior family view before requesting another child',async()=>{
   let selected;const {root,render,event}=setup({onSelectStudent:async id=>{selected=id;}});render(fixture());event(root.querySelector('[data-child]'),'click');await tick();
@@ -125,4 +130,65 @@ test('admin submits explicit constrained action and typed fields',async()=>{
 
 test('meter levels use CSP-safe fixed classes without inline styles',()=>{
   const {root,render}=setup();render(fixture());assert.equal(root.querySelector('[style]'),null);assert.ok(root.querySelector('.fill.level-3'));assert.ok(root.querySelector('.target.target-4'));
+});
+
+test('absence marker, table, keyboard and pointer expose the missing Saturday without a measured value',()=>{
+  const {root,render,event}=setup();render(fixture());const chart=root.querySelector('#portal-chart'),readout=root.querySelector('#chart-readout');
+  assert.equal(chart.querySelectorAll('.absence-marker').length,1);
+  assert.equal(chart.querySelector('.absence-label').textContent,'Gefehlt');
+  assert.match(root.querySelectorAll('.chart-table tbody tr')[1].textContent,/31\.10\.2026.*Gefehlt/);
+  event(chart,'keydown',{key:'Home'});event(chart,'keydown',{key:'ArrowRight'});
+  assert.match(readout.textContent,/31\.10\.2026 · Gefehlt/);assert.doesNotMatch(readout.textContent,/von 5/);
+  assert.equal(chart.querySelector('.active-point').getAttribute('visibility'),'hidden');
+  chart.getBoundingClientRect=()=>({left:0,width:760});event(chart,'pointermove',{clientX:387.5});assert.match(readout.textContent,/31\.10\.2026 · Gefehlt/);
+  event(chart,'keydown',{key:'ArrowRight'});assert.match(readout.textContent,/07\.11\.2026.*3 von 5/);
+});
+
+test('an all-absence history remains navigable and has no trend or points',()=>{
+  const {root,render,event}=setup(),vm=fixture();vm.derived.history=vm.derived.history.map(row=>({...row,value:null,status:'absent'}));render(vm);
+  const chart=root.querySelector('#portal-chart');assert.ok(chart);assert.equal(chart.querySelectorAll('.trend,.point').length,0);assert.equal(chart.querySelectorAll('.absence-marker').length,3);
+  event(chart,'keydown',{key:'End'});assert.match(root.querySelector('#chart-readout').textContent,/07\.11\.2026 · Gefehlt/);
+});
+
+test('team counter and each of the four states are visible without inferring presence',()=>{
+  const {root,render}=setup(),vm=fixture('teacher');vm.selectedStudent=null;vm.derived.team.feedbackCount=1;vm.derived.team.feedbackTotal=2;
+  vm.derived.team.rows=['Anwesenheit offen','Gefehlt','Da, Feedback offen','Feedback erfasst'].map((feedbackStatus,i)=>({id:String(i),display_name:'Test '+i,feedbackStatus,attendanceStatus:['missing','absent','present','present'][i]}));
+  render(vm);assert.match(root.textContent,/1 von 2 erfasst/);for(const status of ['Anwesenheit offen','Gefehlt','Da, Feedback offen','Feedback erfasst'])assert.ok(root.querySelector('.team-table').textContent.includes(status));
+});
+
+test('account creation shows escaped random password only once and clears it on a new render',async()=>{
+  let sent;const {root,render,event}=setup({onAccountAction:async payload=>{sent=payload;return {ok:true,username:'test.neu',initial_password:'test-only-<secret>'};}}),vm=fixture('admin');vm.selectedStudent=null;render(vm);
+  root.querySelector('#account-username').value='test.neu';root.querySelector('#account-name').value='Testperson';root.querySelector('#account-role').value='parent';
+  event(root.querySelector('[data-account-action=create]'),'submit');await tick();
+  assert.deepEqual(sent,{action:'create',username:'test.neu',display_name:'Testperson',role:'parent'});
+  assert.equal(root.querySelector('.one-time-password').textContent,'test-only-<secret>');assert.equal(root.querySelector('secret'),null);
+  assert.equal(root.querySelector('.one-time-password').getAttribute('value'),null);
+  render(vm);assert.equal(root.querySelector('.one-time-password'),null);assert.doesNotMatch(root.textContent,/test-only/);
+});
+
+test('account password confirmation can be dismissed and repeated results never redisplay a password',async()=>{
+  let replayed=false;const {root,render,event}=setup({onAccountAction:async()=>({ok:true,username:'testeltern',initial_password:'test-only-reset',replayed})}),vm=fixture('admin');vm.selectedStudent=null;render(vm);
+  const form=root.querySelector('[data-account-action=reset]');root.querySelector('#account-reset').value='parent';event(form,'submit');await tick();assert.match(root.textContent,/test-only-reset/);
+  event(root.querySelector('.account-secret'),'keydown',{key:'Escape'});assert.doesNotMatch(root.textContent,/test-only-reset/);
+  replayed=true;event(form,'submit');await tick();assert.equal(root.querySelector('.one-time-password'),null);assert.match(root.textContent,/nicht erneut ausgegeben/);
+});
+
+test('late account result after logout cannot reveal a one-time password',async()=>{
+  let confirm;const {root,ui,render,event}=setup({onAccountAction:()=>new Promise(resolve=>{confirm=resolve;})}),vm=fixture('admin');vm.selectedStudent=null;render(vm);
+  event(root.querySelector('[data-account-action=create]'),'submit');ui.clear();confirm({ok:true,initial_password:'test-only-late'});await tick();assert.doesNotMatch(root.textContent,/test-only-late/);assert.equal(root.querySelector('.account-secret'),null);
+});
+
+test('MFA setup isolates QR as an image and clears setup material after leaving',async()=>{
+  let sent;const {root,ui,event,shimForms}=setup({onVerifyMfa:async payload=>{sent=payload;return {ok:true};}});
+  ui.showMfaSetup({qr_code:'<svg xmlns="http://www.w3.org/2000/svg"><script>neverInline()</script></svg>',secret:'TEST-ONLY-MFA'});shimForms();
+  assert.equal(root.querySelector('script,svg'),null);assert.match(root.querySelector('.mfa-qr').getAttribute('src'),/^data:image\/svg\+xml/);assert.match(root.textContent,/TEST-ONLY-MFA/);assert.doesNotMatch(root.textContent,/Testkind/);
+  root.querySelector('#mfa-code').value='123456';event(root.querySelector('#portal-mfa'),'submit');await tick();assert.deepEqual(sent,{code:'123456'});assert.equal(root.querySelector('#mfa-code').value,'');
+  ui.clear();assert.doesNotMatch(root.textContent,/TEST-ONLY-MFA/);assert.equal(root.querySelector('img'),null);
+});
+
+test('admin recovery has no free recipient and validates the replacement password before submission',async()=>{
+  let requested,sent;const {root,ui,event,shimForms}=setup({onRequestRecovery:async payload=>{requested=payload;return {ok:true};},onCompleteRecovery:async payload=>{sent=payload;return {ok:true};}});
+  ui.showLogin();shimForms();event(root.querySelector('#portal-admin-recovery'),'submit');await tick();assert.deepEqual(requested,{});assert.equal(root.querySelector('#portal-admin-recovery input'),null);
+  ui.showRecovery();shimForms();const form=root.querySelector('#portal-recovery');root.querySelector('#recovery-password').value='short';root.querySelector('#recovery-confirm').value='short';event(form,'submit');await tick();assert.equal(sent,undefined);
+  root.querySelector('#recovery-password').value='test-only-password';root.querySelector('#recovery-confirm').value='test-only-password';root.querySelector('#recovery-totp').value='123456';event(form,'submit');await tick();assert.deepEqual(sent,{password:'test-only-password',totp:'123456'});assert.equal(root.querySelector('#recovery-password').value,'');
 });

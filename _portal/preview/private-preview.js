@@ -12,7 +12,9 @@ const api={
  changePassword:async()=>{throw new Error('Die Passwortänderung ist für den echten Supabase-Anmeldetest vorbereitet. Diese Vorschau besitzt keine echten Konten.');},
  getSnapshot:()=>request('snapshot'),
  saveSaturday:(student_id,course_day,payload)=>request('saturday',{student_id,course_day,payload}),
- reportExam:data=>request('exam',data),adminChange:(action,payload)=>request('admin',{action,payload})
+ reportExam:data=>request('exam',data),adminChange:(action,payload)=>request('admin',{action,payload}),
+ accountAction:payload=>request('accounts',payload),
+ requestRecovery:async()=>{throw new Error('Die private Vorschau versendet keine Wiederherstellungsnachricht. Echte Anmeldung, MFA und E-Mail-Zustellung bleiben gesondert zu prüfen.');}
 };
 const app=startPortal({root:document.querySelector('#portal-root'),api,courseDates:globalThis.LCCourseData.dates});
 const actors=await request('actors');

@@ -1,8 +1,18 @@
-# Portal v1 – Prüfnachweis vom 16.11.2026
+# Portal v1 – Prüfnachweis, aktualisiert 17.11.2026
 
 **Entwurf, nicht freigeschaltet. Keine echten Familien, Produktionsschlüssel oder Cloudinstanz.**
 
-Der gemeinsame Abschlusslauf bestand **75 von 75 Tests**: 28 Berechnungstests, 11 Anwendungssteuerungs-, 6 API-Client-, 16 DOM-, 10 PostgreSQL/RLS-Testgruppen, 1 private HTTP-Matrix und 3 Auslieferungsgrenzen-/Assettests. Ausführung mit Node und fest versionierten Paketen aus `_portal/package-lock.json`. Testdateien: [tests](tests), [db-tests/rls.test.mjs](db-tests/rls.test.mjs).
+Der aktualisierte gemeinsame Abschlusslauf bestand **116 von 116 Tests**: 31 Berechnungstests, 16 Anwendungssteuerungs-, 15 API-Client-, 24 DOM-, 16 PostgreSQL/RLS-Testgruppen, 8 Edge-Handler-/REST-Adapterprüfungen mit simuliertem Auth-Dienst, 1 private HTTP-Matrix, 3 Auslieferungsgrenzen-/Assettests und 2 Dashboard-/Kalender-SQL-Prüfungen. Ausführung mit Node 24 und fest versionierten Paketen aus `_portal/package-lock.json`. Testdateien: [tests](tests), [db-tests/rls.test.mjs](db-tests/rls.test.mjs), [edge-tests/accounts.test.mjs](edge-tests/accounts.test.mjs). Der vorherige Stand vom 16.11. bestand 75 Tests; der neue Lauf enthält diese Prüfbereiche und die gezielten Korrekturen.
+
+## Korrekturauftrag vom 17.11.
+
+- **Absenzlücke:** Nora Birke hat einen bewerteten Samstag, eine Absenz und wieder eine Bewertung. Die Absenz bleibt mit `value:null,status:absent`, unterbrochener Linie, «Gefehlt»-Markierung, Tabellenzeile, Zeigerdetail und Tastaturauswahl bestehen. Auch führende, abschliessende und mehrere aufeinanderfolgende Absenzen geprüft.
+- **Nur Anwesenheit:** Milo Birke ist am letzten Kurstag anwesend, besitzt aber keine leere Feedbackzeile. Er bleibt «Da, Feedback offen»; der Zähler ändert sich nicht. Interne Notiz allein genügt ebenfalls nicht. «Bearbeitet» plus «Nächster Schritt» oder eine Elternnotiz zählt genau einmal. SQL, Modell, DOM und der private HTTP-Weg wurden geprüft. Lina ist abwesend, Alex hat keine erfasste Anwesenheit; alle vier Teamzustände sind in der Vorschau vorhanden.
+- **Konten im Portal:** Zufälliges einmaliges Passwort, keine Rückgabe bei Wiederholung, gesondertes Sperren/Freigeben, serverseitige Admin-/AAL2-/Sitzungsprüfung, exakte Herkunft, Eingabe-/Ratenlimits, Audit ohne Zugangsdaten. Kein Dienstschlüssel im Frontend. Gleichzeitige Aktionen auf dasselbe Konto werden ausgeschlossen; Reset kann nicht durch ein parallel gestartetes Freigeben aufgehoben werden.
+- **Erste Einrichtung/Wiederherstellung:** Admin-Maillogin, MFA-Ersteinrichtung vor dem Datenzugriff, bestätigte Recovery-Identität und URL-Bereinigung geprüft mit simuliertem SDK. Persönliche Faktoren/Passwörter bleiben nur im aktuellen Speicher bzw. in der Anzeige; späte Antworten nach Abmeldung werden verworfen. Abmelden funktioniert auch bei fehlgeschlagener Bereinigung eines unfertigen Faktors. Die Anleitungsvorlage für den ersten Admin wurde in einer leeren PostgreSQL-Testdatenbank ausgeführt; falsche Mail und wiederholte Zuordnung werden abgewiesen.
+- **Bestehendes erhalten:** Ursprüngliche Migration unverändert, neue Korrekturen additiv. Öffentliche Website, Kalender, Formulare, PDFs, PR #5 und PR #7 unverändert; Portal-Konfiguration und Link bleiben ausgeschaltet. Kein Supabase-Projekt, kein echtes Konto, kein Merge, kein Deployment.
+
+Diese lokalen Prüfungen bestätigen keinen echten Supabase-Login, keine Cloud-Edge-Bereitstellung und kein Browserlayout. Die nachfolgende Rollenmatrix gilt weiterhin als SQL-Prüfung mit simulierten Claims.
 
 ## Rollen- und Zugriffsnachweis
 
@@ -38,6 +48,14 @@ Die folgende Matrix wurde mit derselben Migration und denselben RPCs in **PGlite
 
 ## Tatsächlich eingesetzte Subagents
 
+Für den Korrekturauftrag vom 17.11.:
+
+- `portal_revision_ui`: Modell, Oberfläche und zugehörige Tests; anschliessend unabhängiger Review der Root-Änderungen an API/Steuerung/MFA/Recovery.
+- `portal_revision_backend`: additive SQL-Migrationen, Edge Function, Testdaten, Notfallwerkzeug und angepasste, noch nicht ausgeführte echte Auth-Abnahme.
+- `portal_docs_review`: offizielle Dashboard-Quellen und verständliche Anleitung; unabhängiger Schlussreview von Backend, UI und API. Gefundener Reset-/Freigabekonflikt sowie irreführende Wiederholungsmeldungen wurden behoben und gezielt nachgeprüft. Zusätzlich SQL-Ausführung der Anleitungsvorlage und Kalenderabgleich.
+
+Die Hauptinstanz integrierte die API/Steuerung, private HTTP-Vorschau und Auslieferung und prüfte den vollständigen Diff sowie die gemeinsamen Tests. Frühere Subagent-Aufgaben vom 16.11.:
+
 - `portal_ui`: Oberfläche und 16 DOM-Tests; anschliessend unabhängige Modell-/API-/Datenbank- und private HTTP-/DOM-Kopplungsprüfung (11 zusätzliche Prüfgruppen).
 - `portal_database`: Migration, Rollenregeln, SQL-Fixtures, Betreiberwerkzeuge sowie Vorbereitung der echten Auth-/REST-Matrix.
 - `portal_calculations`: Berechnungen und 28 Tests; anschliessend unabhängiger Review anderer Komponenten mit 23 privaten Prüfungen (8 Anwendungssteuerung/Konfiguration, 12 SQL/RLS, 3 Operatorguards). Die eigene Modellarbeit wird dadurch nicht als unabhängig abgenommen bezeichnet.
@@ -49,6 +67,7 @@ Die privaten Berichte und die ursprüngliche Gestaltungsvorlage bleiben ausserha
 | Prüfung | Konkrete Grenze |
 |---|---|
 | Vollständiger Supabase-Auth-/PostgREST-Test | Docker/WSL und lokaler Supabase-Stack fehlen. [auth-integration.mjs](db-tests/auth-integration.mjs) ist vorbereitet und syntaxgeprüft, nicht gelaufen. Echte signierte Sitzungen, Registrierungssperre, TOTP, eigener Passwortwechsel, Reset und alte Auth-Sitzungen bleiben damit offen. |
+| Echte Edge-/Dashboard-/Recovery-Abnahme | Kein Supabase-Projekt und kein Edge-Deployment angelegt. Mock-/PGlite-Prüfungen ersetzen weder tatsächliche Gateway-JWT-Prüfung noch Mailzustellung, TOTP-Einrichtung und Recovery. Betreiber-Mailzustellung und tatsächliche Dashboardbedienung müssen im freigegebenen leeren Testprojekt geprüft werden. |
 | Browser/Smartphone/Desktop/Safari | Kein kostenfreier, nachweislich isolierter Cloud-Browsertest ausgeführt. Kein persönlicher Browser verwendet. Keine Layout-, Konsolen-, nativen Fokus-/Validierungs- oder Screenreader-Bestehensbehauptung. |
 | CI | Im bestehenden Repository sind keine CI-Prüfungen eingerichtet. Lokale Prüfungen sind keine bestandenen CI-Checks. |
 | Betrieb mit echten Familien | Datenschutz-/Aufbewahrungs-/Löschentscheidungen, tatsächliche Region/Dienstleister, kontrollierte Aliasdomain, erreichbarer Betreiber-Recoveryweg, MFA und gesonderte Freigabe fehlen. |

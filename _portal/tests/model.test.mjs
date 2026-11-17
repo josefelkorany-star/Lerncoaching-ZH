@@ -5,7 +5,7 @@ import vm from 'node:vm';
 import {
   isCalendarDate, zurichDate, dayDifference, courseDates,
   lastOfferedCourseDay, nextOfferedCourseDay, reachedCourseDays,
-  deriveStudent, deriveTeam, prioritiesFor
+  deriveStudent, deriveTeam, prioritiesFor, hasFamilyFeedback
 } from '../../portal-model.js';
 
 const context = vm.createContext({});
@@ -85,7 +85,10 @@ test('attendance is never inferred from feedback or subject assessments', () => 
   const model = deriveStudent(data, 'a', '2027-01-23', calendar);
   assert.deepEqual(model.attendance.map(row => row.status), ['present', 'absent', 'missing']);
   assert.deepEqual([model.summary.present, model.summary.absent, model.summary.unrecorded], [1, 1, 1]);
-  assert.ok(!model.history.some(point => point.date === '2027-01-16'));
+  assert.deepEqual(model.history.map(point => point.date), ['2027-01-09', '2027-01-16', '2027-01-23']);
+  assert.equal(model.history[1].value, null);
+  assert.equal(model.history[1].status, 'absent');
+  assert.match(model.history[1].detail, /Gefehlt/);
 });
 
 test('historical mean uses only subjects active and assessed at that point', () => {
@@ -234,14 +237,18 @@ test('team counts explicit absence separately and never expects feedback before 
   const result = deriveTeam(data, '2027-01-18', calendar);
   assert.equal(result.lastCourseDay, '2027-01-16'); assert.equal(result.absenceCount, 1); assert.equal(result.openFeedback, 0);
   assert.deepEqual(result.rows.map(row => row.id).sort(), ['a', 'new']);
-  assert.equal(result.rows.find(row => row.id === 'new').feedbackStatus, 'Noch kein Kurstag');
+  assert.equal(result.rows.find(row => row.id === 'new').feedbackStatus, 'Anwesenheit offen');
+  assert.equal(result.rows.find(row => row.id === 'new').feedbackEligible, false);
+  assert.equal(result.feedbackTotal, 0);
+  assert.equal(result.attendanceOpen, 0);
 });
 
 test('team feedback status uses the actual last offered Saturday, not a hardcoded date', () => {
   const data = fixture();
-  data.feedback.push({id: 'f', student_id: 'a', course_day: '2027-01-16', worked_on: 'Test'});
-  assert.equal(deriveTeam(data, '2027-01-16', calendar).rows[0].feedbackStatus, 'Erfasst');
-  assert.equal(deriveTeam(data, '2027-01-23', calendar).rows[0].feedbackStatus, 'Offen');
+  data.feedback.push({id: 'f', student_id: 'a', course_day: '2027-01-16', worked_on: 'Test', next_step: 'Weiter üben'});
+  data.attendance.push({student_id: 'a', course_day: '2027-01-16', status: 'present'});
+  assert.equal(deriveTeam(data, '2027-01-16', calendar).rows[0].feedbackStatus, 'Feedback erfasst');
+  assert.equal(deriveTeam(data, '2027-01-23', calendar).rows[0].feedbackStatus, 'Anwesenheit offen');
 });
 
 test('events include global appointments; student presentation never adds parent-only or internal fields', () => {
@@ -294,4 +301,46 @@ test('staff feedback editing retains exact recorded assessment and historical su
   data.profile.role = 'student';
   assert.deepEqual(deriveStudent(data, 'a', '2027-01-30', calendar).subjectPeriods, []);
   assert.ok(!('new_level' in deriveStudent(data, 'a', '2027-01-30', calendar).feedback[0]));
+});
+
+test('family feedback requires both shared fields or a real parent note, never just an internal note', () => {
+  for (const row of [{}, {worked_on: 'Aufgaben'}, {next_step: 'Üben'}, {worked_on: '  ', next_step: 'Üben'},
+    {worked_on: 'Aufgaben', next_step: '\n\t'}, {internal_note: 'Privater Teameintrag'}, {parent_note: '  '}]) {
+    assert.equal(hasFamilyFeedback(row), false);
+  }
+  assert.equal(hasFamilyFeedback({worked_on: ' Aufgaben ', next_step: ' Üben '}), true);
+  assert.equal(hasFamilyFeedback({}, 'Mit Eltern besprochen'), true);
+});
+
+test('team status and counters follow the same four states for attendance-only and complete feedback', () => {
+  const data = fixture(), day = '2027-01-23';
+  data.profile = {role: 'teacher', active: true, core_team: true};
+  data.students = ['missing', 'absent', 'only-attendance', 'internal', 'partial', 'complete', 'parent-only']
+    .map(id => ({...student, id, display_name: id}));
+  data.attendance = data.students.filter(row => row.id !== 'missing').map(row => ({student_id: row.id, course_day: day,
+    status: row.id === 'absent' ? 'absent' : 'present'}));
+  data.feedback = [{student_id: 'complete', course_day: day, worked_on: 'Aufgaben', next_step: 'Wiederholen'},
+    {student_id: 'partial', course_day: day, worked_on: 'Aufgaben', next_step: ' '},
+    {student_id: 'missing', course_day: day, worked_on: 'Altbestand', next_step: 'Keine Anwesenheit'}];
+  data.feedback_internal = [{student_id: 'internal', course_day: day, note: 'Nur Team'}];
+  data.feedback_parent = [{student_id: 'parent-only', course_day: day, note: 'Mit Eltern besprochen'}];
+  const team = deriveTeam(data, day, calendar), byId = Object.fromEntries(team.rows.map(row => [row.id, row]));
+  assert.equal(byId.missing.feedbackStatus, 'Anwesenheit offen');
+  assert.equal(byId.absent.feedbackStatus, 'Gefehlt');
+  for (const id of ['only-attendance', 'internal', 'partial']) assert.equal(byId[id].feedbackStatus, 'Da, Feedback offen');
+  for (const id of ['complete', 'parent-only']) assert.equal(byId[id].feedbackStatus, 'Feedback erfasst');
+  assert.deepEqual([team.feedbackCount, team.feedbackTotal, team.openFeedback, team.attendanceOpen, team.absenceCount], [2, 5, 3, 1, 1]);
+  assert.equal(deriveStudent(data, 'parent-only', day, calendar).feedback[0].parent_note, 'Mit Eltern besprochen');
+  data.profile.role = 'student';
+  assert.deepEqual(deriveStudent(data, 'parent-only', day, calendar).feedback, []);
+});
+
+test('leading, trailing and consecutive absences remain explicit gaps without changing the latest measured level', () => {
+  const data = fixture();
+  data.attendance = ['2027-01-09', '2027-01-16', '2027-01-30'].map(course_day => ({student_id: 'a', course_day, status: 'absent'}));
+  const result = deriveStudent(data, 'a', '2027-01-30', calendar);
+  assert.deepEqual(result.history.map(row => row.value), [null, null, 3.5, null]);
+  assert.deepEqual(result.history.map(row => row.status), ['absent', 'absent', 'rated', 'absent']);
+  assert.equal(result.summary.level, 3.5);
+  assert.equal(result.summary.progress, 0);
 });

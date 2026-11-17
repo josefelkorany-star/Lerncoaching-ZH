@@ -18,8 +18,8 @@ export function saturdayPayload(form) {
 }
 export function startPortal({root,api,courseDates,mount=mountPortal,clock=()=>new Date(),uuid=()=>crypto.randomUUID(),pollMilliseconds=30000}) {
   let epoch=0,readVersion=0,snapshot=null,selected=null,signedIn=false,pending=false,refreshing=false,lastRenderedDay=null;
-  const examAttempts=new Map();
-  function wipe(){epoch++;readVersion++;snapshot=null;selected=null;pending=false;lastRenderedDay=null;examAttempts.clear();ui.clear();}
+  const examAttempts=new Map(),accountAttempts=new Map();
+  function wipe(){epoch++;readVersion++;snapshot=null;selected=null;pending=false;lastRenderedDay=null;examAttempts.clear();accountAttempts.clear();ui.clear();}
   function close(message=''){signedIn=false;wipe();ui.showLogin(message);}
   function view(data){
     const today=todayZurich(clock());
@@ -32,7 +32,7 @@ export function startPortal({root,api,courseDates,mount=mountPortal,clock=()=>ne
       derived,admin:data.profile.role==='admin'?{families:data.families||[],profiles:data.profiles||[],students,subjects:data.subjects||[],competencies:data.competencies||[],appointments:data.appointments||[],grants:data.access_grants||[]}:null};
   }
   const scope=data=>JSON.stringify([data?.profile?.id,data?.profile?.role,data?.profile?.core_team,(data?.students||[]).map(s=>s.id).sort()]);
-  async function refresh(showLoading=false,background=false){
+  async function refresh(showLoading=false,background=false,allowMfaSetup=false){
     if(!signedIn)return;
     const generation=epoch,request=++readVersion;
     if(showLoading)ui.showLoading();
@@ -48,6 +48,7 @@ export function startPortal({root,api,courseDates,mount=mountPortal,clock=()=>ne
       else if(!background||changed){ui.render(view(next));lastRenderedDay=day;}
     }catch(error){
       if(generation!==epoch||request!==readVersion)return;
+      if(error.mfaRequired&&allowMfaSetup){signedIn=false;snapshot=null;ui.clear();throw error;}
       close(error.message||'Die Daten konnten nicht freigegeben werden. Bitte neu anmelden.');try{await api.logout();}catch{/* View already discarded. */}
       throw error;
     }
@@ -68,9 +69,18 @@ export function startPortal({root,api,courseDates,mount=mountPortal,clock=()=>ne
   const ui=mount(root,{
     async onLogin(credentials){
       wipe();const generation=epoch;
-      try{await api.login(credentials);if(generation!==epoch)return {ok:false};signedIn=true;await refresh(true);return {ok:true};}
-      catch(error){if(generation===epoch)close(error.message);throw error;}
+      try{await api.login(credentials);if(generation!==epoch)return {ok:false};signedIn=true;await refresh(true,false,true);return {ok:true};}
+      catch(error){
+        if(error.mfaRequired&&generation===epoch){
+          try{const setup=await api.beginMfa();if(generation!==epoch)return {ok:false};ui.showMfaSetup(setup);return {ok:true};}
+          catch(setupError){if(generation===epoch){close(setupError.message);try{await api.logout();}catch{}}throw setupError;}
+        }
+        if(generation===epoch)close(error.message);throw error;
+      }
     },
+    async onVerifyMfa({code}){const generation=epoch;await api.verifyMfa(code);if(generation!==epoch)return {ok:false};signedIn=true;await refresh(true);return {ok:true};},
+    onRequestRecovery:()=>api.requestRecovery(),
+    async onCompleteRecovery(data){const generation=epoch;await api.completeRecovery(data);if(generation!==epoch)return {ok:false};close('Passwort geändert. Bitte mit dem neuen Passwort und Sicherheitscode anmelden.');return {ok:true};},
     async onLogout(){close();try{await api.logout();}catch(error){ui.showLogin(error.message);}return {ok:true};},
     async onChangePassword({password}){
       if(!signedIn)throw new Error('Bitte zuerst anmelden.');
@@ -80,7 +90,7 @@ export function startPortal({root,api,courseDates,mount=mountPortal,clock=()=>ne
     async onSelectStudent(id){
       if(!signedIn)return;
       if(id&&!snapshot?.students?.some(s=>s.id===id))throw new Error('Für diese Person besteht keine Freigabe.');
-      epoch++;readVersion++;snapshot=null;examAttempts.clear();selected=id;pending=false;ui.clear();
+      epoch++;readVersion++;snapshot=null;examAttempts.clear();accountAttempts.clear();selected=id;pending=false;ui.clear();
       await refresh(true);
     },
     onSaveSaturday:form=>confirmedWrite(()=>api.saveSaturday(form.student_id,form.course_day,saturdayPayload(form))),
@@ -89,7 +99,21 @@ export function startPortal({root,api,courseDates,mount=mountPortal,clock=()=>ne
       if(!examAttempts.has(key))examAttempts.set(key,form.exam_id||uuid());
       return confirmedWrite(()=>api.reportExam({...form,exam_id:examAttempts.get(key)}));
     },
-    onAdminAction(form){const {action,...payload}=form;return confirmedWrite(()=>api.adminChange(action,payload));}
+    onAdminAction(form){const {action,...payload}=form;return confirmedWrite(()=>api.adminChange(action,payload));},
+    async onAccountAction(form){
+      if(!signedIn||pending||snapshot?.profile?.role!=='admin')throw new Error('Die Kontoverwaltung ist nur für Josef nach Anmeldung verfügbar.');
+      const generation=epoch,key=JSON.stringify(form);pending=true;readVersion++;
+      if(!accountAttempts.has(key))accountAttempts.set(key,uuid());
+      try{
+        const result=await api.accountAction({...form,request_id:accountAttempts.get(key)});
+        if(result?.ok!==true)throw new Error('Die Kontoänderung wurde nicht bestätigt.');
+        if(generation!==epoch||!signedIn)throw new Error('Die Ansicht wurde gewechselt. Bitte den Kontostand neu prüfen.');
+        await refresh();
+        if(generation!==epoch||!signedIn)throw new Error('Die Ansicht wurde gewechselt. Bitte den Kontostand neu prüfen.');
+        accountAttempts.delete(key);return result;
+      }catch(error){if(error.accessDenied&&generation===epoch){close(error.message);try{await api.logout();}catch{}}throw error;}
+      finally{if(generation===epoch)pending=false;}
+    }
   });
   const unsubscribe=api.onSessionEnd?.(()=>{if(signedIn)close('Bitte erneut anmelden.');})||(()=>{});
   const backgroundRefresh=()=>{
@@ -101,5 +125,5 @@ export function startPortal({root,api,courseDates,mount=mountPortal,clock=()=>ne
   const timer=pollMilliseconds>0?setInterval(backgroundRefresh,pollMilliseconds):null;
   timer?.unref?.();
   ui.showLogin();
-  return {async restoreSession(){wipe();signedIn=true;await refresh(true);},async reset(){close();try{await api.logout();}catch{}},destroy(){close();unsubscribe();if(timer)clearInterval(timer);globalThis.removeEventListener?.('focus',backgroundRefresh);globalThis.document?.removeEventListener('visibilitychange',backgroundRefresh);}};
+  return {async restoreSession(){wipe();signedIn=true;await refresh(true);},async restoreRecovery(tokens){wipe();const generation=epoch;try{await api.acceptRecovery(tokens);if(generation===epoch)ui.showRecovery();}catch(error){if(generation===epoch)close(error.message);}},async reset(){close();try{await api.logout();}catch{}},destroy(){close();unsubscribe();if(timer)clearInterval(timer);globalThis.removeEventListener?.('focus',backgroundRefresh);globalThis.document?.removeEventListener('visibilitychange',backgroundRefresh);}};
 }

@@ -1,66 +1,76 @@
-# Portalbetrieb: vorbereitete lokale Werkzeuge
+# Technische Test- und Notfallwerkzeuge
 
-## Jetzt lokal starten
+Für Josef gilt die [Schritt-für-Schritt-Anleitung](../ANLEITUNG.md). Der reguläre Weg für Kontoanlage, Passwortreset, Sperren und Freigeben ist die Adminoberfläche mit der Edge Function `portal-accounts`. Dafür benötigt Josef weder Node-Befehle noch einen Dienstschlüssel auf seinem Gerät. Admin-Identität, aktive Sitzung und AAL2 werden serverseitig geprüft; Kontoaktionen werden ohne Passwörter protokolliert.
 
-Es wurde kein Cloudprojekt, echtes Konto oder Produktivdeployment angelegt. Alle Verwaltungsprogramme hier verweigern nicht lokale URLs. Sie gehören ausschliesslich in Node auf dem Betreibergerät; niemals per Script-Tag in das Portal. `service_role`, Datenbankzugang und Passwörter bleiben ausserhalb des Repository. Die SQL-Fixture verwendet erfundene Personen und simulierte Auth-Claims; sie ersetzt keinen Login-/Auth-Test.
+Die hier erhaltenen Node-Werkzeuge sind ausschliesslich ein technischer Test- und Notfallweg. Sie verweigern nicht lokale URLs. Diese Beschränkung nicht für einen Cloud-Notfall entfernen. Für spätere Cloud-Recovery ist der vorab geprüfte Supabase-Dashboardweg der berechtigten Betreiberperson vorgesehen. Kein neues Projekt, echtes Konto oder Deployment wurde im aktuellen Auftrag angelegt.
 
-Für die ergänzenden PostgreSQL-Tests nach `npm ci --prefix _portal --ignore-scripts`:
+## Wiederholbare lokale Tests
+
+Die SQL-Fixture enthält erfundene Personen und simulierte Auth-Claims. Sie ersetzt weder eine echte Anmeldung noch einen signierten JWT-, PostgREST- oder Edge-Integrationstest.
 
 ```powershell
-node --test _portal/db-tests/rls.test.mjs
+npm ci --prefix _portal --ignore-scripts
+node --test _portal/tests/*.test.mjs _portal/db-tests/rls.test.mjs _portal/edge-tests/*.test.mjs
 ```
 
-Mit vorhandenem Docker und Supabase CLI den isolierten Stack aus `_portal` starten (`supabase start`). `supabase/config.toml` sperrt öffentliche Registrierung und anonyme Anmeldung, exponiert nur `public` und aktiviert TOTP. Migrationen nicht auf ein bestehendes fremdes Projekt anwenden. Kein Seed läuft automatisch. Die aktuelle Umgebung hatte keinen Docker-/Supabase-/PostgreSQL-Server; die folgende echte Integration ist deshalb vorbereitet, nicht bestanden.
+Für die vollständige Auth-Integration werden Docker und Supabase CLI benötigt. Aus `_portal` einen neuen isolierten lokalen Stack starten (`supabase start`). `supabase/config.toml` deaktiviert Selbstregistrierung und anonyme Anmeldung, exponiert nur `public` und aktiviert TOTP. Es läuft kein automatischer Seed. In der bisherigen Arbeitsumgebung fehlten Docker und WSL; die echte Integration ist deshalb vorbereitet, nicht bestanden.
 
-Lokale Testkonfiguration **ausserhalb** des Repository erstellen. Felder: `confirmation` exakt `EMPTY_LOCAL_TEST_STACK`, `url` lokale API-Adresse, `anon_key`, `service_role_key`, `database_url` lokale Postgres-Verbindung. Schlüssel ausschliesslich aus dem eigenen lokalen Teststack übernehmen; keine Werte in Chat, PR oder Logs. Datei unter Windows mit NTFS-Zugriff nur für den Betreiber sichern; der Unix-Modus 0600 allein ersetzt keine Windows-ACL. Keine bestehende private Datei wird überschrieben.
+Eine lokale Testkonfiguration **ausserhalb** des Repository anlegen. Felder: `confirmation` exakt `EMPTY_LOCAL_TEST_STACK`, `url` lokale API-Adresse, `anon_key`, `service_role_key`, `database_url` lokale Postgres-Verbindung. Nur Schlüssel des leeren lokalen Teststacks einsetzen. Niemals Werte in Chat, PR oder Logs kopieren. Unter Windows eine private NTFS-ACL setzen; Unix-Dateimodus 0600 ersetzt diese nicht. Vorhandene private Dateien werden nicht überschrieben.
 
 ```powershell
 node _portal/db-tests/auth-integration.mjs C:/private/portal-local.json C:/private/auth-test-result.json
 node _portal/operator/schema-check.mjs C:/private/portal-local.json
 ```
 
-Die Integration verlangt eine leere isolierte Auth-/Portal-Datenbank. Sie legt ausschliesslich synthetische Konten an, meldet sie wirklich über den Anwendungsschlüssel an, richtet testweise TOTP ein und prüft PostgREST. Sie verändert keine echten Zielsysteme und lässt die synthetischen Daten zur Prüfung zurück. Für einen Wiederholungslauf einen neuen isolierten lokalen Stack verwenden oder dessen ausdrücklich als Testbestand identifizierte Datenbank nach eigener Prüfung zurücksetzen. **Kein allgemeines Löschskript** liegt bei.
+Die Integration verlangt eine leere isolierte Auth-/Portal-Datenbank. Sie legt synthetische Konten an, prüft Anmeldung über den Anwendungsschlüssel, TOTP und PostgREST. Sie lässt Testdaten zur Untersuchung zurück. Für Wiederholungen einen neuen leeren Teststack verwenden; keinen Bestand mit Familien zurücksetzen. Die Auth-Tabellenstruktur, insbesondere `auth.sessions`, muss mit der tatsächlichen Supabase-Version übereinstimmen.
 
-Geprüft werden Registrierungssperre, echte AAL1-/AAL2-Sitzung, zwei Familien, Geschwister, eigener Erwachsenenzugang ohne Elternfreigabe, Elternmeldungen, Kinder-/Teamrechte, Vertretung, unbekannte/entzogene Zuordnung, fremde Datensätze, getrennte Notizen, serverseitige Autoren, Wiederholung/Korrektur, eigenes Passwort, manueller Reset, alte Sitzung und Abmeldung. Bis dieser Lauf mit dem tatsächlichen Stack bestanden ist, keine echten Familiendaten freischalten. Schema-/Session-Checks sind bewusst eng: Ändert sich die Supabase-Auth-Tabelle `auth.sessions`, Migration und Prüfung zuerst anpassen und neu abnehmen.
+Die Rollenmatrix umfasst zwei Familien, Geschwister, eigenes volljähriges Kind ohne Elternfreigabe, Elternmeldungen, Schüler-/Teamrechte, Vertretung, unbekannte und entzogene Zuordnung, fremde Datensätze, getrennte Notizen, serverseitige Autoren, Wiederholung/Korrektur, Passwortwechsel, Reset, alte Sitzungen und Abmeldung. Ein fehlender realer Lauf ist ausdrücklich kein bestandener Nachweis.
 
-`node _portal/operator/sync-course-days.mjs` erzeugt additive SQL aus `course-data.js` mit Dateihash. Das Programm führt keine SQL aus. Es löscht keine Kurstage; nach Kalenderänderungen entfallene Tage vor einem Betreiberentscheid gegen bestehende Anwesenheit prüfen. Keine zweite manuelle Terminliste pflegen.
+## Kalender ohne zweite Terminliste
 
-## Später, nach Freigabe
+`course-data.js` bleibt die einzige Kalenderquelle. Der Generator schreibt nur additive SQL, führt sie aber nicht aus:
 
-Vor echten Daten stehen separates Projekt/Region, Kostenentscheidung, Datenschutzinformation, berechtigte Mitarbeitende, Aufbewahrung/Austritt/Löschung, Betreiber-Recovery und echte Auth-/Rechteabnahme aus. Die lokalen Programme sind keine verdeckte Produktionsfreigabe. Für einen späteren Betrieb die Zielkonfiguration separat prüfen; keine localhost-Sperre bloss entfernen und dann ungeprüft ausführen.
+```powershell
+node _portal/operator/sync-course-days.mjs
+```
 
-### Erstadmin und individuelle Konten
+Die daraus erzeugte Datei [course-days.generated.sql](../supabase/course-days.generated.sql) ist für die Dashboard-Einrichtung mitgeliefert. Ein Test vergleicht sämtliche Daten und den SHA-256 mit der Kalenderquelle. Bei Kalenderänderungen neu erzeugen; entfernte Kurstage gegen vorhandene Anwesenheit prüfen, bevor eine gesondert freigegebene Datenkorrektur erfolgt. Der Generator löscht keine Kurstage.
 
-Josef wird anhand seiner bestätigten Auth-ID ausserhalb des Webclients bestimmt. Ein erreichbares Betreiberpostfach unter der kontrollierten Aliasdomain verwenden, dessen lokaler Teil zum vereinbarten Login passt. Im lokalen Konfigurationsfile `admin_email` auf dieses tatsächlich geprüfte Postfach setzen. `first-admin` prüft Auth-ID, bestätigte E-Mail und `is_anonymous=false`, schreibt vorbereitete SQL in eine private Datei und führt sie **nicht** aus. Das Portal bleibt in dieser SQL mit `enabled=false` gesperrt; `require_staff_mfa=true` ist Standard.
+## Erstadmin im lokalen Notfalltest
+
+Das erste Admin-Konto hat die tatsächlich bestätigte Auth-E-Mail **zhlerncoaching@gmail.com**. Die Portalrolle entsteht aus der verifizierten Auth-ID in `portal_private.settings`, niemals aus frei veränderbaren Nutzer-Metadaten. Keine Alias-E-Mail für Josef mehr voraussetzen. Die private lokale Konfiguration enthält `admin_email` mit der bestätigten Adresse.
 
 ```powershell
 node _portal/operator/account-admin.mjs first-admin C:/private/portal-local.json VERIFIED_AUTH_UUID C:/private/first-admin.json IDENTITY_VERIFIED
 ```
 
-Vor Aktivierung müssen MFA eingerichtet und der Wiederherstellungsweg unabhängig vom Portal erprobt sein. Das Portal selbst bietet keine freie Erstadmin-, Recovery- oder Auth-Admin-Funktion. Ein TOTP-Verlust bei Josef benötigt den vorab geprüften Betreiber-Recoveryweg; dieses Werkzeug verspricht dafür keine ungeprüfte Dashboard-Funktion.
+Das Programm prüft Auth-ID, bestätigte E-Mail und einen nicht anonymen Nutzer. Es schreibt vorbereitete SQL in eine neue private Datei und führt diese **nicht** aus. `enabled=false` und `require_staff_mfa=true` bleiben gesetzt. Für die gewöhnliche Dashboard-Einrichtung enthält die [Anleitung](../ANLEITUNG.md#5-deinen-ersten-admin-zugang-anlegen) die entsprechende geprüfte Vorlage; Node ist dafür nicht erforderlich.
 
-Für Familien-/Schülerkonten `alias_domain` und `alias_domain_confirmed=true` erst nach Prüfung der Domainkontrolle in die private Konfiguration aufnehmen. Jedes Kind, jeder Elternzugang und jede Lehrperson erhält ein eigenes Konto und ein eigenes zufälliges Startpasswort. Kein Versand an fiktive Aliaspostfächer. Zugangsdaten über den vereinbarten sicheren persönlichen Weg übergeben; die private Übergabedatei danach entsprechend dem vereinbarten Löschprozess behandeln.
+Portal-MFA, Dashboard-MFA und die Wiederherstellung des Betreiberpostfachs sind getrennte Wege. Vor echten Daten Erst-MFA, Admin-Mailzustellung, Wiederherstellung und Verlust eines Faktors mit synthetischem Projekt prüfen. Die Programme hier versprechen keine ungeprüfte Wiederherstellung eines Cloudkontos.
+
+## Lokale individuelle Konten und Rücksetzen
+
+Nur für einen isolierten lokalen Testbestand: In der privaten Konfiguration `alias_domain` und `alias_domain_confirmed=true` nach eigener Prüfung der Domainkontrolle setzen. Eltern, Kinder und Lehrpersonen erhalten getrennte Konten. Keine Nachricht an fiktive Aliaspostfächer senden.
 
 ```powershell
 node _portal/operator/account-admin.mjs create C:/private/portal-local.json test.name C:/private/test-name-handover.json
 ```
 
-Das neue Auth-Konto hat noch keinen Lernzugriff. Im Adminbereich nur die überprüfte Auth-ID mit **dem exakt im Übergabedokument genannten Benutzernamen** verbinden, Rolle setzen und eine kindbezogene Freigabe erteilen. Benutzername: 3–32 Zeichen a–z, 0–9, Punkt, Minus, Unterstrich; keine doppelten Punkte. Er ist im Portal unveränderbar. Eine spätere Umbenennung muss der Betreiber koordiniert in Auth-Alias und Profil vorbereiten, alte Sitzungen entziehen und den neuen Login prüfen. Die Browserverwaltung ändert nie die Auth-E-Mail. Lehrperson nur bei ausdrücklicher Kernteamfreigabe aktivieren; Vertretung erhält diese nicht automatisch.
+Die private Übergabedatei enthält das zufällige Startpasswort und die Auth-ID. Dieses Notfallwerkzeug erstellt keinen fachlichen Lernzugriff. Das Profil muss anschliessend mit genau dem angegebenen Benutzernamen und der passenden Rolle zugeordnet werden. Eine Familien-ID allein gewährt keinen Zugriff. Ein Benutzername lässt sich nicht isoliert im Portal umbenennen.
 
-Eigenes Passwort: nach frischer Anmeldung setzen (mindestens 12 Zeichen). `secure_password_change=true` kann bei älterer Sitzung erneute Anmeldung verlangen. Dann abmelden, mit aktuellem Passwort neu anmelden und den Wechsel wiederholen; keine Reset-/Bestätigungsmail an ein fiktives Postfach voraussetzen. Die Clientfassung beendet nach erfolgreichem Wechsel alle eigenen Sitzungen. Bei fehlgeschlagener globaler Abmeldung den Betreiber hinzuziehen; nicht einfach behaupten, alle Sitzungen seien gelöscht.
-
-### Manueller Reset und Entzug
-
-Identität persönlich anhand des vereinbarten Verfahrens prüfen. Danach für ein Nicht-Admin-Konto:
+Für Reset und Sperren zuerst die Identität unabhängig prüfen. Kein Adminreset über diesen Weg:
 
 ```powershell
 node _portal/operator/account-admin.mjs reset C:/private/portal-local.json VERIFIED_AUTH_UUID C:/private/reset-handover.json IDENTITY_VERIFIED
+node _portal/operator/account-admin.mjs disable C:/private/portal-local.json VERIFIED_AUTH_UUID C:/private/unused.json IDENTITY_VERIFIED
 ```
 
-Zuerst wird das Profil deaktiviert. Ein Datenbanktrigger setzt `sessions_valid_after` auf Serverzeit, ebenso bei der späteren Reaktivierung. Alte Auth-Sitzungen erfüllen diese Schwelle auch nach späterer Reaktivierung nicht mehr, einschliesslich einer Tokenauffrischung derselben Sitzung oder einer Anmeldung während der Sperre. Danach setzt die Auth-Admin-API ein neues individuelles Passwort. Das Konto bleibt deaktiviert, bis Josef es nach sicherer Übergabe bewusst reaktiviert; erst anschliessend frisch anmelden. Schlägt ein späterer Schritt fehl, bleibt der Zugriff gesperrt und wird nicht stillschweigend wiederhergestellt. Kein Reset einer anderen Person und kein Reset des Erstadmins über diesen Befehl.
+Reset deaktiviert zuerst das Profil und setzt danach ein neues zufälliges Passwort. Das Konto bleibt bis zur sicheren Übergabe und bewussten Freigabe deaktiviert. Ein Fehler stellt es nicht stillschweigend wieder her. Deaktivierung, Reaktivierung, Rollen- oder Kernteamwechsel setzen eine serverseitige Sitzungsgrenze; frühere Sitzungen bleiben auch nach Freigabe unzulässig. Danach frisch anmelden. `disable` schreibt keine Übergabedatei.
 
-`disable` verwendet dieselben Argumente (Übergabedatei unbenutzt) und sperrt nur. Ein Kinderaustritt/entzogene Kinderfreigabe beendet den fachlichen Zugriff sofort, ohne historische Daten zu löschen. Ein Rollen-/Kernteamwechsel invalidiert ebenfalls alte Sitzungen und erfordert neue Anmeldung. Volljährige haben keine automatische Elternfreigabe; der administrative Prüftermin ist keine automatische Zustimmung.
+Im regulären Portalbetrieb erledigt die Edge Function dieselben Kontoaktionen im Supabase-Server, ohne einen Dienstschlüssel auf dem Betreibergerät. Die einmalige Passwortantwort wird weder in der Datenbank-Protokollierung noch im Browser-Speicher abgelegt. Bei unklarer Antwort nicht blind neue Konten erstellen; die dokumentierte Wiederholungsbehandlung und den Kontostand prüfen.
 
-### Rücksetzweg ohne Datenverlust
+## Daten erhalten bei Fehlern
 
-Vor späterer Migration verschlüsselten, kontrolliert zugänglichen Backup- und Restoretest festlegen. Bei Fehlern zuerst serverseitig `portal_private.settings.enabled=false` setzen und den Portal-Link deaktiviert lassen; damit liefern selbst alte Sessions keine Portalbestände mehr. Vorherige Clientfassung wiederherstellen, neue Datensätze erhalten, Fehler gezielt mit vorwärtsgerichteter Korrekturmigration reparieren. Kein pauschales `DROP`, kein Zurücksetzen der Produktivdatenbank und keine Löschung von Familien-/Lernhistorie als Rollback. Erst nach erneut bestandenen realen Rechte-/Authprüfungen wieder aktivieren.
+Vor einer späteren Migration Backup und Restoretest festlegen. Bei einem Vorfall zuerst serverseitig `portal_private.settings.enabled=false` setzen und den Portal-Link ausgeschaltet lassen. Vorherige Clientfassung wiederherstellen, neue Datensätze erhalten und eine vorwärtsgerichtete Korrekturmigration vorbereiten. Kein pauschales `DROP`, kein Zurücksetzen einer Familiendatenbank und keine Löschung von Lernhistorien als Rollback.
+
+Wiederfreigabe erst nach erneuter realer Auth-/Rechteprüfung und gesonderter Zustimmung. Smartphone-/Safari-/Cloud-Browserprüfungen, echte Edge-Ausführung, Admin-Recovery und Mailzustellung bleiben bis zu ihrer tatsächlichen Durchführung offen.

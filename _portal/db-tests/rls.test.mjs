@@ -126,3 +126,103 @@ test('Anonymous and direct mutation paths denied; every public table has RLS',()
  }
  const unsafe=(await e.db.query("select proname from pg_proc p join pg_namespace n on n.oid=p.pronamespace where n.nspname='public' and prokind='f' and has_function_privilege('anon',p.oid,'EXECUTE')")).rows;assert.deepEqual(unsafe,[]);
 }));
+
+test('Attendance-only, whitespace, internal-only and parent-only notes remain distinct',()=>fixture(async e=>{
+ const student=ids.child_a_sibling,day=e.days.at(-1);
+ const count=async table=>(await e.db.query(`select count(*)::int n from public.${table} where student_id=$1 and course_day=$2`,[student,day])).rows[0].n;
+ assert.equal(await count('attendance'),1);assert.equal(await count('feedback'),0);
+ await saturday(e,'teacher',{attendance:'present',worked_on:' \t\n\u00a0',next_step:'\r\n',internal_note:'\uFEFF',parent_note:'\u2000'},student);
+ for(const table of ['feedback','feedback_internal','feedback_parent'])assert.equal(await count(table),0);
+ await saturday(e,'teacher',{attendance:'present',internal_note:'Nur intern'},student);
+ assert.equal(await count('feedback'),0);assert.equal(await count('feedback_internal'),1);
+ assert.equal((await snapshot(e,'parent_a')).feedback_internal.length,0);
+ await saturday(e,'teacher',{attendance:'present',parent_note:'Persönlicher Austausch'},student);
+ assert.equal(await count('feedback'),0);assert.equal(await count('feedback_parent'),1);assert.equal(await count('feedback_internal'),0);
+ assert.ok((await snapshot(e,'parent_a')).feedback_parent.some(x=>x.student_id===student));
+ assert.equal((await snapshot(e,'child_a_sibling')).feedback_parent.length,0);
+ await saturday(e,'teacher',{attendance:'present',worked_on:'Teilweise erfasst'},student);
+ assert.equal(await count('feedback'),1);assert.equal(await count('feedback_parent'),0);
+ await saturday(e,'teacher',{attendance:'present',worked_on:'Aufgaben besprochen',next_step:'Weiter üben'},student);
+ const row=(await e.db.query('select worked_on,next_step from public.feedback where student_id=$1 and course_day=$2',[student,day])).rows[0];
+ assert.ok(row.worked_on.trim()&&row.next_step.trim());
+ await saturday(e,'teacher',{attendance:'absent'},student);
+ for(const table of ['feedback','feedback_internal','feedback_parent'])assert.equal(await count(table),0);
+}));
+
+test('Level-only observation retains editable subject context and clearing removes its level',()=>fixture(async e=>{
+ const student=ids.child_a_sibling,day=e.days.at(-1),subject=ids.subject_a_sibling;
+ await saturday(e,'teacher',{attendance:'present',subject_id:subject,new_level:4},student);
+ const row=(await e.db.query('select * from public.feedback where student_id=$1 and course_day=$2',[student,day])).rows[0];
+ assert.equal(row.subject_id,subject);assert.equal(row.worked_on,'');assert.equal(row.next_step,'');
+ await saturday(e,'teacher',{attendance:'present'},student);
+ assert.equal((await e.db.query('select count(*)::int n from public.subject_levels where student_id=$1 and course_day=$2',[student,day])).rows[0].n,0);
+ assert.equal((await e.db.query('select count(*)::int n from public.feedback where student_id=$1 and course_day=$2',[student,day])).rows[0].n,0);
+}));
+
+const requestId=n=>`50000000-0000-4000-8000-${String(n).padStart(12,'0')}`;
+const begin=async(e,id,action,payload,key='admin',claims)=>(await e.asUser(key,'select public.begin_portal_account_action($1,$2,$3::jsonb) as data',[id,action,JSON.stringify(payload)],claims)).rows[0].data;
+async function edge(e,sql,args){return e.db.transaction(async tx=>{await tx.exec('set local role service_role');return tx.query(sql,args);});}
+const prepare=async(e,id)=>(await edge(e,'select public.prepare_portal_account_action($1,$2) as data',[users.admin.id,id])).rows[0].data;
+const finish=async(e,id,ok,target=null)=>(await edge(e,'select public.finish_portal_account_action($1,$2,$3,$4) as data',[users.admin.id,id,ok,target])).rows[0].data;
+test('Account gate requires designated verified live AAL2 admin, independent of ordinary staff MFA switch',()=>fixture(async e=>{
+ const args={profile_id:users.parent_a.id};
+ for(const key of ['anonymous','parent_a','child_a','teacher','substitute'])await deny(begin(e,requestId(1),'disable',args,key));
+ await deny(begin(e,requestId(1),'disable',args,'admin',{aal:'aal1'}));
+ await e.db.query('update portal_private.settings set require_staff_mfa=false');
+ await deny(begin(e,requestId(1),'disable',args,'admin',{aal:'aal1'}));
+ await deny(begin(e,requestId(1),'disable',args,'admin',{session_id:users.teacher.session_id}));
+ await e.db.query('update auth.users set email_confirmed_at=null where id=$1',[users.admin.id]);await deny(begin(e,requestId(1),'disable',args));
+ await e.db.query('update auth.users set email_confirmed_at=now() where id=$1',[users.admin.id]);
+ await deny(begin(e,requestId(1),'disable',{profile_id:users.admin.id}));
+ await deny(begin(e,requestId(1),'create',{username:'new.test',display_name:'Test',role:'admin'}));
+ await deny(begin(e,requestId(1),'disable',{...args,password:'forbidden'}));
+ await deny(e.asUser('admin','select public.prepare_portal_account_action($1,$2)',[users.admin.id,requestId(1)]));
+ await deny(e.asUser('admin','select public.finish_portal_account_action($1,$2,true,$3)',[users.admin.id,requestId(1),users.parent_a.id]));
+ await deny(e.asUser('admin','select * from portal_private.account_actions'));
+}));
+
+test('Account audit and replay guard cover create, disable, enable and reset without credential storage',()=>fixture(async e=>{
+ const createdId='60000000-0000-4000-8000-000000000001',payload={username:'new.family',display_name:'Erfundene Familie',role:'parent'};
+ const first=await begin(e,requestId(1),'create',payload);assert.equal(first.replayed,false);
+ assert.equal((await begin(e,requestId(1),'create',payload)).state,'pending');
+ await deny(begin(e,requestId(1),'create',{...payload,username:'other.family'}));
+ await deny(begin(e,requestId(2),'create',payload));
+ const prep=await prepare(e,requestId(1));assert.deepEqual(prep.payload,payload);
+ await e.db.query('insert into auth.users(id,email_confirmed_at) values($1,now())',[createdId]);
+ await finish(e,requestId(1),true,createdId);
+ assert.equal((await e.db.query('select active from public.profiles where id=$1',[createdId])).rows[0].active,false);
+ const replay=await begin(e,requestId(1),'create',payload);assert.equal(replay.replayed,true);assert.equal(replay.state,'succeeded');assert.equal(replay.profile_id,createdId);assert.equal('initial_password'in replay,false);
+ for(const [n,action]of [[2,'disable'],[3,'enable'],[4,'reset']]){
+  await begin(e,requestId(n),action,{profile_id:users.parent_a.id});await prepare(e,requestId(n));await finish(e,requestId(n),true,users.parent_a.id);
+  assert.equal((await e.db.query('select active from public.profiles where id=$1',[users.parent_a.id])).rows[0].active,action==='enable');
+  await deny(snapshot(e,'parent_a'));
+ }
+ await deny(admin(e,'profile',{id:users.parent_a.id,username:users.parent_a.username,display_name:users.parent_a.display_name,role:'parent',active:true,core_team:false}));
+ const audit=(await e.db.query('select * from portal_private.account_actions order by created_at,request_id')).rows;
+ assert.equal(audit.length,4);assert.ok(audit.every(a=>a.state==='succeeded'&&a.finished_at));
+ assert.equal(/password|token|secret|authorization/i.test(JSON.stringify(audit)),false);
+}));
+
+test('Account requests are rate limited, stale or revoked sessions cannot execute, and failure remains audited',()=>fixture(async e=>{
+ await begin(e,requestId(1),'reset',{profile_id:users.parent_a.id});await prepare(e,requestId(1));
+ await finish(e,requestId(1),false);
+ assert.equal((await begin(e,requestId(1),'reset',{profile_id:users.parent_a.id})).state,'failed');
+ await begin(e,requestId(2),'disable',{profile_id:users.parent_b.id});
+ await e.db.query("update portal_private.account_actions set created_at=now()-interval '3 minutes' where request_id=$1",[requestId(2)]);await deny(prepare(e,requestId(2)));await finish(e,requestId(2),false);
+ for(let n=3;n<=11;n++)await begin(e,requestId(n),'create',{username:`limit.test${n}`,display_name:'Test',role:'student'});
+ await assert.rejects(begin(e,requestId(12),'create',{username:'limit.last',display_name:'Test',role:'student'}),/ACCOUNT_RATE_LIMIT/);
+ await e.db.query('delete from auth.sessions where id=$1',[users.admin.session_id]);
+ await deny(prepare(e,requestId(3)));await deny(finish(e,requestId(3),true));await finish(e,requestId(3),false);
+ assert.equal((await e.db.query('select state from portal_private.account_actions where request_id=$1',[requestId(3)])).rows[0].state,'failed');
+}));
+
+test('Concurrent account actions on one target cannot interleave reset and enable',()=>fixture(async e=>{
+ const payload={profile_id:users.parent_a.id};
+ await begin(e,requestId(1),'reset',payload);await prepare(e,requestId(1));
+ await assert.rejects(begin(e,requestId(2),'enable',payload),/ACCOUNT_TARGET_BUSY/);
+ await assert.rejects(begin(e,requestId(3),'disable',payload),/ACCOUNT_TARGET_BUSY/);
+ await finish(e,requestId(1),true,users.parent_a.id);
+ assert.equal((await e.db.query('select active from public.profiles where id=$1',[users.parent_a.id])).rows[0].active,false);
+ await begin(e,requestId(2),'enable',payload);await prepare(e,requestId(2));await finish(e,requestId(2),true,users.parent_a.id);
+ assert.equal((await e.db.query('select active from public.profiles where id=$1',[users.parent_a.id])).rows[0].active,true);
+}));

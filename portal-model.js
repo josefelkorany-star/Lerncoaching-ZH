@@ -101,7 +101,8 @@ export function studentHistory(snapshot, student, asOf, source) {
   const attendance = attendanceFor(snapshot, student, days);
   const subjects = list(snapshot.subjects).filter(row => row.student_id === student.id);
   const absent = new Set(attendance.filter(row => row.status === 'absent').map(row => row.date));
-  return days.filter(date => !absent.has(date)).map(date => {
+  return days.map(date => {
+    if (absent.has(date)) return {date, value: null, status: 'absent', detail: 'Gefehlt – keine Coachingstufe für diesen Kurstag.'};
     const items = subjects.filter(item => activeOn(item, date))
       .map(item => summarizeItem(item, snapshot.subject_levels, 'subject_id', date));
     const rated = items.filter(item => item.level !== null);
@@ -148,10 +149,23 @@ export function prioritiesFor(subjects, competencies, exams, asOf) {
     b.gap - a.gap || order(a.name, b.name) || order(a.type, b.type) || order(a.id, b.id)).slice(0, 3);
 }
 
+export function hasFamilyFeedback(feedback, parentNote) {
+  const text = value => typeof value === 'string' && value.trim().length > 0;
+  return Boolean((text(feedback?.worked_on) && text(feedback?.next_step)) || text(parentNote ?? feedback?.parent_note));
+}
+
 function safeFeedback(snapshot, studentId, today) {
   const role = snapshot.profile?.role;
   const parentAllowed = ['parent', 'teacher', 'admin'].includes(role);
-  return list(snapshot.feedback).filter(row => row.student_id === studentId && isCalendarDate(row.course_day) && row.course_day <= today)
+  const rows = list(snapshot.feedback).filter(row => row.student_id === studentId && isCalendarDate(row.course_day) && row.course_day <= today);
+  // A parent note may be saved independently of shared lesson observations.
+  if (parentAllowed) for (const note of list(snapshot.feedback_parent)) {
+    if (note.student_id === studentId && isCalendarDate(note.course_day) && note.course_day <= today &&
+      typeof note.note === 'string' && note.note.trim() && !rows.some(row => row.course_day === note.course_day)) {
+      rows.push({student_id: studentId, course_day: note.course_day});
+    }
+  }
+  return rows
     .sort((a, b) => order(b.course_day, a.course_day) || order(a.id || '', b.id || ''))
     .map(row => {
       const subject = list(snapshot.subjects).find(item => item.id === row.subject_id);
@@ -222,17 +236,23 @@ export function deriveTeam(snapshot, asOf, source) {
     const eligible = lastCourseDay !== null && enrolledOn(student, lastCourseDay);
     const attendance = derived.attendance.find(row => row.date === lastCourseDay);
     const absence = eligible && attendance?.status === 'absent';
-    const feedback = derived.feedback.some(row => row.course_day === lastCourseDay);
+    const feedback = list(snapshot.feedback).find(row => row.student_id === student.id && row.course_day === lastCourseDay);
+    const parentNote = list(snapshot.feedback_parent).find(row => row.student_id === student.id && row.course_day === lastCourseDay)?.note;
+    const completed = eligible && attendance?.status === 'present' && hasFamilyFeedback(feedback, parentNote);
     const exams = upcomingExams(snapshot, student.id, today, 7);
     const priority = derived.priorities[0];
     return {id: student.id, display_name: student.display_name, school_level: student.school_level,
-      feedbackStatus: !eligible ? 'Noch kein Kurstag' : absence ? 'Gefehlt' : feedback ? 'Erfasst' : 'Offen',
+      feedbackStatus: !eligible || attendance?.status === 'missing' || !attendance ? 'Anwesenheit offen' : absence ? 'Gefehlt' : completed ? 'Feedback erfasst' : 'Da, Feedback offen',
+      feedbackEligible: eligible, feedbackComplete: Boolean(completed),
       examDate: exams[0]?.exam_date ?? null, examTopic: exams[0]?.topic ?? '', absence: Boolean(absence),
       attendanceStatus: eligible ? (attendance?.status ?? 'missing') : 'missing',
       priority: priority?.label ?? 'Noch keine Grundlage', priorityTone: priority?.tone ?? 'safe',
       severity: priority?.severity ?? 4, examCount: exams.length};
   }).sort((a, b) => a.severity - b.severity || order(a.examDate || '9999', b.examDate || '9999') ||
     order(a.display_name, b.display_name) || order(a.id, b.id));
-  return {lastCourseDay, openFeedback: rows.filter(row => row.feedbackStatus === 'Offen').length,
+  return {lastCourseDay, openFeedback: rows.filter(row => row.feedbackStatus === 'Da, Feedback offen').length,
+    feedbackCount: rows.filter(row => row.feedbackComplete).length,
+    feedbackTotal: rows.filter(row => row.feedbackEligible && row.attendanceStatus === 'present').length,
+    attendanceOpen: rows.filter(row => row.feedbackEligible && row.attendanceStatus === 'missing').length,
     examCount: rows.reduce((sum, row) => sum + row.examCount, 0), absenceCount: rows.filter(row => row.absence).length, rows};
 }

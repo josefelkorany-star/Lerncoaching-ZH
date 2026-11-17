@@ -30,7 +30,7 @@ try{
   console.log('Lokales Profil deaktiviert; alte Sitzungen sind serverseitig ausgeschlossen. Für Reaktivierung ausdrücklich Admin verwenden.');
  }else if(command==='first-admin'){
   if(!/^[0-9a-f-]{36}$/i.test(identity)||confirmed!=='IDENTITY_VERIFIED'||!c.admin_email)throw new Error('Verifizierte Auth-ID, erreichbare erwartete Admin-Mail und IDENTITY_VERIFIED erforderlich.');
-  if(c.alias_domain_confirmed!==true||!c.alias_domain||c.admin_email.toLowerCase()!==`josef@${c.alias_domain.toLowerCase()}`)throw new Error('Erstadmin benötigt den kontrollierten, erreichbaren Login-Alias josef@alias_domain; kein abweichendes Postfach.');
+  if(c.admin_email.toLowerCase()!=='zhlerncoaching@gmail.com')throw new Error('Erstadmin benötigt die bestätigte Betreiberadresse zhlerncoaching@gmail.com. Familien-Aliase gelten nicht für das Admin-Konto.');
   const result=await adminRequest(c,`/auth/v1/admin/users/${identity}`),u=result.user||result;
   if(u.id!==identity||!u.email_confirmed_at||u.is_anonymous||u.email?.toLowerCase()!==c.admin_email.toLowerCase())throw new Error('Auth-ID und bestätigte Betreiberidentität stimmen nicht überein.');
   await savePrivate(outputPath,{verified_auth_id:identity,sql:`begin;\ninsert into public.profiles(id,username,display_name,role,active,core_team) values('${identity}','josef','Josef','admin',true,true);\ninsert into portal_private.settings(admin_auth_id,require_staff_mfa,enabled) values('${identity}',true,false);\ncommit;`,notice:'Nur vorbereitete SQL. Keine Ausführung. Kein Portalzugriff bis MFA, Wiederherstellungsweg, Rechteprüfung und ausdrücklicher Freigabe von enabled=true.'});

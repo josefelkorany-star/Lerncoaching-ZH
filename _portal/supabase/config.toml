@@ -38,3 +38,7 @@ enroll_enabled = true
 verify_enabled = true
 [analytics]
 enabled = false
+
+# User-facing function: retain gateway verification in addition to its live SQL gate.
+[functions.portal-accounts]
+verify_jwt = true

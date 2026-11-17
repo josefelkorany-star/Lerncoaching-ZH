@@ -6,12 +6,23 @@ import crypto from 'node:crypto';
 import {fileURLToPath,pathToFileURL} from 'node:url';
 import {dependency} from '../dev-dependencies.mjs';
 import {createTestDatabase} from '../db-tests/fixtures.mjs';
+import {createAccountHandler} from '../supabase/functions/portal-accounts/index.ts';
 const here=path.dirname(fileURLToPath(import.meta.url));
 export async function startPreview({root=path.resolve(here,'../..'),port=4187,quiet=false}={}){
  await import(pathToFileURL(path.join(root,'course-data.js')));
  const fixture=await createTestDatabase({PGlite:dependency('@electric-sql/pglite').PGlite,courseDates:globalThis.LCCourseData.dates});
  const sessions=new Map();let queue=Promise.resolve(),origin='';
  const transact=task=>{const job=queue.then(task);queue=job.catch(()=>{});return job;};
+ const service=async(sql,args)=>(await fixture.db.transaction(async tx=>{await tx.exec('set local role service_role');return tx.query(sql,args);})).rows[0].data;
+ const accountServices={
+  authenticate:async key=>{const u=fixture.users[key];return u?{id:u.id,email:key==='admin'?'zhlerncoaching@gmail.com':'synthetic@example.invalid',email_confirmed_at:'2026-01-01',is_anonymous:false}:null;},
+  begin:async(key,id,action,payload)=>(await fixture.asUser(key,'select public.begin_portal_account_action($1,$2,$3::jsonb) as data',[id,action,JSON.stringify(payload)])).rows[0].data,
+  prepare:(actor,id)=>service('select public.prepare_portal_account_action($1,$2) as data',[actor,id]),
+  finish:(actor,id,success,target)=>service('select public.finish_portal_account_action($1,$2,$3,$4) as data',[actor,id,success,target||null]),
+  createUser:async()=>{const id=crypto.randomUUID();await fixture.db.query('insert into auth.users(id,email_confirmed_at) values($1,now())',[id]);return {id};},
+  // Synthetic Auth records have no passwords; only the real handler's SQL effects are exercised.
+  resetPassword:async()=>{}
+ };
  const staticFiles=new Map(['portal.html','portal.css','portal-ui.js','portal-app.js','portal-model.js','course-data.js','private-preview.js','private-preview.css',
  'assets/portal/fonts/dm-sans.woff','assets/portal/fonts/bebas-neue.woff'].map(p=>['/'+p,path.join(root,p)]));
  const mime={'.html':'text/html; charset=utf-8','.js':'text/javascript; charset=utf-8','.css':'text/css; charset=utf-8','.woff':'font/woff'};
@@ -39,6 +50,12 @@ export async function startPreview({root=path.resolve(here,'../..'),port=4187,qu
     }
     if(route==='/api/logout'){sessions.set(token,'anonymous');json(res,200,{ok:true});return;}
     const user=sessions.get(token);let query,args;
+    if(route==='/api/accounts'){
+     const handler=createAccountHandler({config:{url:'https://synthetic.invalid',publishableKey:'synthetic',serviceRoleKey:'synthetic',allowedOrigin:origin,aliasDomain:'preview.invalid',adminEmail:'zhlerncoaching@gmail.com'},services:accountServices});
+     const response=await transact(()=>handler(new Request(origin+'/api/accounts',{method:'POST',headers:{Origin:origin,Authorization:`Bearer ${user}`,'Content-Type':'application/json'},body:JSON.stringify(data)})));
+     const answer=await response.json();
+     json(res,response.status,response.ok?answer:{error:'Die Test-Kontoaktion konnte nicht bestätigt werden. Prüfe Rolle, Angaben und Kontostand.',code:answer.code});return;
+    }
     if(route==='/api/saturday'){query='select public.record_saturday($1,$2,$3::jsonb) as data';args=[data.student_id,data.course_day,JSON.stringify(data.payload)];}
     else if(route==='/api/exam'){query='select public.report_exam($1,$2,$3,$4,$5) as data';args=[data.student_id,data.exam_date,data.subject_id,data.topic,data.exam_id];}
     else if(route==='/api/admin'){query='select public.admin_change($1,$2::jsonb) as data';args=[data.action,JSON.stringify(data.payload)];}

@@ -9,6 +9,7 @@ import fs from 'node:fs/promises';
 import {dependency} from '../dev-dependencies.mjs';
 import {configFile,privatePath,localDatabaseUrl} from '../operator/local-guard.mjs';
 import {users,ids} from './fixtures.mjs';
+import {createAccountHandler} from '../supabase/functions/portal-accounts/index.ts';
 await import('../../course-data.js');
 const {createClient}=dependency('@supabase/supabase-js');
 const {Client}=dependency('pg');
@@ -18,12 +19,20 @@ const db=new Client({connectionString:c.database_url});
 const localFetch=(input,init={})=>fetch(input,{...init,redirect:'error'});
 const client=key=>createClient(c.url,key,{global:{fetch:localFetch},auth:{persistSession:false,autoRefreshToken:false,detectSessionInUrl:false}});
 const service=client(c.service_role_key),sessions={},actual={},passwords={};
+// The handler runs locally against the real isolated GoTrue/PostgREST stack.
+// This does not claim a deployed Edge gateway/CORS acceptance pass.
+const accountHandler=createAccountHandler({config:{url:c.url,publishableKey:c.anon_key,serviceRoleKey:c.service_role_key,allowedOrigin:'http://127.0.0.1:4177',aliasDomain:'example.invalid',adminEmail:'zhlerncoaching@gmail.com'}});
 let checks=0;
 const ok=async(label,fn)=>{await fn();checks++;console.log(`PASS ${label}`);};
 const check=({data,error})=>{if(error)throw new Error(`Anfrage abgewiesen (${error.code||error.status||'unbekannt'}).`);return data;};
 const denied=result=>assert.ok(result.error,'Expected request to be rejected');
 const snap=async key=>check(await sessions[key].rpc('get_portal_snapshot'));
 const admin=async(action,payload)=>check(await sessions.admin.rpc('admin_change',{p_action:action,p_payload:payload}));
+const account=async(action,payload,request_id=randomUUID(),key='admin')=>{
+ const token=check(await sessions[key].auth.getSession()).session.access_token;
+ const response=await accountHandler(new Request(c.url+'/functions/v1/portal-accounts',{method:'POST',headers:{Origin:'http://127.0.0.1:4177',Authorization:`Bearer ${token}`,'Content-Type':'application/json'},body:JSON.stringify({action,request_id,...payload})}));
+ const result=await response.json();assert.equal(response.status,200,`Account action failed (${result.code||'unknown'}).`);return result;
+};
 const dayplus=(date,n)=>{const d=new Date(`${date}T12:00Z`);d.setUTCDate(d.getUTCDate()+n);return d.toISOString().slice(0,10);};
 function totp(secret){let bits='';for(const s of secret.toUpperCase().replace(/=+$/,''))bits+='ABCDEFGHIJKLMNOPQRSTUVWXYZ234567'.indexOf(s).toString(2).padStart(5,'0');const bytes=Buffer.from((bits.match(/.{8}/g)||[]).map(x=>parseInt(x,2)));const counter=Buffer.alloc(8);counter.writeBigUInt64BE(BigInt(Math.floor(Date.now()/30000)));const h=createHmac('sha1',bytes).update(counter).digest(),i=h.at(-1)&15;return String((h.readUInt32BE(i)&0x7fffffff)%1000000).padStart(6,'0');}
 try{
@@ -37,7 +46,7 @@ try{
  });
  // Auth admin is held only by this local Node process; every portal action below uses anon key + real session.
  for(const [key,u]of Object.entries(users)){
-  const password=randomBytes(24).toString('base64url'),email=`${u.username}@example.invalid`;
+  const password=randomBytes(24).toString('base64url'),email=key==='admin'?'zhlerncoaching@gmail.com':`${u.username}@example.invalid`;
   const result=check(await service.auth.admin.createUser({email,password,email_confirm:true}));
   actual[key]={...u,id:result.user.id};passwords[key]=password;
   const s=client(c.anon_key);check(await s.auth.signInWithPassword({email,password}));sessions[key]=s;
@@ -111,15 +120,16 @@ try{
   denied(await client(c.anon_key).auth.signInWithPassword({email:`${users.parent_a.username}@example.invalid`,password:passwords.parent_a}));
   const fresh=client(c.anon_key);check(await fresh.auth.signInWithPassword({email:`${users.parent_a.username}@example.invalid`,password:next}));assert.equal((check(await fresh.rpc('get_portal_snapshot'))).students.length,2);passwords.parent_a=next;
  });
- await ok('Manual reset disables account; old signed/refresh sessions fail after reactivation',async()=>{
-  // Operator role has explicit public.profiles SELECT/UPDATE grants, never used by frontend.
-  check(await service.from('profiles').update({active:false}).eq('id',actual.parent_a.id));
+ await ok('Local Edge handler reset disables account; old signed/refresh sessions fail after audited reactivation',async()=>{
+  await account('disable',{profile_id:actual.parent_a.id});
   const duringInactive=client(c.anon_key);check(await duringInactive.auth.signInWithPassword({email:`${users.parent_a.username}@example.invalid`,password:passwords.parent_a}));
   denied(await duringInactive.rpc('get_portal_snapshot'));
-  const reset=randomBytes(24).toString('base64url');check(await service.auth.admin.updateUserById(actual.parent_a.id,{password:reset}));
+  const resetId=randomUUID(),resetResult=await account('reset',{profile_id:actual.parent_a.id},resetId),reset=resetResult.initial_password;
+  assert.match(reset,/^[A-Za-z0-9_-]{32}$/);assert.equal('initial_password'in await account('reset',{profile_id:actual.parent_a.id},resetId),false);
   denied(await sessions.parent_a.rpc('get_portal_snapshot'));
   denied(await duringInactive.rpc('get_portal_snapshot'));
-  await admin('profile',{id:actual.parent_a.id,username:users.parent_a.username,display_name:users.parent_a.display_name,role:'parent',active:true,core_team:false});
+  denied(await sessions.admin.rpc('admin_change',{p_action:'profile',p_payload:{id:actual.parent_a.id,username:users.parent_a.username,display_name:users.parent_a.display_name,role:'parent',active:true,core_team:false}}));
+  await account('enable',{profile_id:actual.parent_a.id});
   denied(await sessions.parent_a.rpc('get_portal_snapshot'));
   denied(await duringInactive.rpc('get_portal_snapshot'));
   const refreshed=await sessions.parent_a.auth.refreshSession();if(!refreshed.error)denied(await sessions.parent_a.rpc('get_portal_snapshot'));

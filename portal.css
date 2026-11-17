@@ -7,6 +7,9 @@
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation:none!important;transition:none!important}}
 
 .observation-fields{min-width:0;margin:0;padding:0;border:0}.observation-fields:disabled{opacity:.7}
+.chart .absence-marker{fill:none;stroke:var(--serious);stroke-width:2}.chart .absence-label{font:12px var(--body);fill:var(--serious)}
+.account-secret{padding:1rem;margin:1rem 0;border:2px solid var(--strong);border-radius:10px;background:var(--wash)}.one-time-password{display:block;overflow-wrap:anywhere;font-size:1.1rem;padding:.8rem;background:#fff;border-radius:6px;margin-bottom:1rem;user-select:all}
+.mfa-qr{display:block;width:220px;max-width:100%;height:auto;margin:1rem auto}#mfa-cancel{margin-top:.75rem}
 
 /* Long user-entered names and topics must wrap instead of widening mobile cards. */
 body{overflow-wrap:anywhere}.who,.child-tab,.events li>div,.meters li>div{min-width:0}.child-tab{max-width:100%;overflow-wrap:anywhere}

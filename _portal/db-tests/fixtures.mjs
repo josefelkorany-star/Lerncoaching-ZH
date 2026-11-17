@@ -56,6 +56,8 @@ export async function createTestDatabase({PGlite,courseDates}) {
  await admin('competency',{id:ids.competency_a,student_id:ids.child_a,name:'Lernplanung',target_level:3,active_from:joined});
  await admin('competency_level',{competency_id:ids.competency_a,course_day:days[0],level:2});
  for(const [index,day]of days.entries())await asUser('teacher','select public.record_saturday($1,$2,$3::jsonb)',[ids.child_a,day,JSON.stringify({attendance:index===1?'absent':'present',subject_id:index===1?null:ids.subject_a,topic:index===1?'':'Brüche',worked_on:index===1?'':'Aufgaben gemeinsam besprochen',went_well:index===1?'':'Lösungsweg erklärt',next_step:index===1?'':'Brüche vergleichen',arrival_review:index===1?null:true,pause_review:index===1?null:false,understanding:index===1?null:3,effort:index===1?null:4,new_level:index===1?null:3,internal_note:index===1?'':'INTERNE TESTNOTIZ – nur Team',parent_note:index===1?'':'ELTERNTESTNOTIZ – nicht Schülerkonto'})]);
+ await asUser('teacher','select public.record_saturday($1,$2,$3::jsonb)',[ids.child_a_sibling,days.at(-1),JSON.stringify({attendance:'present'})]);
+ await asUser('teacher','select public.record_saturday($1,$2,$3::jsonb)',[ids.child_b,days.at(-1),JSON.stringify({attendance:'absent'})]);
  const examDate=new Date(`${today}T12:00:00Z`);examDate.setUTCDate(examDate.getUTCDate()+3);
  await asUser('parent_a','select public.report_exam($1,$2,$3,$4,$5)',[ids.child_a,examDate.toISOString().slice(0,10),ids.subject_a,'Angekündigte Bruchprüfung',bid(61)]);
  await admin('appointment',{id:bid(71),student_id:ids.child_a,appointment_date:examDate.toISOString().slice(0,10),title:'Material für den nächsten Samstag bereitlegen',audience:'student'});
