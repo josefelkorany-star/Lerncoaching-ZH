@@ -21,6 +21,10 @@ const widths = [320,375,768,1024,1279,1280,1440];
 const expectedMessage = 'Danke! Wir melden uns in der Regel innert 2–3 Werktagen. Für den Ersttermin schicken wir dir dann die Ersttermin-Vereinbarung zum Unterschreiben.';
 const processes = [];
 const results = [];
+function completed(result) {
+  results.push(result);
+  console.log(JSON.stringify({completed:result}));
+}
 
 async function ready(url) {
   for(let attempt=0;attempt<100;attempt++){
@@ -145,7 +149,7 @@ async function main(){
       assert.deepEqual(errors,[],'No JavaScript exceptions in paired preview');
       assert.deepEqual(consoleErrors,[],'No browser console errors in paired preview');
       assert.equal(remoteWriteAttempts,0,'No external write request attempted');
-      results.push({scope:'paired-preview',width,navigationTargets:targets,dialogs:2,syntheticSaved:true,jsErrors:0});
+      completed({scope:'paired-preview',width,navigationTargets:targets,dialogs:2,syntheticSaved:true,jsErrors:0});
       await context.close();
     }
     // Public website is a read-only baseline, not a claim that PR #5 is live.
@@ -160,8 +164,29 @@ async function main(){
       await page.evaluate(()=>document.fonts.ready);await noOverflow(page,'live baseline '+width);
       const targets=await navigation(page,width,false);await dialogs(page);
       const downloads=await page.locator('a[download]').evaluateAll(links=>[...new Set(links.map(a=>a.href))]);
-      for(const url of downloads){assert.equal(new URL(url).origin,'https://lerncoaching-zh.ch');const response=await context.request.get(url);assert.equal(response.status(),200);}
-      results.push({scope:'live-read-only-baseline',width,navigationTargets:targets,dialogs:2,downloads:downloads.length,formSubmitted:false,blockedNonReadRequests:blockedWrites});
+      let calendarExports=0,httpDownloads=0;
+      for(const url of downloads){
+        const target=new URL(url);assert.equal(target.origin,'https://lerncoaching-zh.ch');
+        if(target.protocol==='blob:'){
+          // The calendar is generated in this page. Its object URL cannot be
+          // fetched by the separate HTTP client; read it in its owning page.
+          const calendar=await page.evaluate(async address=>{
+            const response=await fetch(address);
+            if(!response.ok)throw new Error('Calendar object URL could not be read.');
+            return response.text();
+          },url);
+          assert.match(calendar,/^BEGIN:VCALENDAR\r?$/m);
+          assert.match(calendar,/^END:VCALENDAR\r?$/m);
+          assert.match(calendar,/^BEGIN:VEVENT\r?$/m);
+          assert.match(calendar,/^END:VEVENT\r?$/m);
+          calendarExports++;
+        } else {
+          assert.equal(target.protocol,'https:');
+          const response=await context.request.get(url);assert.equal(response.status(),200);
+          httpDownloads++;
+        }
+      }
+      completed({scope:'live-read-only-baseline',width,navigationTargets:targets,dialogs:2,downloads:downloads.length,httpDownloads,calendarExports,formSubmitted:false,blockedNonReadRequests:blockedWrites});
       await context.close();
     }
     console.log(JSON.stringify({environment:'ephemeral GitHub-hosted Ubuntu standard runner',browser:'Chromium',results,artifactsUploaded:0,realSubmissions:0},null,2));
