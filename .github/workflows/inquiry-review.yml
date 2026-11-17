@@ -1,0 +1,50 @@
+name: Anfrage – isolierte Cloud-Browserprüfung
+
+on:
+  push:
+    branches: [codex/interessenanfrage-20261108]
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize, reopened, ready_for_review]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: inquiry-cloud-review-${{ github.head_ref || github.ref_name }}
+  cancel-in-progress: true
+
+jobs:
+  chromium:
+    if: >-
+      github.repository == 'josefelkorany-star/Lerncoaching-ZH' &&
+      github.event.repository.private == false &&
+      ((github.event_name == 'push' && github.ref == 'refs/heads/codex/interessenanfrage-20261108') ||
+      (github.event_name == 'pull_request' && github.event.pull_request.number == 5 &&
+      github.event.pull_request.head.repo.full_name == github.repository))
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    env:
+      INQUIRY_QA_PUBLIC_REPOSITORY: 'true'
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+      - name: Install temporary pinned browser tools
+        env:
+          PLAYWRIGHT_BROWSERS_PATH: ${{ runner.temp }}/inquiry-browsers
+          INQUIRY_QA_DEPENDENCIES: ${{ runner.temp }}/inquiry-browser-tools
+        run: |
+          npm install --prefix "$INQUIRY_QA_DEPENDENCIES" --no-package-lock --ignore-scripts --no-audit --no-fund playwright@1.65.1
+          node "$INQUIRY_QA_DEPENDENCIES/node_modules/playwright/cli.js" install --with-deps chromium
+      - name: Check isolated preview and read-only public website
+        env:
+          PLAYWRIGHT_BROWSERS_PATH: ${{ runner.temp }}/inquiry-browsers
+          INQUIRY_QA_DEPENDENCIES: ${{ runner.temp }}/inquiry-browser-tools
+        run: node _tests/inquiry-browser.cjs
+      # No artifacts, screenshots, videos or Actions caches are uploaded.
+      # No deployment, repository writes, secrets or real form submissions.
