@@ -212,7 +212,7 @@ test('real iframe attributes except accessible title and direct fallback remain 
   const baseline = execFileSync('git', ['show', '36b76c088ca2b123729ddf108ef3b80f082e8a03:index.html'], { cwd: root, encoding: 'utf8' });
   const iframe = text => text.match(/<iframe\b[\s\S]*?<\/iframe>/)[0].replace(/title="[^"]*"/, 'title=""');
   assert.equal(iframe(html), iframe(baseline));
-  assert.match(html, /title="Interessenanfrage Lerncoaching ZH"/);
+  assert.match(html, /title="Ersttermin vereinbaren – Lerncoaching ZH"/);
   assert.equal(html.match(/<p class="form-fallback">[\s\S]*?<\/p>/)[0], baseline.match(/<p class="form-fallback">[\s\S]*?<\/p>/)[0]);
   assert.ok(html.includes(`href="${fixture.registrationUrl}"`));
   assert.ok(!/<(?:input|textarea)\b[^>]*\bdisabled\b/i.test(html), 'No disabled example registration fields');

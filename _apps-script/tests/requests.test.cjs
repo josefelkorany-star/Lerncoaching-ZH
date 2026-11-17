@@ -132,3 +132,42 @@ test('client keeps unresolved IDs beyond two hours, renews them, and clears only
 test('a changed request after an acknowledged conflict can start a new attempt on reload',()=>{
   const r=runtime();const storage=new Map();const c=clientHarness(r.context.bootstrap_(),storage);c.context.response({ok:false,saved:false,code:'ID_CONFLICT',message:'already stored; reload'});assert.equal(storage.size,0);
 });
+
+test('the approved success message is exact for the first receipt and a duplicate receipt',()=>{
+  const expected='Danke! Wir melden uns in der Regel innert 2–3 Werktagen. Für den Ersttermin schicken wir dir dann die Ersttermin-Vereinbarung zum Unterschreiben.';
+  const r=runtime();const p=r.payload();const first=r.context.submitInterest(p);const duplicate=r.context.submitInterest(p);
+  assert.equal(first.message,expected);assert.equal(duplicate.message,expected);
+  assert.equal(r.state.rows.length,2);assert.equal(r.state.mails.length,1);
+  const client=clientHarness(r.context.bootstrap_(),new Map());client.context.response(first);
+  assert.equal(client.elements.get('success-message').textContent,expected);
+});
+
+test('all form call-to-action states use Ersttermin vereinbaren without a scarcity claim',()=>{
+  assert.match(html,/<title>Ersttermin vereinbaren – Lerncoaching ZH<\/title>/);
+  assert.match(html,/<h1>Ersttermin vereinbaren<\/h1>/);
+  assert.match(html,/<button id="submit" type="submit">Ersttermin vereinbaren<\/button>/);
+  assert.match(html,/Unverbindlich – wir melden uns persönlich bei dir\./);
+  assert.doesNotMatch(html+source,/Platz anfragen|Plätze frei|freie Plätze|knappe Plätze|prüft die Verfügbarkeit|\b(?:24|48) Stunden\b/);
+  const r=runtime(),client=clientHarness(r.context.bootstrap_(),new Map());
+  client.context.failed('Erfundener Speicherfehler');
+  assert.equal(client.elements.get('submit').textContent,'Ersttermin vereinbaren');
+});
+
+test('parent text states the approved contract boundary and 12-month retention without a contractual consent field',()=>{
+  assert.match(html,/kein Vertrag und keine Buchung des Ersttermins/);
+  assert.match(html,/Verbindlich wird es erst mit der unterschriebenen Ersttermin-Vereinbarung beziehungsweise dem Anmeldevertrag/);
+  assert.match(html,/Anfragen, aus denen kein Vertrag entsteht, löschen wir 12 Monate nach Eingang\. Auf Wunsch deiner Familie löschen wir sie früher\./);
+  assert.doesNotMatch(html,/type="checkbox"|Speicherfrist.*offen|Aufbewahrungs.*festzulegen/);
+  const r=runtime();r.context.submitInterest(r.payload());
+  assert.match(r.state.mails[0].body,/unterschriebenen Ersttermin-Vereinbarung beziehungsweise dem Anmeldevertrag/);
+  assert.match(r.state.mails[0].body,/nach 12 Monaten gelöscht; auf Wunsch der Familie früher/);
+});
+
+test('the revised information version is stored without inventing consent or altering old rows',()=>{
+  const r=runtime({legacy:['HISTORISCH','TEST Altbestand','','','','','','','','','','']});
+  const original=JSON.stringify(r.state.rows[1]);r.context.submitInterest(r.payload());
+  assert.equal(r.record(2)['Anfrageinfo-Version'],'ersttermin-anfrage-2026-11-17-v1');
+  assert.equal(r.record(2)['Datenschutzhinweis-Version'],'anfrage-datenschutz-2026-11-17-v1');
+  assert.equal(JSON.stringify(r.state.rows[1]),original);
+  assert.equal(r.record(2)['Einwilligung Probetag'],'');
+});

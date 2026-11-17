@@ -2,7 +2,7 @@ import http from 'node:http';
 import {readFile,realpath,stat} from 'node:fs/promises';
 import path from 'node:path';
 const root=await realpath(path.resolve(process.argv[2]));
-const types={'.html':'text/html; charset=utf-8','.js':'text/javascript; charset=utf-8','.css':'text/css; charset=utf-8','.png':'image/png','.jpg':'image/jpeg','.pdf':'application/pdf'};
+const types={'.html':'text/html; charset=utf-8','.js':'text/javascript; charset=utf-8','.css':'text/css; charset=utf-8','.png':'image/png','.jpg':'image/jpeg','.webp':'image/webp','.pdf':'application/pdf'};
 const server=http.createServer(async(req,res)=>{
   try{
     if(!['GET','HEAD'].includes(req.method))throw Error('Read only');

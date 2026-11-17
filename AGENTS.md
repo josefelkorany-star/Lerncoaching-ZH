@@ -17,6 +17,9 @@ Pflege die bestehende Lerncoaching-ZH-Website zuverlässig, verständlich und mi
 
 ## Projekt zuerst verstehen
 
+- Für alle Browserarbeiten ausschliesslich einen nachweislich isolierten Cloud-Browser verwenden. Keine persönlichen/lokalen Browser, Tabs, Profile, Cookies, Sitzungen oder Remote-Debugging-Verbindungen öffnen, auslesen oder übernehmen; auch keine Browserinventur. Dies gilt für Subagents und Loginbefehle, die keinen lokalen Standardbrowser automatisch öffnen dürfen.
+- Fehlt ein geeigneter Cloud-Browser, die Einschränkung ausdrücklich nennen und mit erlaubten APIs oder ohne Browser weiterarbeiten. Keine kostenpflichtigen Browsertests ohne entsprechende Freigabe. Diese Regel erteilt keine zusätzliche Veröffentlichungs- oder Datenfreigabe.
+
 - Repository: `josefelkorany-star/Lerncoaching-ZH`; Standardbranch zum Zeitpunkt der Einrichtung: `main`. Prüfe vor Änderungen den aktuellen Stand, den Arbeitsbranch und bereits vorhandene Änderungen.
 - Der vorgefundene Bestand enthält `index.html`, `CNAME`, `logo.png`, `poster.jpg`, `konzept.pdf`, `vertrag.pdf` und `vertrag_ersttermin.pdf`. Verifiziere den aktuellen Aufbau statt von einem unveränderlichen Dateibestand auszugehen.
 - Lies vor jedem Auftrag die betroffenen Abschnitte und ihre Abhängigkeiten. Prüfe insbesondere eingebettete Dienste, Skripte, mehrfach genannte Inhalte und Download-Verweise.

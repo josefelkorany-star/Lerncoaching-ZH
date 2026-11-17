@@ -1,8 +1,9 @@
-// ENTWURF: noch nicht mit dem tatsächlichen Scriptprojekt/Deployment abgeglichen.
+// Freigabe vom 17.11.2026: unverbindliche Anfrage «Ersttermin vereinbaren».
+// Der tatsächliche Deploymentstand wird vor der koordinierten Umstellung gesichert.
 // Keine Aufnahmeentscheidung, Vertragsannahme, Rechnung oder Reservierung durch diese Web-App.
-var LC_INFO_VERSION = 'interessenanfrage-2026-11-08-v1';
-var LC_PRIVACY_VERSION = 'anfrage-datenschutz-2026-11-08-v1';
-var LC_SUCCESS = 'Deine Anfrage ist eingegangen. Wir prüfen die Verfügbarkeit und melden uns persönlich. Ein Platz ist noch nicht bestätigt.';
+var LC_INFO_VERSION = 'ersttermin-anfrage-2026-11-17-v1';
+var LC_PRIVACY_VERSION = 'anfrage-datenschutz-2026-11-17-v1';
+var LC_SUCCESS = 'Danke! Wir melden uns in der Regel innert 2–3 Werktagen. Für den Ersttermin schicken wir dir dann die Ersttermin-Vereinbarung zum Unterschreiben.';
 var LC_LEGACY_HEADERS = ['Datum','Name Kind/Person','Schulstufe','Schulstufe (Sonstiges)','Angebot','Kontakt Elternteil','Strasse & Hausnr.','PLZ & Wohnort','Fächer / Nachricht','Einwilligung Probetag','Einwilligung Quartal','Einwilligung Online'];
 var LC_EXTRA_HEADERS = ['Vorgangs-ID','Anfrage-ID','Datensatztyp','Anfragestatus','Eingang UTC','Anfrageinfo-Version','Datenschutzhinweis-Version','Schulstufe Anzeige','Wunschdatum unverbindlich','Inhalt-Hash','Kontakt-Hash','Benachrichtigung'];
 var LC_LEVELS = {
@@ -27,10 +28,10 @@ function doGet() {
   try {
     var template = HtmlService.createTemplateFromFile('Index');
     template.bootJson = JSON.stringify(bootstrap_()).replace(/</g, '\\u003c');
-    return template.evaluate().setTitle('Platz anfragen – Lerncoaching ZH')
+    return template.evaluate().setTitle('Ersttermin vereinbaren – Lerncoaching ZH')
       .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
   } catch (_) {
-    return HtmlService.createHtmlOutput('<!doctype html><html lang="de"><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Platz anfragen</title><p>Die Anfrage kann derzeit nicht geladen werden. Bitte versuche es später erneut oder kontaktiere Lerncoaching ZH direkt. Es wurde keine Buchung vorgenommen.</p></html>');
+    return HtmlService.createHtmlOutput('<!doctype html><html lang="de"><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Ersttermin vereinbaren</title><p>Die Anfrage kann derzeit nicht geladen werden. Bitte versuche es später erneut oder kontaktiere Lerncoaching ZH direkt. Es wurde keine Buchung vorgenommen.</p></html>');
   }
 }
 
@@ -209,11 +210,11 @@ function textCell_(value) {
 function notify_(sheet, row, column, config, record) {
   var status;
   try {
-    MailApp.sendEmail({to:config.email, subject:'Neue unverbindliche Interessenanfrage · ' + record['Vorgangs-ID'], body:
-      'Eine Interessenanfrage wurde gespeichert. Kein Vertrag, keine Platzreservierung, keine Zahlungspflicht und kein Termin wurden damit bestätigt.\n\n' +
+    MailApp.sendEmail({to:config.email, subject:'Ersttermin vereinbaren – neue unverbindliche Anfrage · ' + record['Vorgangs-ID'], body:
+      'Eine unverbindliche Anfrage wurde gespeichert. Kein Vertrag, keine Platzreservierung, keine Zahlungspflicht und kein Termin wurden damit bestätigt.\n\n' +
       'Vorgangs-ID: ' + record['Vorgangs-ID'] + '\nName: ' + record['Name Kind/Person'] + '\nKontakt: ' + record['Kontakt Elternteil'] +
       '\nGewünschtes Angebot: ' + LC_OFFERS[record['Angebot']] + '\nWunschdatum (unbestätigt): ' + (record['Wunschdatum unverbindlich'] || 'nicht angegeben') +
-      '\n\nJosef prüft persönlich. Eine verbindliche Buchung erfolgt erst nach ausdrücklicher Bestätigung und Abschluss der separaten unterschriebenen Vereinbarung.\nDetails stehen in der bestehenden privaten Tabelle.'});
+      '\n\nJosef meldet sich persönlich. Verbindlich wird es erst mit der unterschriebenen Ersttermin-Vereinbarung beziehungsweise dem Anmeldevertrag.\nDetails stehen in der bestehenden privaten Tabelle. Anfragen, aus denen kein Vertrag entsteht, werden nach 12 Monaten gelöscht; auf Wunsch der Familie früher.'});
     status = 'versandt';
   } catch (_) { status = 'fehlgeschlagen – manuell prüfen'; }
   // Nach dem Speichern darf auch ein Fehler bei Mail/Statuspflege keine Fehlbestätigung auslösen.

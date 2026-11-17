@@ -17,7 +17,7 @@
   .nav-brand img{display:block;}
   .nav-logo{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;letter-spacing:0.06em;color:var(--navy);}
   .nav-logo span{color:var(--teal);}
-  .nav-links{display:flex;gap:2rem;}
+  .nav-links{display:flex;gap:1rem;flex-wrap:wrap;min-width:0;}
   .nav-links[hidden],.nav-toggle[hidden]{display:none;}
   .nav-links a{color:var(--muted);text-decoration:none;font-size:0.9rem;font-weight:500;transition:color .2s;}
   .nav-links a:hover{color:var(--teal);}
@@ -31,14 +31,21 @@
   .schedule-rules > div{min-width:0;overflow-wrap:anywhere;}
   .form-fallback{margin:0;padding:1rem;font-size:.9rem;line-height:1.6;}
   .form-fallback a{color:var(--teal-mid);text-underline-offset:.15em;}
+  .download-link{max-width:100%;min-width:0;min-height:44px;overflow-wrap:anywhere;white-space:normal;}
+  .first-term-copy{min-width:0;}
+  @media(max-width:480px){.quarter-panel{padding:1.2rem!important;}.first-term-card{flex-direction:column;}}
   .modal{position:fixed;inset:0;width:100%;max-width:none;height:100%;max-height:none;margin:0;border:0;background:transparent;color:var(--text);overflow-y:auto;overscroll-behavior:contain;overflow-wrap:anywhere;padding:2rem 1rem;}
   .modal::backdrop{background:rgba(11,34,68,.6);}
 
-  .hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:8rem 2rem 4rem;background:var(--bg2);position:relative;overflow:hidden;}
+  .hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:8rem 2rem 4rem;background:var(--bg2);position:relative;}
   .hero::after{content:'';position:absolute;top:0;right:0;width:42%;height:100%;background:linear-gradient(135deg,#dff4ec 0%,#b8e8d4 100%);clip-path:polygon(18% 0,100% 0,100% 100%,0% 100%);z-index:0;}
-  .hero-content{position:relative;z-index:1;}
+  .hero-content{position:relative;z-index:1;display:grid;grid-template-columns:minmax(0,1.12fr) minmax(0,1fr);align-items:center;gap:1.5rem;width:100%;}
+  .hero-copy,.hero-visual{min-width:0;}
+  .hero-visual{margin:0;}
+  .hero-visual img{display:block;width:100%;height:auto;object-fit:contain;}
+  .hero-copy .btn-group>a{max-width:100%;overflow-wrap:anywhere;}
   .hero-eyebrow{font-size:.82rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--teal);margin-bottom:1rem;}
-  .hero h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(3.8rem,9vw,8rem);line-height:.92;margin-bottom:1.5rem;color:var(--navy);}
+  .hero h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(3.8rem,7.8vw,7.1rem);line-height:.92;margin-bottom:1.5rem;color:var(--navy);}
   .hero h1 span{color:var(--teal);}
   .hero-sub{font-size:1.1rem;color:var(--muted);max-width:520px;margin-bottom:2.5rem;font-weight:300;line-height:1.8;}
   .hero-sub strong{color:var(--navy);font-weight:600;}
@@ -90,7 +97,11 @@
   .phase-tag{font-size:.75rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;margin-bottom:.8rem;}
   .phase-a .phase-tag{color:var(--teal);}
   .phase-b .phase-tag{color:var(--navy);}
-  .phase-c .phase-tag{color:#E07B39;}
+  .phase-c .phase-tag{color:#995020;}
+  .parents-note{margin-top:1.5rem;padding:1.5rem;background:#f0f8f4;border:1px solid #c6e5d8;border-radius:8px;display:grid;grid-template-columns:minmax(0,.7fr) minmax(0,1.3fr);gap:1.5rem;}
+  .parents-note h3{font-family:'Bebas Neue',sans-serif;font-size:2rem;line-height:1.1;}
+  .parents-note p{font-size:.93rem;line-height:1.75;color:var(--muted);}
+  @media(max-width:768px){.parents-note{grid-template-columns:minmax(0,1fr);gap:.8rem;}}
   .phase-title{font-family:'Bebas Neue',sans-serif;font-size:1.8rem;margin-bottom:.5rem;color:var(--navy);}
   .phase-subtitle{font-size:.82rem;color:var(--muted);margin-bottom:1rem;}
   .phase-items{list-style:none;display:flex;flex-direction:column;gap:.5rem;}
@@ -159,8 +170,14 @@
     .versprechen-grid,.kontakt-inner,.poster-wrap{grid-template-columns:1fr;}
     .schedule-rules{grid-template-columns:minmax(0,1fr);}
     .hero::after{display:none;}
+    .hero-content{grid-template-columns:minmax(0,1fr);}
+    .hero-visual{background:linear-gradient(135deg,#dff4ec,#b8e8d4);border-radius:12px;padding:1rem;}
+    .hero-visual img{max-width:400px;margin:auto;}
+    .hero h1{font-size:clamp(3.8rem,12vw,5.7rem);}
   }
   @media(max-width:480px){
+    .nav-cta{grid-column:1 / -1;grid-row:2;justify-self:stretch;text-align:center;white-space:normal;line-height:1.4;}
+    .nav-toggle{grid-column:2;grid-row:1;justify-self:end;}
     .nav-links{grid-template-columns:repeat(2,minmax(0,1fr));}
     section{padding:4rem 1.2rem;}
     .hero{padding:9rem 1.2rem 3rem;}
@@ -198,13 +215,14 @@
     <a href="#dokumente">Dokumente</a>
     <a href="#faq">FAQ</a>
     <a href="#preise">Preise</a>
-    <a href="#kontakt">Kontakt</a>
+    <a href="#kontakt">Ersttermin vereinbaren</a>
   </div>
-  <a href="#kontakt" class="nav-cta">Platz anfragen</a>
+  <a href="#kontakt" class="nav-cta">Ersttermin vereinbaren</a>
 </nav>
 
 <section class="hero">
   <div class="container hero-content">
+    <div class="hero-copy">
     <p class="hero-eyebrow">Zürich · Mindset-Coaching & Nachhilfe</p>
     <h1>Keinen Bock<br/>auf <span>Lernen?</span></h1>
     <p class="hero-sub">Mathe macht keinen Sinn? Lehrer haben keinen Plan? ChatGPT checkt's auch nicht?<br/><strong>Dann bist du bei uns richtig.</strong> Wir sind engagierte Student:innen — und wir waren auch mal dort.</p>
@@ -212,7 +230,7 @@
       Ihr Kind wird von aktiven ETH- und UZH-Student:innen begleitet — Menschen, die den Schulweg selbst noch frisch kennen und genau wissen, wo es wirklich hakt. Wir bringen nicht nur Fachwissen mit, sondern echtes Verständnis für Frust, Lernblockaden und Prüfungsdruck.
     </p>
     <div class="btn-group">
-      <a href="#kontakt" class="btn-primary">Platz anfragen →</a>
+      <a href="#kontakt" class="btn-primary">Ersttermin vereinbaren</a>
       <a href="#konzept" class="btn-ghost">Unser Konzept</a>
     </div>
     <div class="hero-badges">
@@ -222,6 +240,8 @@
       <span class="badge">Samstags in Zürich</span>
       <span class="badge" style="color:var(--teal);font-weight:600;">Erstes Mal CHF 20.–</span>
     </div>
+    </div>
+    <figure class="hero-visual" aria-hidden="true"><img src="lerncoaching-hero.webp" width="1000" height="1000" alt="" fetchpriority="high"/></figure>
   </div>
 </section>
 
@@ -241,7 +261,7 @@
       <p style="font-weight:700;font-size:1.05rem;color:#fff;">🎯 Erstmal reinschnuppern — Erstes Mal für CHF 20.–</p>
       <p style="font-size:.875rem;color:rgba(255,255,255,.8);margin-top:.2rem;">Konkreter Termin nach persönlicher Bestätigung und separater Vereinbarung. <strong>Keine Quartalsbindung durch den Ersttermin.</strong></p>
     </div>
-    <a href="#kontakt" style="background:#fff;color:var(--teal);padding:.65rem 1.5rem;border-radius:5px;text-decoration:none;font-weight:700;font-size:.9rem;white-space:nowrap;flex-shrink:0;">Termin anfragen →</a>
+    <a href="#kontakt" style="background:#fff;color:var(--teal);padding:.65rem 1.5rem;border-radius:5px;text-decoration:none;font-weight:700;font-size:.9rem;white-space:nowrap;flex-shrink:0;">Ersttermin vereinbaren</a>
   </div>
 </div>
 
@@ -366,7 +386,7 @@
           <span style="background:var(--teal-light);border:1px solid #9FE1CB;border-radius:30px;padding:.45rem 1.1rem;font-size:.875rem;font-weight:500;color:var(--teal-mid)">Sekundarschule</span>
           <span style="background:var(--teal-light);border:1px solid #9FE1CB;border-radius:30px;padding:.45rem 1.1rem;font-size:.875rem;font-weight:500;color:var(--teal-mid)">Gymnasium</span>
           <span style="background:var(--teal-light);border:1px solid #9FE1CB;border-radius:30px;padding:.45rem 1.1rem;font-size:.875rem;font-weight:500;color:var(--teal-mid)">Berufsschule</span>
-          <span style="background:var(--teal-light);border:1px solid #9FE1CB;border-radius:30px;padding:.45rem 1.1rem;font-size:.875rem;font-weight:500;color:var(--teal-mid)">BMS & HMS</span>
+          <span style="background:var(--teal-light);border:1px solid #9FE1CB;border-radius:30px;padding:.45rem 1.1rem;font-size:.875rem;font-weight:500;color:var(--teal-mid)">BMS, HMS und FMS</span>
         </div>
       </div>
     </div>
@@ -395,27 +415,32 @@
   <div class="container">
     <p class="section-label">Der Samstags-Zyklus</p>
     <h2 class="section-title">Jeder Samstag hat ein Ziel</h2>
-    <p class="section-desc">Dein Quartal folgt einer klaren, strategischen Route — kein blinder Aktionismus.</p>
+    <p class="section-desc">Beim Einstieg machen wir eine ausführliche Standortbestimmung. Jeden Samstag schauen wir kurz zurück: Was stand in der Schule an, wie liefen Prüfungen, was braucht heute Aufmerksamkeit?</p>
     <div class="zyklus-phases">
       <div class="phase-card phase-a">
-        <div class="phase-tag">Phase A · Kick-off</div>
+        <div class="phase-tag">Phase A · Einstieg</div>
         <div class="phase-title">Lernstand- &amp; Strategie-Check</div>
-        <div class="phase-subtitle">Erster Samstag im Quartal</div>
-        <ul class="phase-items"><li>Stärken / Schwächen-Analyse</li><li>Zielsetzung bis nächste Ferien</li><li>Lernplan & Soft-Skill-Auswahl</li></ul>
+        <div class="phase-subtitle">Beim Einstieg bzw. am ersten besuchten Samstag des Quartals</div>
+        <ul class="phase-items"><li>Stärken und Lücken erkennen</li><li>Zielsetzung</li><li>Individueller Lernplan (bei Bedarf: einen passenden Soft Skill auswählen)</li></ul>
       </div>
       <div class="phase-card phase-b">
         <div class="phase-tag">Phase B · Training</div>
         <div class="phase-title">Integration & Fokus</div>
         <div class="phase-subtitle">Reguläre Samstage</div>
-        <ul class="phase-items"><li>Schulische Herausforderungen bearbeiten</li><li>Soft Skills am Fachstoff üben</li><li>Verstehen vor Erledigen</li></ul>
+        <ul class="phase-items"><li>Kurz zurückblicken: Was stand in der Schule an, wie liefen Prüfungen, was braucht heute Aufmerksamkeit?</li><li>Aktuelle Schulaufgaben oder Prüfungsthemen bearbeiten</li><li>Verstehen vor Erledigen</li><li>Wenn es hilft: am Schulstoff üben, eine Aufgabe zu planen oder den eigenen Lösungsweg zu erklären.</li></ul>
       </div>
       <div class="phase-card phase-c">
-        <div class="phase-tag">Phase C · Pre-Ferien</div>
+        <div class="phase-tag">Phase C · Rückblick</div>
         <div class="phase-title">Reflexion & Abschluss</div>
-        <div class="phase-subtitle">Letzter Samstag vor den Ferien</div>
-        <ul class="phase-items"><li>Soll / Ist-Vergleich mit Phase-A-Zielen</li><li>Diagnose-Check: Schwächen abgebaut?</li><li>Fokus auf letzte Prüfungen</li></ul>
+        <div class="phase-subtitle">Letzter Kurssamstag vor den Ferien</div>
+        <ul class="phase-items"><li>Vereinbarte Ziele und Fortschritte vergleichen</li><li>Letzte Prüfungen besprechen</li><li>Den nächsten Schritt vereinbaren</li></ul>
       </div>
     </div>
+    <p style="margin-top:1rem;color:var(--muted);font-size:.9rem;">Ob wir zusätzlich eine Lernstrategie üben, hängt von Fach, Alter und Bedarf ab. Es gibt dafür keine starre Altersgrenze.</p>
+    <aside class="parents-note" aria-labelledby="parents-title">
+      <div><p class="section-label">Zusammenarbeit mit Eltern</p><h3 id="parents-title">Welche Noten helfen uns?</h3></div>
+      <p>Bitte teilen Sie der zuständigen Betreuungsperson die zuletzt verfügbaren Zeugnisnoten in den begleiteten Fächern von sich aus mit: beim Eintritt und danach am ersten besuchten Kurssamstag jedes weiteren Quartals. Halten Sie neue Prüfungsnoten fest und nennen Sie uns den aktuellen Stand auf Anfrage nach bestem Wissen korrekt. Liegt noch keine Note vor, genügt ein Hinweis. Eine persönliche Mitteilung reicht; eine Zeugniskopie ist nicht nötig. Volljährige Teilnehmende geben selbst Auskunft. Schriftlich nutzen wir einen vereinbarten Kanal im Einzelkontakt; WhatsApp ist keine Voraussetzung.</p>
+    </aside>
   </div>
 </section>
 
@@ -434,7 +459,7 @@
     </div>
     <div class="lc-next" aria-live="polite" hidden><span class="lc-next-icon" aria-hidden="true">↗</span><p><span id="lc-next-label"></span><strong id="lc-next-date"></strong></p><span id="lc-next-time"></span></div>
     <div id="lc-year-panels"></div>
-    <noscript><p>Bitte aktiviere JavaScript, um die Kurstage 2026 und 2027, Monatsbeiträge und den Kalenderexport anzuzeigen. Bei Fragen zu einem Termin erreichst du uns über die <a href="#kontakt">Kontaktangaben</a>.</p></noscript>
+    <noscript><p>Bitte aktiviere JavaScript, um die Kurstage 2026 und 2027, Monatsbeiträge und den Kalenderexport anzuzeigen. Bei Fragen zu einem Termin nutze <a href="#kontakt">Ersttermin vereinbaren</a>.</p></noscript>
     <div class="lc-calendar-foot">
       <details><summary>Ferienregelung &amp; Beiträge verständlich erklärt</summary><div class="lc-rules">
         <div><h4>Wann findet der Kurs statt?</h4><p>Massgebend sind die hier aufgeführten Kurstage. In längeren Schulferien und am Samstag direkt davor ist kein Kurs. Der Samstag unmittelbar vor dem Schulstart findet wieder statt – ausser am ausdrücklich freien 2. Januar 2027.</p><p>Zusätzlich kursfrei: 27. März 2027 (Osterwochenende) und 15. Mai 2027 (Pfingstwochenende).</p></div>
@@ -455,7 +480,7 @@
       <div class="versprechen-text">
         <h2>Beziehung<br/>vor <span>Inhalt.</span></h2>
         <p>Wir sind Mentoren, keine Aufgabenhelfer. Familiäre Atmosphäre, Augenhöhe — aber gleichzeitig konsequent fordernd.</p>
-        <p style="margin-top:1rem;">Wir nutzen modernste KI-Evaluation, um Lernfortschritte objektiv zu messen und Übungen perfekt auf dich zuzuschneiden.</p>
+        <p style="margin-top:1rem;">Wir besprechen Aufgaben und Prüfungsergebnisse und passen den Lernplan daran an.</p>
       </div>
       <div class="versprechen-points">
         <div class="vp"><div class="vp-icon">❤️</div><div class="vp-text"><strong>Beziehung vor Inhalt</strong><span>Ein Schüler, der sich sicher fühlt, lernt besser.</span></div></div>
@@ -606,7 +631,7 @@
           <li style="font-size:.875rem;color:var(--muted);display:flex;gap:.5rem;"><span style="color:var(--teal);font-weight:700;">✓</span>Wunschdatum nach Absprache</li>
           <li style="font-size:.875rem;color:var(--muted);display:flex;gap:.5rem;"><span style="color:var(--teal);font-weight:700;">✓</span>Zahlung per TWINT</li>
         </ul>
-        <a href="#kontakt" style="display:block;text-align:center;background:var(--teal);color:#fff;padding:.75rem;border-radius:6px;text-decoration:none;font-weight:700;font-size:.875rem;">Probestunde anfragen →</a>
+        <a href="#kontakt" style="display:block;text-align:center;background:var(--teal);color:#fff;padding:.75rem;border-radius:6px;text-decoration:none;font-weight:700;font-size:.875rem;">Ersttermin vereinbaren</a>
       </div>
 
       <!-- Einzelstunde -->
@@ -619,7 +644,7 @@
           <li style="font-size:.875rem;color:var(--muted);display:flex;gap:.5rem;"><span style="color:var(--teal);font-weight:700;">✓</span>Flexible Terminwahl</li>
           <li style="font-size:.875rem;color:var(--muted);display:flex;gap:.5rem;"><span style="color:var(--teal);font-weight:700;">✓</span>Keine Quartalsbindung</li>
         </ul>
-        <a href="#kontakt" style="display:block;text-align:center;background:var(--navy);color:#fff;padding:.75rem;border-radius:6px;text-decoration:none;font-weight:700;font-size:.875rem;">Termin anfragen →</a>
+        <a href="#kontakt" style="display:block;text-align:center;background:var(--navy);color:#fff;padding:.75rem;border-radius:6px;text-decoration:none;font-weight:700;font-size:.875rem;">Ersttermin vereinbaren</a>
       </div>
 
       <!-- Doppelstunde -->
@@ -632,7 +657,7 @@
           <li style="font-size:.875rem;color:var(--muted);display:flex;gap:.5rem;"><span style="color:var(--teal);font-weight:700;">✓</span>Sparender als 2× Einzeln</li>
           <li style="font-size:.875rem;color:var(--muted);display:flex;gap:.5rem;"><span style="color:var(--teal);font-weight:700;">✓</span>Keine Quartalsbindung</li>
         </ul>
-        <a href="#kontakt" style="display:block;text-align:center;background:var(--navy);color:#fff;padding:.75rem;border-radius:6px;text-decoration:none;font-weight:700;font-size:.875rem;">Termin anfragen →</a>
+        <a href="#kontakt" style="display:block;text-align:center;background:var(--navy);color:#fff;padding:.75rem;border-radius:6px;text-decoration:none;font-weight:700;font-size:.875rem;">Ersttermin vereinbaren</a>
       </div>
 
     </div>
@@ -647,54 +672,59 @@
   <div class="container">
     <p class="section-label">Investition</p>
     <h2 class="section-title">Faire Monatsbeiträge</h2>
-    <p class="section-desc">Zahlung bequem per TWINT, E-Banking oder bar bis zum 1. des Monats. Bei Barzahlung stellen wir selbstverständlich eine Quittung aus. Eine Quartalsbuchung entsteht erst nach ausdrücklicher Aufnahmebestätigung und separater unterschriebener Vereinbarung. Die Anfrage selbst ist kostenlos und unverbindlich.</p>
+    <p class="section-desc">Zahlung bequem per TWINT, E-Banking oder bar bis zum 1. des Monats. Bei Barzahlung stellen wir selbstverständlich eine Quittung aus. Eine Quartalsbuchung entsteht erst nach ausdrücklicher Aufnahmebestätigung und separater unterschriebener Vereinbarung. Die Anfrage selbst ist kostenlos und unverbindlich. Anmeldung quartalsweise, kostenlos kündbar per Quartalsende.</p>
     <div style="display:flex;gap:.8rem;align-items:flex-start;background:#FFF8E1;border-left:4px solid #E07B39;border-radius:0 8px 8px 0;padding:1rem 1.2rem;margin-bottom:.5rem;max-width:700px;">
       <span style="font-size:1.2rem;flex-shrink:0;">⏱</span>
       <p style="font-size:.9rem;color:#5A3A00;line-height:1.7;"><strong>Immer Doppellektion — keine Einzellektion möglich.</strong> Der Unterricht findet ausschliesslich als Doppellektion statt (09:30–11:30 Uhr, mit Pause). Eine Buchung einzelner Lektionen ist nicht möglich.</p>
     </div>
 
-    <div style="background:var(--bg2);border:1.5px solid var(--border);border-radius:10px;padding:1.5rem 2rem;margin-top:1.5rem;margin-bottom:.5rem;">
+    <div class="quarter-panel" style="background:var(--bg2);border:1.5px solid var(--border);border-radius:10px;padding:1.5rem 2rem;margin-top:1.5rem;margin-bottom:.5rem;">
       <p style="font-weight:700;color:var(--navy);font-size:.95rem;margin-bottom:1rem;">📅 Quartalseinteilung</p>
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1rem;margin-bottom:1.2rem;">
         <div style="background:var(--teal-light);border-radius:8px;padding:.9rem 1rem;text-align:center;">
           <p style="font-weight:700;color:var(--teal-mid);font-size:.85rem;">Q1</p>
           <p style="font-size:.9rem;color:var(--navy);font-weight:600;">August – Oktober</p>
-          <p style="font-size:.75rem;color:var(--muted);margin-top:.2rem;">Abmeldung bis 31. Oktober</p>
+          <p style="font-size:.75rem;color:var(--muted);margin-top:.2rem;">Kostenlose Kündigung per Quartalsende: Eingang bis 31. Oktober</p>
         </div>
         <div style="background:var(--teal-light);border-radius:8px;padding:.9rem 1rem;text-align:center;">
           <p style="font-weight:700;color:var(--teal-mid);font-size:.85rem;">Q2</p>
           <p style="font-size:.9rem;color:var(--navy);font-weight:600;">November – Januar</p>
-          <p style="font-size:.75rem;color:var(--muted);margin-top:.2rem;">Abmeldung bis 31. Januar</p>
+          <p style="font-size:.75rem;color:var(--muted);margin-top:.2rem;">Kostenlose Kündigung per Quartalsende: Eingang bis 31. Januar</p>
         </div>
         <div style="background:var(--teal-light);border-radius:8px;padding:.9rem 1rem;text-align:center;">
           <p style="font-weight:700;color:var(--teal-mid);font-size:.85rem;">Q3</p>
           <p style="font-size:.9rem;color:var(--navy);font-weight:600;">Februar – April</p>
-          <p style="font-size:.75rem;color:var(--muted);margin-top:.2rem;">Abmeldung bis 30. April</p>
+          <p style="font-size:.75rem;color:var(--muted);margin-top:.2rem;">Kostenlose Kündigung per Quartalsende: Eingang bis 30. April</p>
         </div>
         <div style="background:var(--teal-light);border-radius:8px;padding:.9rem 1rem;text-align:center;">
           <p style="font-weight:700;color:var(--teal-mid);font-size:.85rem;">Q4</p>
           <p style="font-size:.9rem;color:var(--navy);font-weight:600;">Mai – Juli</p>
-          <p style="font-size:.75rem;color:var(--muted);margin-top:.2rem;">Abmeldung bis 31. Juli</p>
+          <p style="font-size:.75rem;color:var(--muted);margin-top:.2rem;">Kostenlose Kündigung per Quartalsende: Eingang bis 31. Juli</p>
         </div>
       </div>
       <div style="display:flex;flex-direction:column;gap:.6rem;">
-        <div style="display:flex;gap:.8rem;align-items:flex-start;">
-          <span style="color:var(--teal);font-weight:700;flex-shrink:0;">✓</span>
-          <p style="font-size:.875rem;color:var(--muted);line-height:1.6;"><strong style="color:var(--navy);">Anfrage jederzeit möglich</strong> — auch mitten im Quartal und wenn gerade keine Plätze frei sind. Josef prüft die Verfügbarkeit persönlich. Eintrittsdatum, erste Vertragsperiode und Beitrag werden vor einem Abschluss ausdrücklich vereinbart.</p>
+        <div style="display:flex;align-items:flex-start;">
+          <span style="color:var(--teal);font-weight:700;flex-shrink:0;display:inline-block;width:1rem;text-align:center;margin-right:.8rem;">✓</span>
+          <p style="font-size:.875rem;color:var(--muted);line-height:1.6;"><strong style="color:var(--navy);">Anfrage jederzeit möglich</strong> — auch mitten im Quartal. Josef meldet sich persönlich. Eintrittsdatum, erste Vertragsperiode und Beitrag werden vor einem Abschluss ausdrücklich vereinbart. Der Monatsbeitrag wird anteilsmässig verrechnet. Eine unverbindliche Anfrage ist kein Kursvertrag.</p>
         </div>
-        <div style="display:flex;gap:.8rem;align-items:flex-start;">
-          <span style="color:#E07B39;font-weight:700;flex-shrink:0;">!</span>
-          <p style="font-size:.875rem;color:var(--muted);line-height:1.6;"><strong style="color:var(--navy);">Für abgeschlossene Quartalsverträge</strong> gelten die vereinbarten Kündigungsbedingungen und gesetzlichen Rechte. Eine Interessenanfrage muss nicht als Kursvertrag gekündigt werden.</p>
+        <div style="display:flex;align-items:flex-start;">
+          <span style="color:var(--teal);font-weight:700;flex-shrink:0;display:inline-block;width:1rem;text-align:center;margin-right:.8rem;">✓</span>
+          <p style="font-size:.875rem;color:var(--muted);line-height:1.6;"><strong style="color:var(--navy);">Kündigung kostenlos per Quartalsende</strong> — schriftlich per E-Mail oder WhatsApp, spätestens am letzten Tag des laufenden Quartals (z.B. Q1: bis 31. Oktober). Ohne Kündigung verlängert sich die Anmeldung automatisch um ein Quartal.</p>
+        </div>
+        <div style="display:flex;align-items:flex-start;">
+          <span style="color:#E07B39;font-weight:700;flex-shrink:0;display:inline-block;width:1rem;text-align:center;margin-right:.8rem;">!</span>
+          <p style="font-size:.875rem;color:var(--muted);line-height:1.6;"><strong style="color:var(--navy);">Austritt während des Quartals</strong> — jederzeit möglich. Weil Gruppen, Lehrpersonen und Plätze für das ganze Quartal eingeplant sind, fällt einmalig eine Pauschale von vier Doppellektionen an: 1 Kind CHF 160.– (mit Treuerabatt CHF 145.–), 2 Geschwister CHF 280.–, 3 Geschwister CHF 360.–. Geschuldet ist höchstens, was ab dem Austritt bis Quartalsende noch angefallen wäre. Die Samstage bis zum Austritt bleiben geschuldet, weitere Monatsbeiträge entfallen; bereits bezahlte Samstage nach dem Austritt werden an die Pauschale angerechnet. Details: Anmeldevertrag, Art.&nbsp;3.</p>
         </div>
 
         <!-- Probelektion Stornierungsregel -->
-        <div style="display:flex;gap:.8rem;align-items:flex-start;margin-top:.4rem;background:#FFF3CD;border-left:3px solid #E07B39;border-radius:0 8px 8px 0;padding:.9rem 1.1rem;">
+        <div class="first-term-card" style="display:flex;gap:.8rem;align-items:flex-start;margin-top:.4rem;background:#FFF3CD;border-left:3px solid #E07B39;border-radius:0 8px 8px 0;padding:.9rem 1.1rem;">
           <span style="font-size:1rem;flex-shrink:0;">⚠️</span>
-          <div style="flex:1;">
+          <div class="first-term-copy" style="flex:1;">
             <p style="font-size:.875rem;font-weight:700;color:var(--navy);margin-bottom:.35rem;">Separat bestätigter Ersttermin (CHF 20.–)</p>
             <p style="font-size:.85rem;color:var(--muted);line-height:1.7;">Die Anfrage allein löst keine Buchung und keine Absagegebühr aus. Für einen Ersttermin vereinbaren wir ein konkretes Datum und schliessen eine separate unterschriebene Vereinbarung ab. Die bisherige Absagefrist bis Donnerstag 18:00 Uhr betrifft einen tatsächlich vereinbarten Samstag. Massgebend sind die ausdrücklich vereinbarten Bedingungen und gesetzlichen Rechte; der Ersttermin begründet keine Quartalsbindung.</p>
+<p style="font-size:.85rem;color:var(--muted);line-height:1.7;">Eine kostenlose Absage ist ausschliesslich bis <strong style="color:var(--navy);">Donnerstag 18:00 Uhr</strong> vor dem gebuchten Samstag möglich. Wer sich nicht fristgerecht abmeldet oder krankheitsbedingt ausfällt, schuldet die vollen CHF 20.– — unabhängig vom Grund. Hintergrund: Lehrpersonen werden fix eingeplant, Gruppen aufgeteilt und Ressourcen reserviert. Kurzfristige Ausfälle verursachen Planungs-, Organisations- und Opportunitätskosten, die mit einem Team von 4 Lehrpersonen nicht einfach aufgefangen werden können.</p>
             <div style="margin-top:.9rem;">
-              <a href="vertrag_ersttermin.pdf" download
+              <a class="download-link" href="vertrag_ersttermin.pdf" download
                  style="display:inline-flex;align-items:center;gap:.5rem;background:var(--navy);color:#fff;padding:.6rem 1.2rem;border-radius:6px;text-decoration:none;font-weight:600;font-size:.82rem;transition:background .2s;"
                  onmouseover="this.style.background='#1a3a6e'" onmouseout="this.style.background='#0B2244'">
                 ⬇ Ersttermin-Vereinbarung herunterladen
@@ -717,8 +747,9 @@
           <li><span>✓</span>Lernstand- & Strategie-Check</li>
           <li><span>✓</span>TWINT, E-Banking oder bar</li>
         </ul>
-        <a href="#kontakt" class="btn-primary" style="display:block;text-align:center;">Platz anfragen →</a>
+        <a href="#kontakt" class="btn-primary" style="display:block;text-align:center;">Ersttermin vereinbaren</a>
         <div class="preis-note">Quartal: 3 Monate. Verbindlich erst mit Bestätigung und separater unterschriebener Vereinbarung.</div>
+        <div class="preis-note">Quartalsweise, verlängert sich automatisch. Kostenlos kündbar per Quartalsende; bei Austritt während des Quartals einmalig eine Pauschale von höchstens vier Doppellektionen.</div>
       </div>
       <div class="preis-card">
         <div class="preis-label">2 Geschwister</div>
@@ -730,8 +761,9 @@
           <li><span>✓</span>Lernstand- & Strategie-Check</li>
           <li><span>✓</span>TWINT, E-Banking oder bar</li>
         </ul>
-        <a href="#kontakt" class="btn-primary" style="display:block;text-align:center;">Platz anfragen →</a>
+        <a href="#kontakt" class="btn-primary" style="display:block;text-align:center;">Ersttermin vereinbaren</a>
         <div class="preis-note">Quartal: 3 Monate. Verbindlich erst mit Bestätigung und separater unterschriebener Vereinbarung.</div>
+        <div class="preis-note">Quartalsweise, verlängert sich automatisch. Kostenlos kündbar per Quartalsende; bei Austritt während des Quartals einmalig eine Pauschale von höchstens vier Doppellektionen.</div>
       </div>
       <div class="preis-card">
         <div class="preis-label">3 Geschwister</div>
@@ -743,8 +775,9 @@
           <li><span>✓</span>Lernstand- & Strategie-Check</li>
           <li><span>✓</span>TWINT, E-Banking oder bar</li>
         </ul>
-        <a href="#kontakt" class="btn-primary" style="display:block;text-align:center;">Platz anfragen →</a>
+        <a href="#kontakt" class="btn-primary" style="display:block;text-align:center;">Ersttermin vereinbaren</a>
         <div class="preis-note">Quartal: 3 Monate. Verbindlich erst mit Bestätigung und separater unterschriebener Vereinbarung.</div>
+        <div class="preis-note">Quartalsweise, verlängert sich automatisch. Kostenlos kündbar per Quartalsende; bei Austritt während des Quartals einmalig eine Pauschale von höchstens vier Doppellektionen.</div>
       </div>
     </div>
   </div>
@@ -756,7 +789,7 @@
   <div class="container">
     <p class="section-label">Downloads</p>
     <h2 class="section-title">Konzept & <span style="color:var(--teal)">Vertrag</span></h2>
-    <p class="section-desc">Hier findest du das bisherige Konzept und die bestehenden Vertragsvorlagen zur Einsicht. Sie werden durch eine Anfrage weder akzeptiert noch auf bestehende Familien neu angewendet. Für neue Abschlüsse erhältst du die passende, ausdrücklich vereinbarte Vertragsfassung persönlich.</p>
+    <p class="section-desc">Hier findest du das aktuelle Konzept und die bestehenden Vertragsvorlagen zur Einsicht. Sie werden durch eine Anfrage weder akzeptiert noch auf bestehende Familien neu angewendet. Für neue Abschlüsse erhältst du die passende, ausdrücklich vereinbarte Vertragsfassung persönlich.</p>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:1.5rem;margin-top:2.5rem;">
 
       <!-- Konzept PDF -->
@@ -765,6 +798,7 @@
         <div>
           <p style="font-weight:700;font-size:1rem;color:var(--navy);">Konzept & Leitfaden</p>
           <p style="font-size:.875rem;color:var(--muted);margin-top:.3rem;line-height:1.6;">Detaillierte Beschreibung unseres pädagogischen Ansatzes, des Samstags-Zyklus und der Rahmenbedingungen.</p>
+          <p style="font-size:.8rem;color:var(--muted);margin-top:.5rem;line-height:1.5;">Aktuelle Fassung: Version 2.4</p>
         </div>
         <!--
           SO LÄDST DU DAS PDF HOCH:
@@ -772,7 +806,7 @@
           2. Lade es auf GitHub ins gleiche Repository wie index.html hoch
           3. Der Download-Button funktioniert dann automatisch
         -->
-        <a href="konzept.pdf" download
+        <a class="download-link" href="konzept.pdf" download
            style="display:inline-flex;align-items:center;gap:.5rem;background:var(--teal);color:#fff;padding:.7rem 1.3rem;border-radius:6px;text-decoration:none;font-weight:600;font-size:.875rem;width:fit-content;transition:background .2s;"
            onmouseover="this.style.background='#0F6E56'" onmouseout="this.style.background='#1D9E75'">
           ⬇ Konzept herunterladen
@@ -783,8 +817,9 @@
       <div style="background:var(--bg2);border:1.5px solid var(--border);border-radius:10px;padding:2rem;display:flex;flex-direction:column;gap:1rem;">
         <div style="width:48px;height:48px;background:#EBF0F7;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;">📝</div>
         <div>
-          <p style="font-weight:700;font-size:1rem;color:var(--navy);">Bisherige Vertragsvorlage</p>
-          <p style="font-size:.875rem;color:var(--muted);margin-top:.3rem;line-height:1.6;">Unterlage zum bisherigen Vertragsstand. Neue Vertragsentwürfe sind keine geltenden Bedingungen und ersetzen diesen Download nicht automatisch.</p>
+          <p style="font-weight:700;font-size:1rem;color:var(--navy);">Anmeldevertrag</p>
+          <p style="font-size:.875rem;color:var(--muted);margin-top:.3rem;line-height:1.6;">Vertragsvorlage zur Einsicht. Die Anfrage nimmt diesen Vertrag nicht an. Für einen Abschluss erhältst du die passende Vertragsfassung persönlich.</p>
+          <p style="font-size:.8rem;color:var(--muted);margin-top:.5rem;line-height:1.5;">Aktuelle Fassung für neue Anmeldungen: Version 2026/2.5. Für bestehende Anmeldungen gilt die unterschriebene Fassung.</p>
         </div>
         <!--
           SO LÄDST DU DEN VERTRAG HOCH:
@@ -792,7 +827,7 @@
           2. Lade es auf GitHub ins gleiche Repository wie index.html hoch
           3. Der Download-Button funktioniert dann automatisch
         -->
-        <a href="vertrag.pdf" download
+        <a class="download-link" href="vertrag.pdf" download
            style="display:inline-flex;align-items:center;gap:.5rem;background:var(--navy);color:#fff;padding:.7rem 1.3rem;border-radius:6px;text-decoration:none;font-weight:600;font-size:.875rem;width:fit-content;transition:background .2s;"
            onmouseover="this.style.background='#1a3a6e'" onmouseout="this.style.background='#0B2244'">
           ⬇ Vertrag herunterladen
@@ -812,13 +847,13 @@
 
       <details style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;">
         <summary style="padding:1.1rem 1.4rem;font-weight:600;cursor:pointer;">Was passiert nach meiner Anfrage?</summary>
-        <p style="padding:.2rem 1.4rem 1.1rem;line-height:1.75;">Die Eingangsbestätigung bestätigt nur den Eingang, keinen Platz oder Termin. Josef prüft die Verfügbarkeit und antwortet persönlich. Erst seine ausdrückliche Bestätigung zusammen mit der separaten unterschriebenen Vereinbarung begründet eine Buchung. Auch ein Wunschdatum und eine Aufnahme auf die Warteliste sind keine Reservierung. Eine Anfrage erzeugt weder Vertrag noch Rechnung.</p>
+        <p style="padding:.2rem 1.4rem 1.1rem;line-height:1.75;">Deine Anfrage ist unverbindlich und bucht keinen Ersttermin. Wir melden uns in der Regel innert 2–3 Werktagen persönlich bei dir. Für den Ersttermin schicken wir dir die Ersttermin-Vereinbarung zum Unterschreiben. Verbindlich wird es erst mit der unterschriebenen Ersttermin-Vereinbarung beziehungsweise dem Anmeldevertrag. Ein Wunschdatum ist noch keine Buchung.</p>
       </details>
       <details style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;overflow:hidden;">
         <summary style="padding:1.1rem 1.4rem;font-weight:600;font-size:.95rem;color:var(--navy);cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;">
           Für welche Schulstufen ist Lerncoaching ZH geeignet? <span class="faq-icon"></span>
         </summary>
-        <p style="padding:.2rem 1.4rem 1.1rem;font-size:.9rem;color:var(--muted);line-height:1.75;">Wir begleiten Schüler:innen ab der 4. Primarklasse, Sekundarschüler:innen, Gymnasiast:innen, Lernende in der Berufslehre sowie BMS- und HMS-Studierende. Bei Fragen zu einer spezifischen Stufe einfach via WhatsApp melden.</p>
+        <p style="padding:.2rem 1.4rem 1.1rem;font-size:.9rem;color:var(--muted);line-height:1.75;">Wir begleiten Schüler:innen ab der 4. Primarklasse, Sekundarschüler:innen, Gymnasiast:innen, Lernende in der Berufslehre sowie Lernende an BMS, HMS und FMS. Bei Fragen zu einer spezifischen Stufe einfach via WhatsApp melden.</p>
       </details>
 
       <details style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;overflow:hidden;">
@@ -832,7 +867,7 @@
         <summary style="padding:1.1rem 1.4rem;font-weight:600;font-size:.95rem;color:var(--navy);cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;">
           Wie gross sind die Gruppen? <span class="faq-icon"></span>
         </summary>
-        <p style="padding:.2rem 1.4rem 1.1rem;font-size:.9rem;color:var(--muted);line-height:1.75;">Wir betreuen maximal vier Schüler:innen je gleichzeitig betreuender Person. Bei drei gleichzeitig eingesetzten Betreuungspersonen sind das höchstens zwölf Plätze. Die Aufnahme wird individuell geprüft; daraus folgt keine Aussage über aktuell freie Plätze.</p>
+        <p style="padding:.2rem 1.4rem 1.1rem;font-size:.9rem;color:var(--muted);line-height:1.75;">Wir betreuen maximal vier Schüler:innen je gleichzeitig betreuender Person. Bei drei gleichzeitig eingesetzten Betreuungspersonen sind das höchstens zwölf Plätze. Die Aufnahme wird persönlich besprochen.</p>
       </details>
 
       <details style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;overflow:hidden;">
@@ -853,7 +888,7 @@
         <summary style="padding:1.1rem 1.4rem;font-weight:600;font-size:.95rem;color:var(--navy);cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;">
           Wie läuft der erste Samstag ab? <span class="faq-icon"></span>
         </summary>
-        <p style="padding:.2rem 1.4rem 1.1rem;font-size:.9rem;color:var(--muted);line-height:1.75;">Der erste Samstag ist unser Kick-off: Wir machen einen Lernstand- &amp; Strategie-Check, klären Stärken und Lücken, setzen gemeinsam Ziele und erstellen daraus einen individuellen Lernplan. Kein Frontalunterricht — wir hören erst zu.</p>
+        <p style="padding:.2rem 1.4rem 1.1rem;font-size:.9rem;color:var(--muted);line-height:1.75;">Beim Einstieg machen wir eine ausführliche Standortbestimmung: Wir erkennen Stärken und Lücken, setzen Ziele und erstellen einen individuellen Lernplan. Bei Bedarf wählen wir eine passende Lernstrategie aus. Am ersten besuchten Samstag eines weiteren Quartals überprüfen wir Ziele und Plan. Jeden Samstag folgt nach einem kurzen Rückblick die Arbeit an aktuellen Schulaufgaben oder Prüfungsthemen. Vor den Ferien vergleichen wir Ziele und Fortschritte, besprechen letzte Prüfungen und vereinbaren den nächsten Schritt.</p>
       </details>
 
       <details style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;overflow:hidden;">
@@ -867,7 +902,7 @@
         <summary style="padding:1.1rem 1.4rem;font-weight:600;font-size:.95rem;color:var(--navy);cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;">
           Kann ich auch mitten im Quartal einsteigen? <span class="faq-icon"></span>
         </summary>
-        <p style="padding:.2rem 1.4rem 1.1rem;font-size:.9rem;color:var(--muted);line-height:1.75;">Du kannst jederzeit unverbindlich anfragen. Ob und wann ein Eintritt möglich ist, prüft Josef persönlich. Eintrittsdatum, erste Vertragsperiode und Beitrag werden vor dem Abschluss festgehalten. Auch bei vorübergehend voller Belegung bleibt das Anfrageformular erreichbar.</p>
+        <p style="padding:.2rem 1.4rem 1.1rem;font-size:.9rem;color:var(--muted);line-height:1.75;">Du kannst jederzeit unverbindlich einen Ersttermin vereinbaren. Wir melden uns persönlich bei dir. Eintrittsdatum, erste Vertragsperiode und Beitrag werden vor einem Vertragsabschluss festgehalten. Die Online-Anfrage selbst bucht keinen Termin.</p>
       </details>
 
       <details style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;overflow:hidden;">
@@ -881,7 +916,8 @@
         <summary style="padding:1.1rem 1.4rem;font-weight:600;font-size:.95rem;color:var(--navy);cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;">
           Bis wann muss ich kündigen? <span class="faq-icon"></span>
         </summary>
-        <p style="padding:.2rem 1.4rem 1.1rem;font-size:.9rem;color:var(--muted);line-height:1.75;">Für bestehende Quartalsverträge gilt die vereinbarte ordentliche Kündigung bis zum letzten Tag des laufenden Quartals, schriftlich per E-Mail oder WhatsApp; gesetzliche Rechte bleiben vorbehalten. Eine unverbindliche Anfrage ist kein Kursvertrag. Die Quartale: Q1 Aug–Okt, Q2 Nov–Jan, Q3 Feb–Apr, Q4 Mai–Jul.</p>
+        <p style="padding:.2rem 1.4rem 1.1rem;font-size:.9rem;color:var(--muted);line-height:1.75;">Kostenlos ist die Kündigung per Quartalsende: Sie muss spätestens am letzten Tag des laufenden Quartals schriftlich per E-Mail oder WhatsApp bei uns eingehen (Q1 Aug–Okt, Q2 Nov–Jan, Q3 Feb–Apr, Q4 Mai–Jul). Ohne Kündigung verlängert sich die Anmeldung automatisch um ein Quartal.<br/><br/>Ein Austritt während des Quartals ist jederzeit möglich. Weil Gruppen, Lehrpersonen und Plätze für das ganze Quartal eingeplant sind, fällt dann einmalig eine Pauschale von vier Doppellektionen an: 1 Kind CHF 160.– (mit Treuerabatt CHF 145.–), 2 Geschwister CHF 280.–, 3 Geschwister CHF 360.–. Geschuldet ist höchstens, was ab dem Austritt bis Quartalsende noch angefallen wäre. Die bis zum Austritt angebotenen Samstage bleiben geschuldet, auch bei Abwesenheit; weitere Monatsbeiträge entfallen. Bereits bezahlte Samstage nach dem Austritt werden an die Pauschale angerechnet, ein allfälliger Überschuss wird zurückerstattet. Keine Pauschale ist geschuldet, wenn wir begründeten Anlass zur Kündigung gegeben haben.<br/><br/><strong style="color:var(--navy);">Beispiele</strong> (1 Kind, CHF 160.– für einen Monat mit vier Samstagen bezahlt): Austritt vor dem ersten Samstag des Monats – es kommt nichts mehr dazu. Austritt nach den ersten zwei Samstagen im ersten Quartalsmonat – es bleiben CHF 80.– zu bezahlen. Dasselbe im letzten Quartalsmonat – es kommt nichts mehr dazu, weil bis Quartalsende nur noch die zwei bereits bezahlten Samstage angefallen wären.</p>
+        <p style="padding:0 1.4rem 1.1rem;font-size:.9rem;color:var(--muted);">Eine unverbindliche Anfrage ist kein Kursvertrag und muss nicht als solcher gekündigt werden.</p>
       </details>
 
       <details style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;overflow:hidden;">
@@ -908,7 +944,7 @@
       <div>
         <p class="section-label">Kontakt & Anfrage</p>
         <h2 class="section-title">Mach Lernen wieder <span style="color:var(--teal)">spannend.</span></h2>
-        <p style="color:var(--muted);font-weight:300;line-height:1.8;margin-bottom:0">Frage einen Platz an oder schreib uns per WhatsApp. Josef prüft deine Anfrage persönlich und meldet sich bei dir. Eine Anfrage ist auch möglich, wenn gerade keine Plätze frei sind.</p>
+        <p style="color:var(--muted);font-weight:300;line-height:1.8;margin-bottom:0">Ersttermin vereinbaren oder persönlich Kontakt aufnehmen: Unverbindlich – wir melden uns persönlich bei dir.</p>
         <div class="contact-items">
           <div class="contact-item"><div class="contact-icon">📍</div><div><strong>Standort</strong><span>Dörflistrasse 67, 8050 Zürich</span></div></div>
           <div class="contact-item"><div class="contact-icon">📱</div><div><strong>WhatsApp / Telefon</strong><span>+41 76 282 92 44</span></div></div>
@@ -917,10 +953,10 @@
         </div>
       </div>
       <div class="kontakt-form" style="padding:0;overflow:hidden;border-radius:10px;">
-        <p class="inquiry-notice"><strong>Unverbindliche Interessenanfrage</strong><br>Kein Kursvertrag, kein bestätigter Probetermin, keine Platzreservierung und keine Zahlungspflicht. Die verbindliche Aufnahme erfolgt erst nach Josefs ausdrücklicher Bestätigung und Abschluss der separaten unterschriebenen Vereinbarung. Du erhältst dazu die Vertragsfassung mit Version, Eintrittsdatum, erster Vertragsperiode, Tarif und Teilnehmenden; unterschreibe sie und gib sie auf dem persönlich vereinbarten Weg zurück.</p>
+        <p class="inquiry-notice"><strong>Ersttermin vereinbaren</strong><br>Unverbindlich – wir melden uns persönlich bei dir.<br>Die Anfrage erzeugt keinen Vertrag und keine Buchung des Ersttermins. Verbindlich wird es erst mit der unterschriebenen Ersttermin-Vereinbarung beziehungsweise dem Anmeldevertrag. Du erhältst dazu die Vertragsfassung mit Version, Eintrittsdatum, erster Vertragsperiode, Tarif und Teilnehmenden; unterschreibe sie und gib sie auf dem persönlich vereinbarten Weg zurück.</p>
         <iframe 
           src="https://script.google.com/macros/s/AKfycbyzoXaSxK5Pp3W5rCMSMiDef2HMdZqMB0G7jYPJf2Tan8R_2j2r6b4Y2_0vMkUXn7o0HQ/exec"
-          title="Interessenanfrage Lerncoaching ZH"
+          title="Ersttermin vereinbaren – Lerncoaching ZH"
           width="100%"
           height="620"
           frameborder="0"
@@ -969,13 +1005,13 @@
     Die Angaben dienen der persönlichen Prüfung deiner Anfrage, der Kontaktaufnahme und gegebenenfalls einer vereinbarten Warteliste. Erst nach einem separaten Vertragsabschluss werden erforderliche Vertrags- und Unterrichtsdaten für dessen Durchführung bearbeitet.</p>
 
     <p style="font-size:.85rem;color:var(--muted);line-height:1.75;margin-bottom:1rem;"><strong style="color:var(--navy);">Speicherung</strong><br/>
-    Das Formular wird über Google Apps Script bereitgestellt und speichert Anfragen in Google Sheets. Die Kursleitung erhält eine E-Mail-Benachrichtigung. Die Website wird über GitHub Pages ausgeliefert und lädt Schriftarten von Google Fonts; dabei werden technische Verbindungsdaten an die jeweiligen Dienste übermittelt. Wer WhatsApp nutzt, kommuniziert über diesen Dienst. Es wird kein bestimmter Speicherort oder Zertifizierungsstatus zugesichert. Aufbewahrung und Löschung nicht aufgenommener Anfragen sind vor der Umstellung organisatorisch festzulegen.</p>
+    Das Formular wird über Google Apps Script bereitgestellt und speichert Anfragen in Google Sheets. Die Kursleitung erhält eine E-Mail-Benachrichtigung. Die Website wird über GitHub Pages ausgeliefert und lädt Schriftarten von Google Fonts; dabei werden technische Verbindungsdaten an die jeweiligen Dienste übermittelt. Wer WhatsApp nutzt, kommuniziert über diesen Dienst. Es wird kein bestimmter Speicherort oder Zertifizierungsstatus zugesichert. Anfragen, aus denen kein Vertrag entsteht, werden nach 12 Monaten gelöscht, auf Wunsch der Familie früher.</p>
 
     <p style="font-size:.85rem;color:var(--muted);line-height:1.75;margin-bottom:1rem;"><strong style="color:var(--navy);">Ihre Rechte (Art. 25 DSG)</strong><br/>
     Sie haben das Recht auf Auskunft, Berichtigung, Löschung und Herausgabe Ihrer Daten. Anfragen richten Sie bitte an zhlerncoaching@gmail.com.</p>
 
     <p style="font-size:.85rem;color:var(--muted);line-height:1.75;"><strong style="color:var(--navy);">Anwendbares Recht</strong><br/>
-    Diese Datenschutzhinweise richten sich nach dem Schweizer Datenschutzgesetz (DSG, SR 235.1). Version der Anfrageinformationen: 2026-11-08-entwurf. Die gesetzlich vorgesehenen Rechte und Zuständigkeiten bleiben vorbehalten.</p>
+    Diese Datenschutzhinweise richten sich nach dem Schweizer Datenschutzgesetz (DSG, SR 235.1). Version der Anfrageinformationen: 2026-11-17. Die gesetzlich vorgesehenen Rechte und Zuständigkeiten bleiben vorbehalten.</p>
   </div>
 </dialog>
 
