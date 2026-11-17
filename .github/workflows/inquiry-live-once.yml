@@ -1,0 +1,51 @@
+name: PR5 – einmalige freigegebene Live-Abnahme
+
+on:
+  push:
+    branches: [codex/anfrage-live-abnahme-20261117]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: inquiry-live-acceptance-20261117-7f2a-once
+  cancel-in-progress: false
+
+jobs:
+  once:
+    if: >-
+      github.repository == 'josefelkorany-star/Lerncoaching-ZH' &&
+      github.event.repository.private == false &&
+      github.event_name == 'push' &&
+      github.ref == 'refs/heads/codex/anfrage-live-abnahme-20261117' &&
+      github.run_attempt == 1 &&
+      github.event.head_commit.message == 'CODEX LIVE-ABNAHME PR5 20261117 7F2A EINMALIG'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    env:
+      INQUIRY_QA_PUBLIC_REPOSITORY: 'true'
+      INQUIRY_LIVE_COMMIT_GATE: 'CODEX LIVE-ABNAHME PR5 20261117 7F2A EINMALIG'
+      INQUIRY_APPROVED_MERGE_SHA: '3bfd3f52c81090602d6ad7582a914a1db4d0fe4d'
+      INQUIRY_RELEASE_PR: '11'
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+      - name: Install temporary pinned Chromium tools
+        env:
+          PLAYWRIGHT_BROWSERS_PATH: ${{ runner.temp }}/inquiry-live-browsers
+          INQUIRY_QA_DEPENDENCIES: ${{ runner.temp }}/inquiry-live-tools
+        run: |
+          npm install --prefix "$INQUIRY_QA_DEPENDENCIES" --no-package-lock --ignore-scripts --no-audit --no-fund playwright@1.65.1
+          node "$INQUIRY_QA_DEPENDENCIES/node_modules/playwright/cli.js" install --with-deps chromium
+      - name: Read-only live checks followed by exactly one approved synthetic inquiry
+        env:
+          PLAYWRIGHT_BROWSERS_PATH: ${{ runner.temp }}/inquiry-live-browsers
+          INQUIRY_QA_DEPENDENCIES: ${{ runner.temp }}/inquiry-live-tools
+        run: node _tests/inquiry-live-once.cjs
+      # No retry directive, manual dispatch, real user data, artifacts or caches.
+      # Root removes/disables this one-time workflow after the recorded result.
