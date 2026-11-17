@@ -131,7 +131,7 @@ async function calendarAndDownloads(page,context){
   check(['konzept.pdf','vertrag.pdf','vertrag_ersttermin.pdf'].every(file=>urls.some(url=>new URL(url).pathname==='/'+file)),'DOWNLOAD_LINK_MISSING');
   for(const url of urls){
     const target=new URL(url);check(target.origin===new URL(SITE).origin,'FOREIGN_DOWNLOAD');
-    const response=await context.request.get(url);check(response.status()===200,'DOWNLOAD_HTTP_ERROR');
+    const response=await context.request.get(url);checkpoint({scope:'download-http',file:path.basename(target.pathname),status:response.status()});check(response.status()===200,'DOWNLOAD_HTTP_ERROR');
     const file=path.basename(target.pathname);check(['konzept.pdf','vertrag.pdf','vertrag_ersttermin.pdf','poster.jpg'].includes(file),'UNEXPECTED_DOWNLOAD');
     check(sha(await response.body())===sha(await fs.readFile(path.join(root,file))),'DOWNLOAD_VERSION_MISMATCH');downloads++;
   }
