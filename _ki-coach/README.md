@@ -1,26 +1,31 @@
-# KI-Coach – unveränderte Claude-Originalbasis
+# KI-Coach – Originalbasis und korrigierte Arbeitsfassung
 
-Private Vorbereitung, 17.11.2026. Branch `codex/ki-coach-claude-original-20261117`, Ausgangspunkt `main` (`49635cee41ffb4ea40ea2a10ec28e4fe852bf316`). Der vollständige Originalumfang ersetzt den früheren eingeschränkten Teampiloten. Keine Funktion, Rolle, Grenze und kein Originaltext wurde geändert.
+Branch `codex/ki-coach-claude-original-20261117`, bestehender Entwurfs-PR #8. Der vollständige Coach bleibt erhalten; kein eingeschränkter Teampilot.
 
-`original/` enthält exakt die vier Dateien aus `Lerncoaching_ZH_KI_Coach_Claude_Original.zip`. `original-sha256.json` und die Erhaltungstests sichern die bytegenaue Übernahme. Die Anleitungen bleiben Originalreferenzen; ihre späteren Veröffentlichungsaufträge und früheren Testbehauptungen wurden nicht als zusätzliche Freigabe oder eigene Testergebnisse übernommen.
+## Zwei getrennte Fassungen
 
-## Ansicht
+- `original/`: genau die vier Dateien aus dem gelieferten Claude-ZIP, bytegenau unverändert. `original-sha256.json`, Git-Attribute und fünf Erhaltungsprüfungen sichern den Originalstand.
+- `working/`: korrigierte Laufzeitdateien `coach.html` und `Code.gs`. Der ausdrückliche Folgeauftrag umfasst Sitzungsgrenzen, verbindliche Kontingent-/Budgetreservierungen samt Wiederholungsschutz und nachgewiesene Meldungsspeicherung mit Literaltexten in Sheets. Die beiden Originalunterlagen bleiben Referenzen; sie sind keine aktualisierte Betriebsanleitung oder Freigabe.
 
-Vom Repository aus `node _ki-coach/preview/server.mjs --port 4192` starten. Die private Startseite liegt unter `http://127.0.0.1:4192/`, die unveränderte Originalansicht unter `/coach.html`. Es wird kein Browser automatisch geöffnet. Für die Ansicht wird ausschliesslich das vorhandene Website-Logo zusätzlich ausgeliefert.
+## Private Vorschau
 
-Die Originaldemo verwendet `DEMO` und `DEMO-LP`, weil ihre `API_URL` leer ist. Antworten sind fest vorgegeben. Der Vorschauserver erlaubt zusätzlich keine Backend-Verbindung; Google Fonts bleiben wie im Original erlaubt. Die lokalen gespeicherten Chats sind keine zentrale Kontenverwaltung. Bitte ausschliesslich erfundene Eingaben verwenden.
+`node _ki-coach/preview/server.mjs --port 4193` startet ausschliesslich einen lokalen Server. Kein Browser wird geöffnet. Unter `http://127.0.0.1:4193/` erklärt die Startseite die Korrekturen. `/coach.html` liefert exakt die Arbeitsfassung, `/original/coach.html` das unveränderte Original zum Vergleich.
 
-## Prüfung und tatsächlicher Einrichtungsstand
+`DEMO` öffnet den Schüler-, `DEMO-LP` den Lehrpersonenmodus. Beide liefern feste Beispielantworten, keine echte KI. Google Fonts bleiben wie im Original extern. Backend-Aufrufe sind im privaten Server zusätzlich gesperrt. Ausschliesslich erfundene Eingaben verwenden. Budgetreservierung und Sheets-Speicherung werden getrennt mit nachgebildeten Diensten getestet, nicht durch die reine Demo bewiesen.
 
-- [Zusammenfassung und nächster Schritt](review/ERGEBNIS.md)
-- [Backend: Funktionen, reproduzierte Fehler und Vorschläge](review/BACKEND.md)
-- [Frontend: Bedienung, Sitzungsfehler und Prüfgrenzen](review/FRONTEND.md)
-- [Anbieterquellen, Preise und Google-Projektaufbau](review/ANBIETER-UND-EINRICHTUNG.md)
+## Nachweise
 
-Tests mit Node 24: `node --test _ki-coach/tests/*.test.mjs`. Die DOM-Prüfungen benötigen Linkedom als reine Testabhängigkeit; im bestehenden Arbeitsbereich wird die vorhandene Installation genutzt. Alternativ `COACH_DEPENDENCY_ROOT` auf einen Ordner mit `package.json` und installiertem `linkedom` setzen. Keine neue Produktionsabhängigkeit.
+- [Aktuelle Korrekturen und offene Punkte](review/KORREKTUREN.md)
+- [Arbeitsfassung Backend](review/ARBEITSFASSUNG-BACKEND.md)
+- [Arbeitsfassung Frontend](review/ARBEITSFASSUNG-FRONTEND.md)
+- [Ursprüngliche Bestandsprüfung](review/ERGEBNIS.md) mit getrennten Originalbefunden und Anbieterquellen
 
-Die Tests mit `FINDING` bestehen gerade dann, wenn der dokumentierte Originalfehler reproduziert wird. Eine vollständig grüne Testausgabe ist ausdrücklich keine Freigabe für Kinder oder einen Livebetrieb. Google-/Claude-Integration, reale Fotoerkennung und echte Cloud-Browser-Darstellung bleiben offen.
+Tests mit Node 24: `node --test _ki-coach/tests/*.test.mjs`. Die DOM-Prüfungen verwenden die vorhandene Linkedom-Testinstallation im Arbeitsbereich. Alternativ `COACH_DEPENDENCY_ROOT` auf einen Ordner mit `package.json` und installiertem Linkedom setzen. Keine neue Produktionsabhängigkeit.
 
-Ein eigenes leeres Coach-Sheet und das daran gebundene Apps-Script-Projekt wurden über bestehende Autorisierung vorbereitet. Nur der unveränderte Servercode und ein separates Manifest mit `Europe/Zurich`/V8 wurden hochgeladen und zurückgelesen. Es gibt keine öffentliche Web-App, keine Projektversion, keinen Schlüssel und keine Funktionsausführung. IDs, Zuordnung, vor-/nachher gesicherter Projektstand und clasp-Konfiguration liegen ausschliesslich im privaten Arbeitsordner.
+Die Originaltests mit `FINDING` bzw. `Known defect` reproduzieren weiterhin absichtlich Originalfehler. Die neuen `working-*`-Prüfungen testen die Korrekturen positiv und getrennt. Eine gemeinsame grüne Gesamtausgabe bedeutet keine fehlerfreie Originalversion und keine Google-/Claude-/Browserabnahme.
 
-Anmeldeformular, Portal, Website, PDFs, PR #5–#7 und main bleiben unverändert. Kein Merge und keine Veröffentlichung. Die Original-Elterninformation ist hier eine Prüfquelle und wurde nicht als freigegebener Website-Download eingebunden.
+## Keine Freischaltung
+
+In dieser Fortsetzung keine Google-Anmeldung oder Google-Schreibzugriffe, keine Einrichtung, kein Deployment, kein API-Schlüssel und keine kostenpflichtigen Aufrufe. Die zuvor gesicherte Originalkopie im eigenen Google-Projekt wird durch diese Arbeit nicht verändert. Die korrigierte Arbeitsfassung wurde dort nicht übertragen. Die vorhandene private Projektzuordnung und Sicherung bleiben erhalten.
+
+Anmeldeformular, Portal, Website/PDFs, main und PR #5–#7 bleiben unverändert. Kein Merge, keine Veröffentlichung. Browserarbeit weiterhin ausschliesslich in einem nachweislich isolierten Cloud-Browser; kein persönlicher Browser und kein kostenpflichtiger Browsertest.

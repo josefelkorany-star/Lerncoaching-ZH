@@ -1,5 +1,7 @@
 # KI-Coach: Ergebnis der Originalprüfung
 
+Historischer Originalbefund. Die aktuelle autorisierte Arbeitsfassung und ihre getrennten Korrekturprüfungen sind in [KORREKTUREN.md](KORREKTUREN.md) dokumentiert. Die vier Originaldateien und ihre hier beschriebenen Fehler bleiben unverändert.
+
 Stand 17.11.2026. Die vier gelieferten Originaldateien bleiben bytegenau erhalten. Ergänzt wurden nur private Vorschau, Tests und diese getrennten Berichte. Keine stillen Korrekturen und kein eingeschränkter Teampilot.
 
 ## Was tatsächlich nachvollzogen wurde

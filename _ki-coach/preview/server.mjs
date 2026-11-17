@@ -3,13 +3,15 @@ import fs from 'node:fs/promises';
 import {fileURLToPath} from 'node:url';
 import path from 'node:path';
 
-// Local preview wrapper only. Never rewrites or injects into the original HTML.
+// Local preview wrapper only. Neither working copy nor original are rewritten.
 const base = new URL('../', import.meta.url);
 const routes = new Map([
   ['/', [new URL('START.html', import.meta.url), 'text/html; charset=utf-8']],
-  ['/coach.html', [new URL('original/coach.html', base), 'text/html; charset=utf-8']],
+  ['/coach.html', [new URL('working/coach.html', base), 'text/html; charset=utf-8']],
+  ['/original/coach.html', [new URL('original/coach.html', base), 'text/html; charset=utf-8']],
+  ['/original/logo.png', [new URL('../logo.png', base), 'image/png']],
   ['/logo.png', [new URL('../logo.png', base), 'image/png']],
-  ['/pruefbericht', [new URL('review/ERGEBNIS.md', base), 'text/plain; charset=utf-8']],
+  ['/pruefbericht', [new URL('review/KORREKTUREN.md', base), 'text/plain; charset=utf-8']],
 ]);
 
 export function previewServer() {
@@ -42,9 +44,9 @@ export function previewServer() {
 
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
   const portIndex = process.argv.indexOf('--port');
-  const port = Number(portIndex === -1 ? 4192 : process.argv[portIndex + 1]);
+  const port = Number(portIndex === -1 ? 4193 : process.argv[portIndex + 1]);
   if (!Number.isInteger(port) || port < 1024 || port > 65535) throw new Error('Invalid preview port');
   const server = previewServer();
   server.on('error', error => { console.error(error.code); process.exitCode = 1; });
-  server.listen(port, '127.0.0.1', () => console.log(`Private Originalvorschau: http://127.0.0.1:${port}/`));
+  server.listen(port, '127.0.0.1', () => console.log(`Private Coach-Arbeitsfassung: http://127.0.0.1:${port}/`));
 }
