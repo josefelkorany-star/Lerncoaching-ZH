@@ -5,7 +5,7 @@ const fs=require('node:fs'),path=require('node:path'),crypto=require('node:crypt
 const vm=require('node:vm');
 const {execFileSync}=require('node:child_process');
 const root=path.resolve(__dirname,'..');
-const base='49635cee41ffb4ea40ea2a10ec28e4fe852bf316';
+const base='5545d7036b709555dfad9e867e799411f5ad8247';
 const before=execFileSync('git',['show',base+':index.html'],{cwd:root,encoding:'utf8'});
 const html=fs.readFileSync(path.join(root,'index.html'),'utf8');
 const sha=b=>crypto.createHash('sha256').update(b).digest('hex');
@@ -46,7 +46,8 @@ test('Saturday sequence, optional strategy and parent note match the approved ex
 test('four dates and periods preserved; no private new contract rule or PDF draft linked',()=>{
  for(const date of ['31. Oktober','31. Januar','30. April','31. Juli'])assert.ok(html.includes('Kostenlose Kündigung per Quartalsende: Eingang bis '+date));
  for(const name of ['August – Oktober','November – Januar','Februar – April','Mai – Juli'])assert.ok(html.includes(name));
- for(const marker of ['ENTWURF','Gesondert zu prüfen','Offene Rechtsfrage','Die Parteien vereinbaren','CHF 145','private/','preview-actor'])assert.ok(!html.includes(marker),marker);
+ assert.ok(html.includes('Treuerabatt CHF 145.–'));assert.ok(html.includes('Aktuelle Fassung für neue Anmeldungen: Version 2026/2.5.'));
+ for(const marker of ['ENTWURF','Gesondert zu prüfen','Offene Rechtsfrage','Die Parteien vereinbaren','private/','preview-actor'])assert.ok(!html.includes(marker),marker);
 });
 test('download and anchor destinations resolve; wrap rules address narrow cards without clipping',()=>{
  const ids=new Set([...html.matchAll(/\bid="([^"]+)"/g)].map(m=>m[1]));assert.equal(ids.size,[...html.matchAll(/\bid="([^"]+)"/g)].length);
