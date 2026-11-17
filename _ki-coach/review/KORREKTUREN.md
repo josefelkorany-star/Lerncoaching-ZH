@@ -1,5 +1,7 @@
 # KI-Coach: Korrekturen der Arbeitsfassung
 
+Historischer Prüfstand bis `2bc0748`. Die anschliessenden Zugangskorrekturen, neu ausgeführten Tests und der aktuelle Google-Übertragungsstand stehen in [ZUGANG-UND-CODEERSATZ.md](ZUGANG-UND-CODEERSATZ.md). Aussagen unten über damals noch offene Zugangsfehler und eine noch nicht erfolgte Übertragung beziehen sich auf diesen früheren Stand. Der Foto-Vorschlag ist weiterhin nicht umgesetzt und gehört zu einem getrennten späteren Auftrag.
+
 Stand 17.11.2026, Fortsetzung im bestehenden Entwurfs-PR #8. Kein Merge und keine Veröffentlichung. Die Laufzeitdateien liegen getrennt in `working/`; alle vier Dateien in `original/` bleiben bytegenau erhalten. Die ursprüngliche Fehlerprüfung bleibt als Vergleich bestehen.
 
 ## Die drei beauftragten Korrekturen

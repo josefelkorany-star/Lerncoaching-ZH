@@ -49,14 +49,14 @@ var BLATT = {
 
 var KOPF = {
   ZUGAENGE: ['Name', 'Rolle', 'Stufe', 'Code', 'Aktiv', 'Monatsbudget USD', 'Nachrichten pro Tag',
-             'Verbrauch Monat USD', 'Nachrichten Monat', 'Zuletzt aktiv', 'Notiz'],
+             'Verbrauch Monat USD', 'Nachrichten Monat', 'Zuletzt aktiv', 'Notiz', 'Verbrauchs-ID', 'Codehistorie'],
   PROTOKOLL: ['Zeitpunkt', 'Name', 'Rolle', 'Stufe', 'Fach', 'Modell', 'Input-Tokens', 'Output-Tokens',
               'Kosten USD', 'Markiert', 'Frage', 'Antwort'],
   MELDUNGEN: ['Zeitpunkt', 'Name', 'Rolle', 'Art', 'Grund', 'Nachricht', 'Antwort', 'Erledigt']
 };
 
 // Spalten im Blatt «Zugänge» (1-basiert)
-var SP = { NAME: 1, ROLLE: 2, STUFE: 3, CODE: 4, AKTIV: 5, BUDGET: 6, TAG: 7, VERBRAUCH: 8, ANZAHL: 9, ZULETZT: 10, NOTIZ: 11 };
+var SP = { NAME: 1, ROLLE: 2, STUFE: 3, CODE: 4, AKTIV: 5, BUDGET: 6, TAG: 7, VERBRAUCH: 8, ANZAHL: 9, ZULETZT: 10, NOTIZ: 11, PERSON: 12, HISTORIE: 13 };
 
 var MODELLE = ['claude-sonnet-5-5', 'claude-haiku-5-5', 'claude-opus-5-5'];
 
@@ -385,16 +385,71 @@ function leseEinstellungen_(ss) {
   return werte;
 }
 
-function findeNutzer_(ctx, code) {
+// Die erste Codekennung wird als dauerhafte Verbrauchs-ID eingefroren. Dadurch
+// bleiben bestehende Z_M_/Z_T_-Zähler und Vorgangsschlüssel ohne Migration gültig.
+// ID und Historie gehören zur ganzen Zugangszeile, niemals zum Namen/Zeilenindex.
+function zugangsDaten_(ctx) {
+  var b = ctx.ss.getSheetByName(BLATT.ZUGAENGE);
+  if (!b) return {blatt:null,zeilen:[]};
+  var kopf = b.getRange(1,SP.PERSON,1,2).getValues()[0];
+  if ((kopf[0] && kopf[0] !== KOPF.ZUGAENGE[SP.PERSON-1]) ||
+      (kopf[1] && kopf[1] !== KOPF.ZUGAENGE[SP.HISTORIE-1])) {
+    throw benutzerFehler_('IDENTITAET','Die technischen Zugangsspalten müssen zuerst geprüft werden.');
+  }
+  var zeilen = b.getLastRow() < 2 ? [] : b.getRange(2,1,b.getLastRow()-1,KOPF.ZUGAENGE.length).getValues();
+  var besitzer = Object.create(null), codes = Object.create(null);
+  zeilen.forEach(function(z,i) {
+    var id = String(z[SP.PERSON-1] || ''), roh = String(z[SP.HISTORIE-1] || ''), h = [];
+    if (id || roh) {
+      try { h = JSON.parse(roh); } catch(e) { throw benutzerFehler_('IDENTITAET','Eine Zugangsidentität ist unvollständig. Bitte die Verwaltung informieren.'); }
+      if (!/^[a-f0-9]{16}$/.test(id) || !Array.isArray(h) || !h.length || h.indexOf(id)<0 ||
+          h.some(function(x,j){return !/^[a-f0-9]{16}$/.test(x) || h.indexOf(x)!==j;})) {
+        throw benutzerFehler_('IDENTITAET','Eine Zugangsidentität ist ungültig. Bitte die Verwaltung informieren.');
+      }
+    }
+    var code = normalisiereCode_(z[SP.CODE-1] || '');
+    if (code) {
+      if (codes[code] !== undefined) throw benutzerFehler_('IDENTITAET','Ein Zugangscode ist mehrfach zugeordnet. Bitte die Verwaltung informieren.');
+      codes[code] = i;
+      var aktuell = hash_(code);
+      if (id && h.indexOf(aktuell)<0) throw benutzerFehler_('IDENTITAET','Ein Code wurde ohne gesicherten Ersatz geändert. Bitte die Verwaltung informieren.');
+      if (!id) h = [aktuell];
+    }
+    h.forEach(function(x) {
+      if (besitzer[x] !== undefined && besitzer[x] !== i) throw benutzerFehler_('IDENTITAET','Eine Verbrauchs-ID oder ein früherer Code ist mehrfach zugeordnet. Bitte die Verwaltung informieren.');
+      besitzer[x] = i;
+    });
+  });
+  return {blatt:b,zeilen:zeilen,besitzer:besitzer,codes:codes};
+}
+
+function sichereIdentitaet_(ctx,daten,index,id,historie) {
+  var b = daten.blatt, zeile = index+2, erwartet = [id,JSON.stringify(historie)];
+  b.getRange(1,SP.PERSON,1,2).setValues([[KOPF.ZUGAENGE[SP.PERSON-1],KOPF.ZUGAENGE[SP.HISTORIE-1]]]);
+  b.getRange(zeile,SP.PERSON,1,2).setValues([textZeile_(erwartet)]);
+  SpreadsheetApp.flush();
+  var gelesen = b.getRange(zeile,SP.PERSON,1,2).getValues()[0];
+  if (gelesen[0] !== erwartet[0] || gelesen[1] !== erwartet[1]) throw benutzerFehler_('IDENTITAET','Die Zugangsidentität konnte nicht sicher gespeichert werden.');
+}
+
+// hatLock ist ausschliesslich für die kontrollierten internen Aufrufstellen.
+function findeNutzer_(ctx, code, hatLock) {
   var gesucht = normalisiereCode_(code);
   if (gesucht.length < 8) return null;
-  var blatt = ctx.ss.getSheetByName(BLATT.ZUGAENGE);
-  if (!blatt || blatt.getLastRow() < 2) return null;
-  var zeilen = blatt.getRange(2, 1, blatt.getLastRow() - 1, KOPF.ZUGAENGE.length).getValues();
+  var daten = zugangsDaten_(ctx), zeilen = daten.zeilen;
   for (var i = 0; i < zeilen.length; i++) {
     var z = zeilen[i];
     if (!z[SP.CODE - 1] || normalisiereCode_(z[SP.CODE - 1]) !== gesucht) continue;
     if (!istJa_(z[SP.AKTIV - 1]) || !String(z[SP.NAME - 1]).trim()) return null;
+    if (!z[SP.PERSON-1]) {
+      if (!hatLock) {
+        var lock = LockService.getScriptLock(); lock.waitLock(15000);
+        try { return findeNutzer_(kontext_(),gesucht,true); }
+        finally { lock.releaseLock(); }
+      }
+      sichereIdentitaet_(ctx,daten,i,hash_(gesucht),[hash_(gesucht)]);
+      return findeNutzer_(ctx,gesucht,true);
+    }
     var istLp = /lehr/i.test(String(z[SP.ROLLE - 1]));
     return {
       name: String(z[SP.NAME - 1]).trim(),
@@ -403,7 +458,7 @@ function findeNutzer_(ctx, code) {
       monatsbudget: zahl_(z[SP.BUDGET - 1], istLp ? ctx.einst.budgetLp : ctx.einst.budgetS),
       tageslimit: zahl_(z[SP.TAG - 1], istLp ? ctx.einst.tagLp : ctx.einst.tagS),
       zeile: i + 2,
-      schluessel: hash_(gesucht)
+      schluessel: String(z[SP.PERSON-1])
     };
   }
   return null;
@@ -464,8 +519,10 @@ function zaehlerErhoehen_(n, usd) {
 
 function spiegleVerbrauch_(ctx, n, s) {
   try {
-    var blatt = ctx.ss.getSheetByName(BLATT.ZUGAENGE);
-    blatt.getRange(n.zeile, SP.VERBRAUCH, 1, 3).setValues([[Math.round(s.m.usd * 10000) / 10000, s.m.n, new Date()]]);
+    var daten = zugangsDaten_(ctx), index = -1;
+    daten.zeilen.forEach(function(z,i){ if(z[SP.PERSON-1]===n.schluessel) index=i; });
+    if (index<0) throw new Error('Verbrauchs-ID nicht mehr vorhanden');
+    daten.blatt.getRange(index+2, SP.VERBRAUCH, 1, 3).setValues([[Math.round(s.m.usd * 10000) / 10000, s.m.n, new Date()]]);
   } catch (err) {
     console.error('Verbrauch nicht gespiegelt: ' + err);
   }
@@ -569,6 +626,7 @@ function onOpen() {
     .addItem('3. Verbindung testen', 'verbindungTesten')
     .addSeparator()
     .addItem('Codes für neue Zeilen erzeugen', 'codesErzeugen')
+    .addItem('Persönlichen Code ersetzen', 'codeErsetzen')
     .addItem('Verbrauch diesen Monat anzeigen', 'verbrauchAnzeigen')
     .addItem('Protokoll jetzt aufräumen', 'protokollAufraeumen')
     .addToUi();
@@ -691,7 +749,7 @@ function menutestFrage_() { return 'Wie beginne ich sinnvoll mit der Vorbereitun
 function menutestId_(code) {
   var lock = LockService.getScriptLock(); lock.waitLock(15000);
   try {
-    var ctx = kontext_(), n = findeNutzer_(ctx,code);
+    var ctx = kontext_(), n = findeNutzer_(ctx,code,true);
     if (!n) throw benutzerFehler_('CODE','Dieser Code ist ungültig oder nicht aktiv.');
     var b = journal_(ctx), key = vollHash_(n.schluessel + '|menutest');
     var alt = findeVorgang_(b,key);
@@ -706,6 +764,89 @@ function menutestId_(code) {
   } finally { try { SpreadsheetApp.flush(); } finally { lock.releaseLock(); } }
 }
 
+function freierCode_(daten) {
+  for (var versuch=0;versuch<100;versuch++) {
+    var code = neuerCode_();
+    if (daten.besitzer[hash_(normalisiereCode_(code))] === undefined) return code;
+  }
+  throw benutzerFehler_('IDENTITAET','Es konnte kein unbenutzter Code erzeugt werden.');
+}
+
+function schreibeErsatzCode_(ctx,daten,index,id,historie) {
+  var code = freierCode_(daten), h = historie.slice();
+  var codeHash=hash_(normalisiereCode_(code));
+  if (h.indexOf(codeHash)<0) h.push(codeHash);
+  // Zuerst ID und bisherige/neue Codekennung sichern. Bei Abbruch bleibt die
+  // alte oder die neue Zugangszelle gültig, beide nutzen denselben Verbrauch.
+  sichereIdentitaet_(ctx,daten,index,id,h);
+  daten.blatt.getRange(index+2,SP.CODE).setValue(code);
+  SpreadsheetApp.flush();
+  var gelesen = zugangsDaten_(ctx).zeilen[index];
+  if (!gelesen || normalisiereCode_(gelesen[SP.CODE-1])!==normalisiereCode_(code) || gelesen[SP.PERSON-1]!==id) {
+    throw benutzerFehler_('IDENTITAET','Der Codeersatz konnte nicht bestätigt werden. Bitte die Zugangszeile prüfen.');
+  }
+  return {name:String(gelesen[SP.NAME-1]),code:code,lp:/lehr/i.test(String(gelesen[SP.ROLLE-1]))};
+}
+
+function ersetzeCode_(alterCode) {
+  var lock = LockService.getScriptLock(); lock.waitLock(15000);
+  try {
+    var ctx=kontext_(), daten=zugangsDaten_(ctx), gesucht=normalisiereCode_(alterCode), index=-1;
+    daten.zeilen.forEach(function(z,i){if(gesucht && normalisiereCode_(z[SP.CODE-1] || '')===gesucht) index=i;});
+    if (index<0 || gesucht.length<8 || !String(daten.zeilen[index][SP.NAME-1] || '').trim()) throw benutzerFehler_('CODE','Der bisherige Code wurde nicht eindeutig gefunden.');
+    var z=daten.zeilen[index], id=String(z[SP.PERSON-1] || hash_(gesucht));
+    var h=z[SP.HISTORIE-1] ? JSON.parse(z[SP.HISTORIE-1]) : [id];
+    return schreibeErsatzCode_(ctx,daten,index,id,h);
+  } finally { lock.releaseLock(); }
+}
+
+function codeErsetzen() {
+  var ui=SpreadsheetApp.getUi();
+  var antwort=ui.prompt('Persönlichen Code ersetzen','Bisherigen Code eingeben. Der Tages- und Monatsverbrauch sowie offene Vorgänge bleiben erhalten. Den Code vorher nicht aus der Tabelle löschen.',ui.ButtonSet.OK_CANCEL);
+  if (antwort.getSelectedButton()!==ui.Button.OK) return;
+  try {
+    var neu=ersetzeCode_(antwort.getResponseText());
+    ui.alert('Code ersetzt',neu.name+'\nNeuer persönlicher Code: '+neu.code+'\nDer bisherige Code ist ungültig. Verbrauch und Limits bleiben erhalten.',ui.ButtonSet.OK);
+  } catch(err) { ui.alert('Code nicht bestätigt',String(err.message || err),ui.ButtonSet.OK); }
+}
+
+function codeFuerLeereZeile_(index,snapshot,bestaetigung) {
+  var lock=LockService.getScriptLock(); lock.waitLock(15000);
+  try {
+    var ctx=kontext_(), daten=zugangsDaten_(ctx), id=String(snapshot[SP.PERSON-1] || '');
+    if (id) {
+      index=-1;
+      daten.zeilen.forEach(function(z,i){if(z[SP.PERSON-1]===id) index=i;});
+    } else if (JSON.stringify(daten.zeilen[index])!==JSON.stringify(snapshot)) {
+      throw benutzerFehler_('IDENTITAET','Die Zugangszeile wurde inzwischen geändert. Bitte erneut prüfen.');
+    }
+    var z=daten.zeilen[index];
+    if (!z || z[SP.CODE-1] || !String(z[SP.NAME-1] || '').trim()) throw benutzerFehler_('IDENTITAET','Diese Zeile ist kein eindeutig zugeordneter Zugang ohne Code.');
+    var h=id ? JSON.parse(z[SP.HISTORIE-1]) : null;
+    if (!id) {
+      if (!bestaetigung) throw benutzerFehler_('IDENTITAET','Ohne gesicherte Zuordnung wird kein neuer Verbrauchszähler angelegt.');
+      if (bestaetigung==='NEU') {
+        if (z[SP.VERBRAUCH-1] || z[SP.ANZAHL-1] || z[SP.ZULETZT-1]) throw benutzerFehler_('IDENTITAET','Diese Zeile enthält bisherigen Verbrauch. Bitte den bisherigen Code zuordnen.');
+        id=hash_(normalisiereCode_(freierCode_(daten)));
+      } else {
+        var alt=normalisiereCode_(bestaetigung);
+        if (alt.length<8) throw benutzerFehler_('IDENTITAET','Der bisherige Code ist ungültig.');
+        id=hash_(alt);
+        if (daten.besitzer[id]!==undefined && daten.besitzer[id]!==index) throw benutzerFehler_('IDENTITAET','Dieser frühere Code gehört bereits zu einer anderen Zugangszeile.');
+      }
+      h=[id];
+    }
+    var neu=schreibeErsatzCode_(ctx,daten,index,id,h);
+    // Nur bei einem ausdrücklich neuen Zugang gelten die ursprünglichen
+    // Startwerte. Codeersatz darf insbesondere eine Sperrung nicht aufheben.
+    if (bestaetigung==='NEU') {
+      daten.blatt.getRange(index+2,SP.AKTIV).setValue(true);
+      if (!z[SP.ROLLE-1]) daten.blatt.getRange(index+2,SP.ROLLE).setValue('Schüler');
+    }
+    return neu;
+  } finally { lock.releaseLock(); }
+}
+
 function codesErzeugen() {
   var ss = SpreadsheetApp.getActiveSpreadsheet();
   var einst = leseEinstellungen_(ss);
@@ -714,24 +855,27 @@ function codesErzeugen() {
     SpreadsheetApp.getUi().alert('Noch keine Personen eingetragen. Trag im Blatt «Zugänge» zuerst Name, Rolle und Stufe ein.');
     return;
   }
-  var anzahl = blatt.getLastRow() - 1;
-  var daten = blatt.getRange(2, 1, anzahl, KOPF.ZUGAENGE.length).getValues();
-  var bestehend = {};
-  daten.forEach(function (z) { if (z[SP.CODE - 1]) bestehend[normalisiereCode_(z[SP.CODE - 1])] = true; });
+  var daten = zugangsDaten_({ss:ss,einst:einst}).zeilen;
   var neu = [];
   for (var i = 0; i < daten.length; i++) {
     var name = String(daten[i][SP.NAME - 1] || '').trim();
     if (!name || daten[i][SP.CODE - 1]) continue;
-    var code;
-    do { code = neuerCode_(); } while (bestehend[normalisiereCode_(code)]);
-    bestehend[normalisiereCode_(code)] = true;
-    blatt.getRange(i + 2, SP.CODE).setValue(code);
-    blatt.getRange(i + 2, SP.AKTIV).setValue(true);   // ein neuer Code ist sofort aktiv
-    if (!daten[i][SP.ROLLE - 1]) blatt.getRange(i + 2, SP.ROLLE).setValue('Schüler');
-    neu.push({ name: name, code: code, lp: /lehr/i.test(String(daten[i][SP.ROLLE - 1])) });
+    var bestaetigung='';
+    if (!daten[i][SP.PERSON-1]) {
+      var ui=SpreadsheetApp.getUi();
+      var antwort=ui.prompt('Zugang eindeutig zuordnen: '+name,'Falls ein bisheriger Code gelöscht wurde: genau diesen Code eingeben, damit dessen Verbrauch erhalten bleibt. Nur für eine wirklich neue Person ohne früheren Zugang NEU eingeben. Ohne eindeutige Zuordnung abbrechen.',ui.ButtonSet.OK_CANCEL);
+      if (antwort.getSelectedButton()!==ui.Button.OK) continue;
+      bestaetigung=String(antwort.getResponseText()).trim();
+      if (bestaetigung!=='NEU') {
+        var check=ui.prompt('Bisherigen Zugang bestätigen','Die Zuordnung eines gelöschten Codes kann ohne bisherige Verbrauchs-ID nicht automatisch nachgewiesen werden. Nur wenn dieser Code sicher zu '+name+' gehörte, ZUORDNEN eingeben. Sonst abbrechen und die Verwaltung prüfen lassen.',ui.ButtonSet.OK_CANCEL);
+        if (check.getSelectedButton()!==ui.Button.OK || check.getResponseText().trim()!=='ZUORDNEN') continue;
+      }
+    }
+    try { neu.push(codeFuerLeereZeile_(i,daten[i],bestaetigung)); }
+    catch(err) { SpreadsheetApp.getUi().alert('Kein Code für '+name,String(err.message || err),SpreadsheetApp.getUi().ButtonSet.OK); }
   }
   if (!neu.length) {
-    SpreadsheetApp.getUi().alert('Alle eingetragenen Personen haben schon einen Code.');
+    SpreadsheetApp.getUi().alert('Keine neuen Codes erstellt. Bestehende Zugänge und Verbrauchszähler bleiben erhalten.');
     return;
   }
   var html = '<div style="font-family:Arial,sans-serif;font-size:13px;color:#0B2244">' +
@@ -969,7 +1113,7 @@ function reserviereChat_(ctx,n,id,hash,modell,system,nachrichten,maxTok,code,fac
   lock.waitLock(15000);
   try {
     ctx.einst = leseEinstellungen_(ctx.ss);
-    var frisch = findeNutzer_(ctx, code);
+    var frisch = findeNutzer_(ctx, code, true);
     if (!frisch) return {antwort:fehler_('CODE','Dieser Code ist ungültig oder nicht aktiv.')};
     Object.keys(frisch).forEach(function(k){ n[k]=frisch[k]; });
     var istLp = n.rolle === 'Lehrperson';

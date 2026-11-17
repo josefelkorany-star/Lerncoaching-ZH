@@ -7,13 +7,13 @@ export function createBackend(options={}){
  const clock={now:Date.parse(options.now||'2026-11-17T12:00:00Z')};
  class ClockDate extends Date{constructor(...args){super(...(args.length?args:[clock.now]));}static now(){return clock.now;}}
  const props=new Map(),cache=new Map(),sheets=new Map(),requests=[],mail=[],errors=[],alerts=[],dialogs=[],triggers=[],locks=[];
- const fail={append:new Set(),appendAfter:new Set(),set:new Set(),setAfter:new Set(),mail:false,properties:false,flush:false,cache:false};
+ const fail={append:new Set(),appendAfter:new Set(),set:new Set(),setAfter:new Set(),beforeSet:null,afterSet:null,mail:false,properties:false,flush:false,cache:false};
  const writes=[]; let locked=false,sequence=0;
  const literal=v=>typeof v==='string'&&v.startsWith("'")?v.slice(1):v;
  const clone=x=>Array.isArray(x)?x.map(clone):x;
  function sheet(name,initial=[]){
   const b={name,rows:clone(initial),getName:()=>name,getLastRow(){let n=this.rows.length;while(n&&!this.rows[n-1]?.some(x=>x!==''&&x!==undefined&&x!==null))n--;return n;},
-   getRange(row,col,height=1,width=1){const range={getFormulas:()=>Array.from({length:height},()=>Array(width).fill('')),getValues:()=>Array.from({length:height},(_,r)=>Array.from({length:width},(_,c)=>b.rows[row+r-1]?.[col+c-1]??'')),setValues(values){if(fail.set.has(name))throw Error('Synthetic set failure');writes.push({name,kind:'set',row,col,values:clone(values)});for(let r=0;r<height;r++){b.rows[row+r-1]??=[];for(let c=0;c<width;c++)b.rows[row+r-1][col+c-1]=literal(values[r][c]);}if(fail.setAfter.has(name))throw Error('Synthetic acknowledgement lost after set');return range;},setValue(value){return this.setValues([[value]]);}};
+   getRange(row,col,height=1,width=1){const range={getFormulas:()=>Array.from({length:height},()=>Array(width).fill('')),getValues:()=>Array.from({length:height},(_,r)=>Array.from({length:width},(_,c)=>b.rows[row+r-1]?.[col+c-1]??'')),setValues(values){const write={name,kind:'set',row,col,values:clone(values)};if(fail.beforeSet)fail.beforeSet(write);if(fail.set.has(name))throw Error('Synthetic set failure');writes.push(write);for(let r=0;r<height;r++){b.rows[row+r-1]??=[];for(let c=0;c<width;c++)b.rows[row+r-1][col+c-1]=literal(values[r][c]);}if(fail.afterSet)fail.afterSet(write);if(fail.setAfter.has(name))throw Error('Synthetic acknowledgement lost after set');return range;},setValue(value){return this.setValues([[value]]);}};
     for(const m of ['insertCheckboxes','setNumberFormat','setDataValidation','setNote','setWrap','setFontWeight','setFontSize','setBackground','setFontColor'])range[m]=()=>range;
     return range;},appendRow(values){if(fail.append.has(name))throw new Error('Synthetic sheet failure');writes.push({name,kind:'append',values:clone(values)});this.rows.push(values.map(literal));if(fail.appendAfter.has(name))throw Error('Synthetic acknowledgement lost after append');return this;},deleteRows(start,n){this.rows.splice(start-1,n);},clear(){this.rows=[];return this;},setColumnWidth(){return this;},setFrozenRows(){return this;}};
   sheets.set(name,b);return b;

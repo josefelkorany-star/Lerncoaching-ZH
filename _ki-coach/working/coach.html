@@ -648,7 +648,9 @@
     ladeChats();
     S.chats.sort(function (a, b) { return b.geaendert - a.geaendert; });
     S.aktivId = null; S.entwurf = null;
-    S.fachWahl = S.chats.length ? S.chats[0].fach : (istLp() ? 'Unterrichtsvorbereitung' : 'Allgemein');
+    var letztesFach = S.chats.length ? S.chats[0].fach : '';
+    var fachErlaubt = FAECHER.some(function (f) { return f.n === letztesFach && (istLp() || !f.lp); });
+    S.fachWahl = fachErlaubt ? letztesFach : (istLp() ? 'Unterrichtsvorbereitung' : 'Allgemein');
     $('who-name').textContent = nutzer.name;
     $('who-rolle').textContent = nutzer.rolle + (nutzer.stufe ? ' · ' + nutzer.stufe : '');
     $('eingabe').placeholder = istLp() ? 'Was brauchst du?' : 'Schreib deine Frage …';
@@ -662,16 +664,59 @@
   function abmelden(loeschen, meldung) {
     if (loeschen && S.code) entferne(chatKey());
     entferne(SITZUNG);
+    sperreChatAnsicht(meldung);
+  }
+
+  function sperreChatAnsicht(meldung) {
     verwerfeSitzungsarbeit();
     S.code = ''; S.nutzer = null; S.chats = []; S.aktivId = null; S.entwurf = null; S.bild = null; S.laeuft = false;
-    S.verbrauch = null; S.zuletztFokus = null;
+    S.verbrauch = null; S.zuletztFokus = null; S.fachWahl = 'Allgemein';
     $('verlauf-in').innerHTML = ''; $('who-name').textContent = ''; $('who-rolle').textContent = '';
+    $('chat-title').textContent = ''; $('fach-badge').innerHTML = '';
     $('chatliste').innerHTML = ''; $('meter-text').textContent = ''; $('meter-kurz').textContent = ''; $('meter-fill').style.width = '0%';
+    $('meter-bar').title = '';
     $('code').value = '';
     schliesseAlle();
     schliesseSidebar();
     zeigeHinweis('');
     zeigeLogin(meldung);
+  }
+
+  function pruefeAnmeldung(code, dauerhaft, wiederherstellung) {
+    // Gespeicherte Namen, Rollen und Chats sind kein Nachweis eines aktiven Zugangs.
+    sperreChatAnsicht(wiederherstellung ? 'Gespeicherten Zugang prüfen …' : '');
+    var generation = sitzungsGeneration;
+    var knopf = $('btn-login');
+    knopf.disabled = true; knopf.textContent = 'Prüfe …';
+    api({ aktion: 'login', code: code }).then(function (d) {
+      if (generation !== sitzungsGeneration) return;
+      knopf.disabled = false; knopf.textContent = 'Anmelden';
+      var bestaetigt = d && d.ok === true && d.nutzer && typeof d.nutzer.name === 'string' &&
+        (d.nutzer.rolle === 'Schüler' || d.nutzer.rolle === 'Lehrperson');
+      if (!bestaetigt) {
+        entferne(SITZUNG);
+        $('login-err').textContent = (d && d.meldung) || 'Der Zugang konnte nicht bestätigt werden. Bitte erneut anmelden.';
+        return;
+      }
+      S.dauerhaft = dauerhaft;
+      anmelden(code, d.nutzer, d.verbrauch);
+      speichereSitzung();
+      if (d.status === 'PAUSE') zeigeHinweis('Der KI-Coach ist gerade pausiert. Bitte versuche es später nochmals.', 'info');
+    }).catch(function (e) {
+      if (generation !== sitzungsGeneration) return;
+      knopf.disabled = false; knopf.textContent = 'Anmelden';
+      $('login-err').textContent = netzMeldung(e);
+    });
+  }
+
+  function stelleSitzungWiederHer() {
+    var sitz = lies(SITZUNG, true) || lies(SITZUNG, false);
+    if (sitz && typeof sitz.code === 'string' && sitz.code) {
+      $('bleiben').checked = sitz.dauerhaft !== false;
+      pruefeAnmeldung(sitz.code, sitz.dauerhaft !== false, true);
+    } else {
+      sperreChatAnsicht();
+    }
   }
 
   function aktuellerChat() {
@@ -926,24 +971,7 @@
       ev.preventDefault();
       var code = normCode($('code').value);
       if (code.length < 4) { $('login-err').textContent = 'Bitte gib deinen Code ein, z.B. LC-AB12-CD34.'; return; }
-      verwerfeSitzungsarbeit();
-      var generation = sitzungsGeneration;
-      var knopf = $('btn-login');
-      knopf.disabled = true; knopf.textContent = 'Prüfe …'; $('login-err').textContent = '';
-      api({ aktion: 'login', code: code }).then(function (d) {
-        if (generation !== sitzungsGeneration) return;
-        knopf.disabled = false; knopf.textContent = 'Anmelden';
-        if (!d || !d.ok) { $('login-err').textContent = (d && d.meldung) || 'Anmeldung fehlgeschlagen.'; return; }
-        S.dauerhaft = $('bleiben').checked;
-        S.code = code; S.nutzer = d.nutzer; S.verbrauch = d.verbrauch;
-        speichereSitzung();
-        anmelden(code, d.nutzer, d.verbrauch);
-        if (d.status === 'PAUSE') zeigeHinweis('Der KI-Coach ist gerade pausiert. Bitte versuche es später nochmals.', 'info');
-      }).catch(function (e) {
-        if (generation !== sitzungsGeneration) return;
-        knopf.disabled = false; knopf.textContent = 'Anmelden';
-        $('login-err').textContent = netzMeldung(e);
-      });
+      pruefeAnmeldung(code, $('bleiben').checked, false);
     });
     $('code').addEventListener('blur', function () {
       var n = normCode(this.value);
@@ -1098,24 +1126,10 @@
     alle('[data-tage]').forEach(function (el) { el.textContent = String(KONFIG.PROTOKOLL_TAGE); });
     verbinde();
     setzeVh();
-    var sitz = lies(SITZUNG, true) || lies(SITZUNG, false);
-    if (sitz && sitz.code && sitz.nutzer) {
-      S.dauerhaft = sitz.dauerhaft !== false;
-      anmelden(sitz.code, sitz.nutzer, sitz.verbrauch);
-      var generation = sitzungsGeneration;
-      api({ aktion: 'login', code: sitz.code }).then(function (d) {
-        if (generation !== sitzungsGeneration) return;
-        if (d && d.ok) {
-          S.nutzer = d.nutzer; S.verbrauch = d.verbrauch; speichereSitzung(); renderMeter();
-          $('who-name').textContent = d.nutzer.name;
-          if (d.status === 'PAUSE') zeigeHinweis('Der KI-Coach ist gerade pausiert. Bitte versuche es später nochmals.', 'info');
-        } else if (d && d.fehler === 'CODE') {
-          abmelden(false, 'Dein Code ist nicht mehr aktiv. Frag das Team von Lerncoaching ZH.');
-        }
-      }).catch(function () {});
-    } else {
-      zeigeLogin();
-    }
+    stelleSitzungWiederHer();
+    // Auch eine aus dem Browser-Seitencache wieder geöffnete Ansicht neu prüfen.
+    window.addEventListener('pagehide', function () { sperreChatAnsicht(); });
+    window.addEventListener('pageshow', function (ev) { if (ev.persisted) stelleSitzungWiederHer(); });
   }
 
   start();

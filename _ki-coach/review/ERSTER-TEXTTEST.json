@@ -1,0 +1,16 @@
+{
+  "status": "Vorbereitet, nicht ausgeführt",
+  "person": {"name": "Testkind Birke", "rolle": "Schüler", "stufe": "5. Primar"},
+  "fach": "Mathematik",
+  "text": "Wie rechne ich 3/4 + 1/8? Gib mir bitte nur den ersten Schritt.",
+  "bilder": 0,
+  "vorherigeNachrichten": 0,
+  "zusatzanweisung": "",
+  "modell": "claude-sonnet-5-5",
+  "maximaleBezahlteAufrufe": 1,
+  "maximaleAusgabeTokens": 900,
+  "kalkulierteEingabeReserveTokens": 7995,
+  "kalkulierteReserveMikroUSD": 24990,
+  "geplanteKostenobergrenzeUSD": 0.025,
+  "hinweis": "Software-Reserve gemäss unveränderter Preiskonfiguration; keine live bestätigte Garantie der Anbieterabrechnung. Keine automatische Wiederholung. Bei unklarem Ergebnis nicht als neue Anfrage erneut senden."
+}
