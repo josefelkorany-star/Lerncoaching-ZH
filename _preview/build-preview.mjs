@@ -13,7 +13,7 @@ if (!outsideRoot) {
 }
 await mkdir(output, { recursive: true });
 const files = ['index.html', 'calendar.css', 'calendar.js', 'course-data.js', 'site-config.js',
-  'logo.png', 'poster.jpg', 'lerncoaching-hero.webp', 'konzept.pdf', 'vertrag.pdf', 'vertrag_ersttermin.pdf'];
+  'logo.png', 'poster.jpg', 'konzept.pdf', 'vertrag.pdf', 'vertrag_ersttermin.pdf'];
 const manifest = [];
 for (const file of files) {
   const source = path.join(root, file);

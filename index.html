@@ -17,7 +17,7 @@
   .nav-brand img{display:block;}
   .nav-logo{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;letter-spacing:0.06em;color:var(--navy);}
   .nav-logo span{color:var(--teal);}
-  .nav-links{display:flex;gap:1rem;flex-wrap:wrap;min-width:0;}
+  .nav-links{display:flex;gap:2rem;}
   .nav-links[hidden],.nav-toggle[hidden]{display:none;}
   .nav-links a{color:var(--muted);text-decoration:none;font-size:0.9rem;font-weight:500;transition:color .2s;}
   .nav-links a:hover{color:var(--teal);}
@@ -176,8 +176,6 @@
     .hero h1{font-size:clamp(3.8rem,12vw,5.7rem);}
   }
   @media(max-width:480px){
-    .nav-cta{grid-column:1 / -1;grid-row:2;justify-self:stretch;text-align:center;white-space:normal;line-height:1.4;}
-    .nav-toggle{grid-column:2;grid-row:1;justify-self:end;}
     .nav-links{grid-template-columns:repeat(2,minmax(0,1fr));}
     section{padding:4rem 1.2rem;}
     .hero{padding:9rem 1.2rem 3rem;}
@@ -193,7 +191,6 @@
   .hero-sub{animation:fadeUp .6s .2s ease both;}
   .btn-group{animation:fadeUp .6s .3s ease both;}
   .hero-badges{animation:fadeUp .6s .4s ease both;}
-  .inquiry-notice{padding:1rem;margin-bottom:1rem;background:var(--teal-light);border-left:4px solid var(--teal);border-radius:8px;font-size:.9rem;line-height:1.7;overflow-wrap:anywhere;}
 </style>
 <link rel="stylesheet" href="calendar.css"/>
 </head>
@@ -215,9 +212,9 @@
     <a href="#dokumente">Dokumente</a>
     <a href="#faq">FAQ</a>
     <a href="#preise">Preise</a>
-    <a href="#kontakt">Ersttermin vereinbaren</a>
+    <a href="#kontakt">Kontakt</a>
   </div>
-  <a href="#kontakt" class="nav-cta">Ersttermin vereinbaren</a>
+  <a href="#kontakt" class="nav-cta">Jetzt anmelden</a>
 </nav>
 
 <section class="hero">
@@ -230,7 +227,7 @@
       Ihr Kind wird von aktiven ETH- und UZH-Student:innen begleitet — Menschen, die den Schulweg selbst noch frisch kennen und genau wissen, wo es wirklich hakt. Wir bringen nicht nur Fachwissen mit, sondern echtes Verständnis für Frust, Lernblockaden und Prüfungsdruck.
     </p>
     <div class="btn-group">
-      <a href="#kontakt" class="btn-primary">Ersttermin vereinbaren</a>
+      <a href="#kontakt" class="btn-primary">Jetzt anmelden →</a>
       <a href="#konzept" class="btn-ghost">Unser Konzept</a>
     </div>
     <div class="hero-badges">
@@ -247,7 +244,7 @@
 
 <div class="stats-bar">
   <div class="stats-inner">
-    <div><div class="stat-num">CHF 160</div><div class="stat-lbl">für vier Samstage</div></div>
+    <div><div class="stat-num">CHF 160</div><div class="stat-lbl">ab / Monat</div></div>
     <div><div class="stat-num">4</div><div class="stat-lbl">Kernkompetenzen</div></div>
     <div><div class="stat-num">Ab 4.</div><div class="stat-lbl">Primarklasse</div></div>
     <div><div class="stat-num">Zürich</div><div class="stat-lbl">Oerlikon · 8050</div></div>
@@ -259,9 +256,9 @@
   <div style="max-width:1100px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;">
     <div>
       <p style="font-weight:700;font-size:1.05rem;color:#fff;">🎯 Erstmal reinschnuppern — Erstes Mal für CHF 20.–</p>
-      <p style="font-size:.875rem;color:rgba(255,255,255,.8);margin-top:.2rem;">Konkreter Termin nach persönlicher Bestätigung und separater Vereinbarung. <strong>Keine Quartalsbindung durch den Ersttermin.</strong></p>
+      <p style="font-size:.875rem;color:rgba(255,255,255,.8);margin-top:.2rem;">Überzeug dich selbst — danach entscheidest du. &nbsp;·&nbsp; <strong>Abmeldung bis Do. 18:00 Uhr</strong></p>
     </div>
-    <a href="#kontakt" style="background:#fff;color:var(--teal);padding:.65rem 1.5rem;border-radius:5px;text-decoration:none;font-weight:700;font-size:.9rem;white-space:nowrap;flex-shrink:0;">Ersttermin vereinbaren</a>
+    <a href="#kontakt" style="background:#fff;color:var(--teal);padding:.65rem 1.5rem;border-radius:5px;text-decoration:none;font-weight:700;font-size:.9rem;white-space:nowrap;flex-shrink:0;">Jetzt buchen →</a>
   </div>
 </div>
 
@@ -459,7 +456,7 @@
     </div>
     <div class="lc-next" aria-live="polite" hidden><span class="lc-next-icon" aria-hidden="true">↗</span><p><span id="lc-next-label"></span><strong id="lc-next-date"></strong></p><span id="lc-next-time"></span></div>
     <div id="lc-year-panels"></div>
-    <noscript><p>Bitte aktiviere JavaScript, um die Kurstage 2026 und 2027, Monatsbeiträge und den Kalenderexport anzuzeigen. Bei Fragen zu einem Termin nutze <a href="#kontakt">Ersttermin vereinbaren</a>.</p></noscript>
+    <noscript><p>Bitte aktiviere JavaScript, um die Kurstage 2026 und 2027, Monatsbeiträge und den Kalenderexport anzuzeigen. Bei Fragen zu einem Termin erreichst du uns über die <a href="#kontakt">Kontaktangaben</a>.</p></noscript>
     <div class="lc-calendar-foot">
       <details><summary>Ferienregelung &amp; Beiträge verständlich erklärt</summary><div class="lc-rules">
         <div><h4>Wann findet der Kurs statt?</h4><p>Massgebend sind die hier aufgeführten Kurstage. In längeren Schulferien und am Samstag direkt davor ist kein Kurs. Der Samstag unmittelbar vor dem Schulstart findet wieder statt – ausser am ausdrücklich freien 2. Januar 2027.</p><p>Zusätzlich kursfrei: 27. März 2027 (Osterwochenende) und 15. Mai 2027 (Pfingstwochenende).</p></div>
@@ -627,11 +624,11 @@
         <div style="font-family:'Bebas Neue',sans-serif;font-size:3rem;line-height:1;color:var(--navy);margin-bottom:.2rem;">CHF 45</div>
         <p style="font-size:.85rem;color:var(--muted);margin-bottom:1.2rem;">60 Minuten · einmalig · <s style="opacity:.6;">CHF 65</s></p>
         <ul style="list-style:none;display:flex;flex-direction:column;gap:.5rem;margin-bottom:1.5rem;">
-          <li style="font-size:.875rem;color:var(--muted);display:flex;gap:.5rem;"><span style="color:var(--teal);font-weight:700;">✓</span>Ohne Quartalsbindung</li>
-          <li style="font-size:.875rem;color:var(--muted);display:flex;gap:.5rem;"><span style="color:var(--teal);font-weight:700;">✓</span>Wunschdatum nach Absprache</li>
+          <li style="font-size:.875rem;color:var(--muted);display:flex;gap:.5rem;"><span style="color:var(--teal);font-weight:700;">✓</span>Unverbindlich testen</li>
+          <li style="font-size:.875rem;color:var(--muted);display:flex;gap:.5rem;"><span style="color:var(--teal);font-weight:700;">✓</span>Termin frei wählbar</li>
           <li style="font-size:.875rem;color:var(--muted);display:flex;gap:.5rem;"><span style="color:var(--teal);font-weight:700;">✓</span>Zahlung per TWINT</li>
         </ul>
-        <a href="#kontakt" style="display:block;text-align:center;background:var(--teal);color:#fff;padding:.75rem;border-radius:6px;text-decoration:none;font-weight:700;font-size:.875rem;">Ersttermin vereinbaren</a>
+        <a href="#kontakt" style="display:block;text-align:center;background:var(--teal);color:#fff;padding:.75rem;border-radius:6px;text-decoration:none;font-weight:700;font-size:.875rem;">Probestunde buchen →</a>
       </div>
 
       <!-- Einzelstunde -->
@@ -644,7 +641,7 @@
           <li style="font-size:.875rem;color:var(--muted);display:flex;gap:.5rem;"><span style="color:var(--teal);font-weight:700;">✓</span>Flexible Terminwahl</li>
           <li style="font-size:.875rem;color:var(--muted);display:flex;gap:.5rem;"><span style="color:var(--teal);font-weight:700;">✓</span>Keine Quartalsbindung</li>
         </ul>
-        <a href="#kontakt" style="display:block;text-align:center;background:var(--navy);color:#fff;padding:.75rem;border-radius:6px;text-decoration:none;font-weight:700;font-size:.875rem;">Ersttermin vereinbaren</a>
+        <a href="#kontakt" style="display:block;text-align:center;background:var(--navy);color:#fff;padding:.75rem;border-radius:6px;text-decoration:none;font-weight:700;font-size:.875rem;">Jetzt buchen →</a>
       </div>
 
       <!-- Doppelstunde -->
@@ -657,11 +654,11 @@
           <li style="font-size:.875rem;color:var(--muted);display:flex;gap:.5rem;"><span style="color:var(--teal);font-weight:700;">✓</span>Sparender als 2× Einzeln</li>
           <li style="font-size:.875rem;color:var(--muted);display:flex;gap:.5rem;"><span style="color:var(--teal);font-weight:700;">✓</span>Keine Quartalsbindung</li>
         </ul>
-        <a href="#kontakt" style="display:block;text-align:center;background:var(--navy);color:#fff;padding:.75rem;border-radius:6px;text-decoration:none;font-weight:700;font-size:.875rem;">Ersttermin vereinbaren</a>
+        <a href="#kontakt" style="display:block;text-align:center;background:var(--navy);color:#fff;padding:.75rem;border-radius:6px;text-decoration:none;font-weight:700;font-size:.875rem;">Jetzt buchen →</a>
       </div>
 
     </div>
-    <p style="font-size:.8rem;color:var(--muted);margin-top:1.2rem;">Eine Online-Anfrage ist noch keine Stundenbuchung. Termin und separate Vereinbarung werden persönlich bestätigt; vorher entsteht keine Absagegebühr. Für vereinbarte Stunden: Zahlung per TWINT, Absagen bitte mindestens 24 Stunden vorher per WhatsApp.</p>
+    <p style="font-size:.8rem;color:var(--muted);margin-top:1.2rem;">Zahlung per TWINT nach jeder Stunde. Absagen bitte mind. 24h im Voraus per WhatsApp.</p>
   </div>
 </section>
 
@@ -672,7 +669,7 @@
   <div class="container">
     <p class="section-label">Investition</p>
     <h2 class="section-title">Faire Monatsbeiträge</h2>
-    <p class="section-desc">Zahlung bequem per TWINT, E-Banking oder bar bis zum 1. des Monats. Bei Barzahlung stellen wir selbstverständlich eine Quittung aus. Eine Quartalsbuchung entsteht erst nach ausdrücklicher Aufnahmebestätigung und separater unterschriebener Vereinbarung. Die Anfrage selbst ist kostenlos und unverbindlich. Anmeldung quartalsweise, kostenlos kündbar per Quartalsende.</p>
+    <p class="section-desc">Zahlung bequem per TWINT, E-Banking oder bar bis zum 1. des Monats. Bei Barzahlung stellen wir selbstverständlich eine Quittung aus. Anmeldung quartalsweise, kostenlos kündbar per Quartalsende.</p>
     <div style="display:flex;gap:.8rem;align-items:flex-start;background:#FFF8E1;border-left:4px solid #E07B39;border-radius:0 8px 8px 0;padding:1rem 1.2rem;margin-bottom:.5rem;max-width:700px;">
       <span style="font-size:1.2rem;flex-shrink:0;">⏱</span>
       <p style="font-size:.9rem;color:#5A3A00;line-height:1.7;"><strong>Immer Doppellektion — keine Einzellektion möglich.</strong> Der Unterricht findet ausschliesslich als Doppellektion statt (09:30–11:30 Uhr, mit Pause). Eine Buchung einzelner Lektionen ist nicht möglich.</p>
@@ -705,7 +702,7 @@
       <div style="display:flex;flex-direction:column;gap:.6rem;">
         <div style="display:flex;align-items:flex-start;">
           <span style="color:var(--teal);font-weight:700;flex-shrink:0;display:inline-block;width:1rem;text-align:center;margin-right:.8rem;">✓</span>
-          <p style="font-size:.875rem;color:var(--muted);line-height:1.6;"><strong style="color:var(--navy);">Anfrage jederzeit möglich</strong> — auch mitten im Quartal. Josef meldet sich persönlich. Eintrittsdatum, erste Vertragsperiode und Beitrag werden vor einem Abschluss ausdrücklich vereinbart. Der Monatsbeitrag wird anteilsmässig verrechnet. Eine unverbindliche Anfrage ist kein Kursvertrag.</p>
+          <p style="font-size:.875rem;color:var(--muted);line-height:1.6;"><strong style="color:var(--navy);">Anmeldung jederzeit möglich</strong> — auch mitten im Quartal. Der Monatsbeitrag wird anteilsmässig verrechnet.</p>
         </div>
         <div style="display:flex;align-items:flex-start;">
           <span style="color:var(--teal);font-weight:700;flex-shrink:0;display:inline-block;width:1rem;text-align:center;margin-right:.8rem;">✓</span>
@@ -720,16 +717,15 @@
         <div class="first-term-card" style="display:flex;gap:.8rem;align-items:flex-start;margin-top:.4rem;background:#FFF3CD;border-left:3px solid #E07B39;border-radius:0 8px 8px 0;padding:.9rem 1.1rem;">
           <span style="font-size:1rem;flex-shrink:0;">⚠️</span>
           <div class="first-term-copy" style="flex:1;">
-            <p style="font-size:.875rem;font-weight:700;color:var(--navy);margin-bottom:.35rem;">Separat bestätigter Ersttermin (CHF 20.–)</p>
-            <p style="font-size:.85rem;color:var(--muted);line-height:1.7;">Die Anfrage allein löst keine Buchung und keine Absagegebühr aus. Für einen Ersttermin vereinbaren wir ein konkretes Datum und schliessen eine separate unterschriebene Vereinbarung ab. Die bisherige Absagefrist bis Donnerstag 18:00 Uhr betrifft einen tatsächlich vereinbarten Samstag. Massgebend sind die ausdrücklich vereinbarten Bedingungen und gesetzlichen Rechte; der Ersttermin begründet keine Quartalsbindung.</p>
-<p style="font-size:.85rem;color:var(--muted);line-height:1.7;">Eine kostenlose Absage ist ausschliesslich bis <strong style="color:var(--navy);">Donnerstag 18:00 Uhr</strong> vor dem gebuchten Samstag möglich. Wer sich nicht fristgerecht abmeldet oder krankheitsbedingt ausfällt, schuldet die vollen CHF 20.– — unabhängig vom Grund. Hintergrund: Lehrpersonen werden fix eingeplant, Gruppen aufgeteilt und Ressourcen reserviert. Kurzfristige Ausfälle verursachen Planungs-, Organisations- und Opportunitätskosten, die mit einem Team von 4 Lehrpersonen nicht einfach aufgefangen werden können.</p>
+            <p style="font-size:.875rem;font-weight:700;color:var(--navy);margin-bottom:.35rem;">Stornierung Ersttermins (CHF 20.–)</p>
+            <p style="font-size:.85rem;color:var(--muted);line-height:1.7;">Eine kostenlose Absage ist ausschliesslich bis <strong style="color:var(--navy);">Donnerstag 18:00 Uhr</strong> vor dem gebuchten Samstag möglich. Wer sich nicht fristgerecht abmeldet oder krankheitsbedingt ausfällt, schuldet die vollen CHF 20.– — unabhängig vom Grund. Hintergrund: Lehrpersonen werden fix eingeplant, Gruppen aufgeteilt und Ressourcen reserviert. Kurzfristige Ausfälle verursachen Planungs-, Organisations- und Opportunitätskosten, die mit einem Team von 4 Lehrpersonen nicht einfach aufgefangen werden können.</p>
             <div style="margin-top:.9rem;">
               <a class="download-link" href="vertrag_ersttermin.pdf" download
                  style="display:inline-flex;align-items:center;gap:.5rem;background:var(--navy);color:#fff;padding:.6rem 1.2rem;border-radius:6px;text-decoration:none;font-weight:600;font-size:.82rem;transition:background .2s;"
                  onmouseover="this.style.background='#1a3a6e'" onmouseout="this.style.background='#0B2244'">
                 ⬇ Ersttermin-Vereinbarung herunterladen
               </a>
-              <p style="font-size:.75rem;color:var(--muted);margin-top:.4rem;">Bisherige Vorlage zur Einsicht. Für eine neue Aufnahme erhältst du die ausdrücklich vereinbarte Fassung und das bestätigte Datum persönlich.</p>
+              <p style="font-size:.75rem;color:var(--muted);margin-top:.4rem;">Bitte vor dem ersten Samstag ausdrucken, unterschreiben und mitbringen.</p>
             </div>
           </div>
         </div>
@@ -740,43 +736,40 @@
       <div class="preis-card">
         <div class="preis-label">1 Kind</div>
         <div class="preis-amount">CHF 160</div>
-        <div class="preis-per">Referenz: vier Samstage · CHF 40 pro Doppellektion</div>
+        <div class="preis-per">pro Monat · CHF 40 pro Doppellektion</div>
         <ul class="preis-features">
           <li><span>✓</span>Alle regulären Samstage</li>
           <li><span>✓</span>Individueller Lernplan</li>
           <li><span>✓</span>Lernstand- & Strategie-Check</li>
           <li><span>✓</span>TWINT, E-Banking oder bar</li>
         </ul>
-        <a href="#kontakt" class="btn-primary" style="display:block;text-align:center;">Ersttermin vereinbaren</a>
-        <div class="preis-note">Quartal: 3 Monate. Verbindlich erst mit Bestätigung und separater unterschriebener Vereinbarung.</div>
+        <a href="#kontakt" class="btn-primary" style="display:block;text-align:center;">Anmelden →</a>
         <div class="preis-note">Quartalsweise, verlängert sich automatisch. Kostenlos kündbar per Quartalsende; bei Austritt während des Quartals einmalig eine Pauschale von höchstens vier Doppellektionen.</div>
       </div>
       <div class="preis-card">
         <div class="preis-label">2 Geschwister</div>
         <div class="preis-amount">CHF 280</div>
-        <div class="preis-per">Referenz: vier Samstage · CHF 35 pro Doppellektion/Kind</div>
+        <div class="preis-per">pro Monat · CHF 35 pro Doppellektion/Kind</div>
         <ul class="preis-features">
           <li><span>✓</span>Beide Kinder inklusive</li>
           <li><span>✓</span>Individuelle Lernpläne</li>
           <li><span>✓</span>Lernstand- & Strategie-Check</li>
           <li><span>✓</span>TWINT, E-Banking oder bar</li>
         </ul>
-        <a href="#kontakt" class="btn-primary" style="display:block;text-align:center;">Ersttermin vereinbaren</a>
-        <div class="preis-note">Quartal: 3 Monate. Verbindlich erst mit Bestätigung und separater unterschriebener Vereinbarung.</div>
+        <a href="#kontakt" class="btn-primary" style="display:block;text-align:center;">Anmelden →</a>
         <div class="preis-note">Quartalsweise, verlängert sich automatisch. Kostenlos kündbar per Quartalsende; bei Austritt während des Quartals einmalig eine Pauschale von höchstens vier Doppellektionen.</div>
       </div>
       <div class="preis-card">
         <div class="preis-label">3 Geschwister</div>
         <div class="preis-amount">CHF 360</div>
-        <div class="preis-per">Referenz: vier Samstage · CHF 30 pro Doppellektion/Kind</div>
+        <div class="preis-per">pro Monat · CHF 30 pro Doppellektion/Kind</div>
         <ul class="preis-features">
           <li><span>✓</span>Alle drei Kinder inklusive</li>
           <li><span>✓</span>Individuelle Lernpläne</li>
           <li><span>✓</span>Lernstand- & Strategie-Check</li>
           <li><span>✓</span>TWINT, E-Banking oder bar</li>
         </ul>
-        <a href="#kontakt" class="btn-primary" style="display:block;text-align:center;">Ersttermin vereinbaren</a>
-        <div class="preis-note">Quartal: 3 Monate. Verbindlich erst mit Bestätigung und separater unterschriebener Vereinbarung.</div>
+        <a href="#kontakt" class="btn-primary" style="display:block;text-align:center;">Anmelden →</a>
         <div class="preis-note">Quartalsweise, verlängert sich automatisch. Kostenlos kündbar per Quartalsende; bei Austritt während des Quartals einmalig eine Pauschale von höchstens vier Doppellektionen.</div>
       </div>
     </div>
@@ -789,7 +782,7 @@
   <div class="container">
     <p class="section-label">Downloads</p>
     <h2 class="section-title">Konzept & <span style="color:var(--teal)">Vertrag</span></h2>
-    <p class="section-desc">Hier findest du das aktuelle Konzept und die bestehenden Vertragsvorlagen zur Einsicht. Sie werden durch eine Anfrage weder akzeptiert noch auf bestehende Familien neu angewendet. Für neue Abschlüsse erhältst du die passende, ausdrücklich vereinbarte Vertragsfassung persönlich.</p>
+    <p class="section-desc">Hier findest du alle wichtigen Dokumente zum Herunterladen — unser detailliertes Konzept sowie den Anmeldevertrag.</p>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:1.5rem;margin-top:2.5rem;">
 
       <!-- Konzept PDF -->
@@ -818,7 +811,7 @@
         <div style="width:48px;height:48px;background:#EBF0F7;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;">📝</div>
         <div>
           <p style="font-weight:700;font-size:1rem;color:var(--navy);">Anmeldevertrag</p>
-          <p style="font-size:.875rem;color:var(--muted);margin-top:.3rem;line-height:1.6;">Vertragsvorlage zur Einsicht. Die Anfrage nimmt diesen Vertrag nicht an. Für einen Abschluss erhältst du die passende Vertragsfassung persönlich.</p>
+          <p style="font-size:.875rem;color:var(--muted);margin-top:.3rem;line-height:1.6;">Bitte herunterladen, ausdrucken, unterschreiben und am ersten Samstag mitbringen oder per WhatsApp einschicken.</p>
           <p style="font-size:.8rem;color:var(--muted);margin-top:.5rem;line-height:1.5;">Aktuelle Fassung für neue Anmeldungen: Version 2026/2.5. Für bestehende Anmeldungen gilt die unterschriebene Fassung.</p>
         </div>
         <!--
@@ -845,10 +838,6 @@
     <div style="display:flex;flex-direction:column;gap:.8rem;max-width:800px;">
 
 
-      <details style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;">
-        <summary style="padding:1.1rem 1.4rem;font-weight:600;cursor:pointer;">Was passiert nach meiner Anfrage?</summary>
-        <p style="padding:.2rem 1.4rem 1.1rem;line-height:1.75;">Deine Anfrage ist unverbindlich und bucht keinen Ersttermin. Wir melden uns in der Regel innert 2–3 Werktagen persönlich bei dir. Für den Ersttermin schicken wir dir die Ersttermin-Vereinbarung zum Unterschreiben. Verbindlich wird es erst mit der unterschriebenen Ersttermin-Vereinbarung beziehungsweise dem Anmeldevertrag. Ein Wunschdatum ist noch keine Buchung.</p>
-      </details>
       <details style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;overflow:hidden;">
         <summary style="padding:1.1rem 1.4rem;font-weight:600;font-size:.95rem;color:var(--navy);cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;">
           Für welche Schulstufen ist Lerncoaching ZH geeignet? <span class="faq-icon"></span>
@@ -867,7 +856,7 @@
         <summary style="padding:1.1rem 1.4rem;font-weight:600;font-size:.95rem;color:var(--navy);cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;">
           Wie gross sind die Gruppen? <span class="faq-icon"></span>
         </summary>
-        <p style="padding:.2rem 1.4rem 1.1rem;font-size:.9rem;color:var(--muted);line-height:1.75;">Wir betreuen maximal vier Schüler:innen je gleichzeitig betreuender Person. Bei drei gleichzeitig eingesetzten Betreuungspersonen sind das höchstens zwölf Plätze. Die Aufnahme wird persönlich besprochen.</p>
+        <p style="padding:.2rem 1.4rem 1.1rem;font-size:.9rem;color:var(--muted);line-height:1.75;">Wir arbeiten bewusst in kleinen Gruppen von 2–5 Schüler:innen, damit jede:r die Aufmerksamkeit bekommt, die er oder sie braucht.</p>
       </details>
 
       <details style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;overflow:hidden;">
@@ -895,21 +884,21 @@
         <summary style="padding:1.1rem 1.4rem;font-weight:600;font-size:.95rem;color:var(--navy);cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;">
           Gibt es ein «Erstes Mal»-Angebot? <span class="faq-icon"></span>
         </summary>
-        <p style="padding:.2rem 1.4rem 1.1rem;font-size:.9rem;color:var(--muted);line-height:1.75;">Ja, eine erste Doppellektion kostet CHF 20.–. Zuerst fragst du unverbindlich an. Erst nach persönlicher Bestätigung eines konkreten Datums und Abschluss der separaten unterschriebenen Vereinbarung ist der Ersttermin gebucht. Er begründet keine Quartalsbindung; die blosse Anfrage keine Zahlungspflicht.</p>
+        <p style="padding:.2rem 1.4rem 1.1rem;font-size:.9rem;color:var(--muted);line-height:1.75;">Ja! Wir bieten eine erste Doppellektion für CHF 20.– an — völlig unverbindlich. So kannst du uns und unsere Arbeitsweise kennenlernen, bevor du dich für ein Quartal entscheidest.</p>
       </details>
 
       <details style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;overflow:hidden;">
         <summary style="padding:1.1rem 1.4rem;font-weight:600;font-size:.95rem;color:var(--navy);cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;">
           Kann ich auch mitten im Quartal einsteigen? <span class="faq-icon"></span>
         </summary>
-        <p style="padding:.2rem 1.4rem 1.1rem;font-size:.9rem;color:var(--muted);line-height:1.75;">Du kannst jederzeit unverbindlich einen Ersttermin vereinbaren. Wir melden uns persönlich bei dir. Eintrittsdatum, erste Vertragsperiode und Beitrag werden vor einem Vertragsabschluss festgehalten. Die Online-Anfrage selbst bucht keinen Termin.</p>
+        <p style="padding:.2rem 1.4rem 1.1rem;font-size:.9rem;color:var(--muted);line-height:1.75;">Ja, eine Anmeldung ist jederzeit möglich. Der Monatsbeitrag für den Eintrittsmonat wird anteilsmässig berechnet.</p>
       </details>
 
       <details style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;overflow:hidden;">
         <summary style="padding:1.1rem 1.4rem;font-weight:600;font-size:.95rem;color:var(--navy);cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;">
           Was passiert wenn mein Kind einen Samstag verpasst? <span class="faq-icon"></span>
         </summary>
-        <p style="padding:.2rem 1.4rem 1.1rem;font-size:.9rem;color:var(--muted);line-height:1.75;">Bei einem abgeschlossenen Kursvertrag führt eine einzelne Absenz nicht automatisch zu einer Rückerstattung oder einem Nachholtermin. Bitte melde Abwesenheiten frühzeitig. Einzelabsenz, längere Verhinderung, Pause, Kündigung und ein Ausfall durch uns werden getrennt beurteilt; massgebend sind die vereinbarten Bedingungen und zwingenden gesetzlichen Rechte. Eine blosse Interessenanfrage reserviert noch keinen Platz und verursacht keine Kurskosten.</p>
+        <p style="padding:.2rem 1.4rem 1.1rem;font-size:.9rem;color:var(--muted);line-height:1.75;">Unser Angebot funktioniert wie ein regulärer Kurs, und wir möchten ehrlich erklären, warum das so ist — denn wir verstehen, dass diese Regelung auf den ersten Blick streng wirken kann. Wenn dein Kind angemeldet ist, reservieren wir einen fixen Platz, planen die Lehrperson ein, bezahlen sie für ihre Vorbereitung und Anwesenheit und tragen laufende Kosten wie Raummiete und Organisation. All das entsteht unabhängig davon, ob dein Kind am Ende erscheint oder nicht. Es ist vergleichbar mit einem Monatsabo im Fitnesscenter oder einem Kurs an der Musikschule: Der Platz gehört dir, die Kosten laufen — ob du kommst oder nicht. Grundsätzlich sind deshalb weder Rückerstattungen noch Nachholmöglichkeiten vorgesehen. Bei krankheitsbedingter Abwesenheit kann jedoch je nach Situation und nach vorgängiger bzw. zeitnaher Absprache eine Kulanzlösung möglich sein — dies ist freiwillig und kein Anspruch. Wir hoffen, dass dieses Verständnis dabei hilft, Absenzen wenn immer möglich zu vermeiden.</p>
       </details>
 
       <details style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;overflow:hidden;">
@@ -917,7 +906,6 @@
           Bis wann muss ich kündigen? <span class="faq-icon"></span>
         </summary>
         <p style="padding:.2rem 1.4rem 1.1rem;font-size:.9rem;color:var(--muted);line-height:1.75;">Kostenlos ist die Kündigung per Quartalsende: Sie muss spätestens am letzten Tag des laufenden Quartals schriftlich per E-Mail oder WhatsApp bei uns eingehen (Q1 Aug–Okt, Q2 Nov–Jan, Q3 Feb–Apr, Q4 Mai–Jul). Ohne Kündigung verlängert sich die Anmeldung automatisch um ein Quartal.<br/><br/>Ein Austritt während des Quartals ist jederzeit möglich. Weil Gruppen, Lehrpersonen und Plätze für das ganze Quartal eingeplant sind, fällt dann einmalig eine Pauschale von vier Doppellektionen an: 1 Kind CHF 160.– (mit Treuerabatt CHF 145.–), 2 Geschwister CHF 280.–, 3 Geschwister CHF 360.–. Geschuldet ist höchstens, was ab dem Austritt bis Quartalsende noch angefallen wäre. Die bis zum Austritt angebotenen Samstage bleiben geschuldet, auch bei Abwesenheit; weitere Monatsbeiträge entfallen. Bereits bezahlte Samstage nach dem Austritt werden an die Pauschale angerechnet, ein allfälliger Überschuss wird zurückerstattet. Keine Pauschale ist geschuldet, wenn wir begründeten Anlass zur Kündigung gegeben haben.<br/><br/><strong style="color:var(--navy);">Beispiele</strong> (1 Kind, CHF 160.– für einen Monat mit vier Samstagen bezahlt): Austritt vor dem ersten Samstag des Monats – es kommt nichts mehr dazu. Austritt nach den ersten zwei Samstagen im ersten Quartalsmonat – es bleiben CHF 80.– zu bezahlen. Dasselbe im letzten Quartalsmonat – es kommt nichts mehr dazu, weil bis Quartalsende nur noch die zwei bereits bezahlten Samstage angefallen wären.</p>
-        <p style="padding:0 1.4rem 1.1rem;font-size:.9rem;color:var(--muted);">Eine unverbindliche Anfrage ist kein Kursvertrag und muss nicht als solcher gekündigt werden.</p>
       </details>
 
       <details style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;overflow:hidden;">
@@ -942,9 +930,9 @@
   <div class="container">
     <div class="kontakt-inner">
       <div>
-        <p class="section-label">Kontakt & Anfrage</p>
+        <p class="section-label">Kontakt & Anmeldung</p>
         <h2 class="section-title">Mach Lernen wieder <span style="color:var(--teal)">spannend.</span></h2>
-        <p style="color:var(--muted);font-weight:300;line-height:1.8;margin-bottom:0">Ersttermin vereinbaren oder persönlich Kontakt aufnehmen: Unverbindlich – wir melden uns persönlich bei dir.</p>
+        <p style="color:var(--muted);font-weight:300;line-height:1.8;margin-bottom:0">Melde dich jetzt an oder schreib uns direkt per WhatsApp. Wir freuen uns auf dich!</p>
         <div class="contact-items">
           <div class="contact-item"><div class="contact-icon">📍</div><div><strong>Standort</strong><span>Dörflistrasse 67, 8050 Zürich</span></div></div>
           <div class="contact-item"><div class="contact-icon">📱</div><div><strong>WhatsApp / Telefon</strong><span>+41 76 282 92 44</span></div></div>
@@ -953,10 +941,9 @@
         </div>
       </div>
       <div class="kontakt-form" style="padding:0;overflow:hidden;border-radius:10px;">
-        <p class="inquiry-notice"><strong>Ersttermin vereinbaren</strong><br>Unverbindlich – wir melden uns persönlich bei dir.<br>Die Anfrage erzeugt keinen Vertrag und keine Buchung des Ersttermins. Verbindlich wird es erst mit der unterschriebenen Ersttermin-Vereinbarung beziehungsweise dem Anmeldevertrag. Du erhältst dazu die Vertragsfassung mit Version, Eintrittsdatum, erster Vertragsperiode, Tarif und Teilnehmenden; unterschreibe sie und gib sie auf dem persönlich vereinbarten Weg zurück.</p>
         <iframe 
           src="https://script.google.com/macros/s/AKfycbyzoXaSxK5Pp3W5rCMSMiDef2HMdZqMB0G7jYPJf2Tan8R_2j2r6b4Y2_0vMkUXn7o0HQ/exec"
-          title="Ersttermin vereinbaren – Lerncoaching ZH"
+          title="Anmeldeformular Lerncoaching ZH"
           width="100%"
           height="620"
           frameborder="0"
@@ -999,19 +986,19 @@
     E-Mail: zhlerncoaching@gmail.com · Tel.: +41 76 282 92 44</p>
 
     <p style="font-size:.85rem;color:var(--muted);line-height:1.75;margin-bottom:1rem;"><strong style="color:var(--navy);">Welche Daten wir erheben</strong><br/>
-    Für die Interessenanfrage erfassen wir Name, Schulstufe, gewünschtes Angebot und eine Kontaktmöglichkeit, optional Wunschdatum und Nachricht. Bitte keine Diagnosen oder Gesundheitsdetails eintragen. Vorgangskennung, Eingangszeit und Informationsversionen dienen der Nachvollziehbarkeit und Erkennung technischer Wiederholungen. Es wird keine Vertragszustimmung erfasst.</p>
+    Beim Ausfüllen des Anmeldeformulars erheben wir: Name des Kindes, Schulstufe, Anzahl Kinder, Kontaktdaten eines Elternteils sowie optionale Angaben zu Fächern und Herausforderungen.</p>
 
     <p style="font-size:.85rem;color:var(--muted);line-height:1.75;margin-bottom:1rem;"><strong style="color:var(--navy);">Zweck der Datenbearbeitung</strong><br/>
-    Die Angaben dienen der persönlichen Prüfung deiner Anfrage, der Kontaktaufnahme und gegebenenfalls einer vereinbarten Warteliste. Erst nach einem separaten Vertragsabschluss werden erforderliche Vertrags- und Unterrichtsdaten für dessen Durchführung bearbeitet.</p>
+    Die Daten werden ausschliesslich zur Vertragserfüllung (Anmeldung, Lernplanerstellung, Elternkommunikation) verwendet. Es erfolgt keine Weitergabe an Dritte.</p>
 
     <p style="font-size:.85rem;color:var(--muted);line-height:1.75;margin-bottom:1rem;"><strong style="color:var(--navy);">Speicherung</strong><br/>
-    Das Formular wird über Google Apps Script bereitgestellt und speichert Anfragen in Google Sheets. Die Kursleitung erhält eine E-Mail-Benachrichtigung. Die Website wird über GitHub Pages ausgeliefert und lädt Schriftarten von Google Fonts; dabei werden technische Verbindungsdaten an die jeweiligen Dienste übermittelt. Wer WhatsApp nutzt, kommuniziert über diesen Dienst. Es wird kein bestimmter Speicherort oder Zertifizierungsstatus zugesichert. Anfragen, aus denen kein Vertrag entsteht, werden nach 12 Monaten gelöscht, auf Wunsch der Familie früher.</p>
+    Anmeldedaten werden in einem passwortgeschützten Google Sheet gespeichert (Google LLC, USA). Google ist unter dem EU-US Data Privacy Framework zertifiziert. Die Daten werden nach Beendigung des Vertragsverhältnisses gelöscht, sofern keine gesetzlichen Aufbewahrungspflichten bestehen.</p>
 
     <p style="font-size:.85rem;color:var(--muted);line-height:1.75;margin-bottom:1rem;"><strong style="color:var(--navy);">Ihre Rechte (Art. 25 DSG)</strong><br/>
     Sie haben das Recht auf Auskunft, Berichtigung, Löschung und Herausgabe Ihrer Daten. Anfragen richten Sie bitte an zhlerncoaching@gmail.com.</p>
 
     <p style="font-size:.85rem;color:var(--muted);line-height:1.75;"><strong style="color:var(--navy);">Anwendbares Recht</strong><br/>
-    Diese Datenschutzhinweise richten sich nach dem Schweizer Datenschutzgesetz (DSG, SR 235.1). Version der Anfrageinformationen: 2026-11-17. Die gesetzlich vorgesehenen Rechte und Zuständigkeiten bleiben vorbehalten.</p>
+    Diese Datenschutzerklärung richtet sich nach dem Schweizer Datenschutzgesetz (DSG, SR 235.1). Gerichtsstand ist Zürich.</p>
   </div>
 </dialog>
 
