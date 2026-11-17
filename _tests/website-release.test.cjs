@@ -27,7 +27,8 @@ test('navigation destinations, dialog keyboard handlers and existing scripts rem
  const destinations=s=>[...s.match(/<nav\b[\s\S]*?<\/nav>/)[0].matchAll(/href="([^"]+)"/g)].map(x=>x[1]);
  assert.deepEqual(destinations(html),destinations(before));assert.deepEqual(scripts(html),scripts(before));
  for(const script of scripts(html)){const body=script.replace(/^<script[^>]*>/,'').replace(/<\/script>$/,'');if(body.trim())new vm.Script(body);}
- assert.equal(html.match(/<dialog id="impModal"[\s\S]*?<\/dialog>/)[0],before.match(/<dialog id="impModal"[\s\S]*?<\/dialog>/)[0]);
+ // Einzige gewollte Änderung im Impressum seit dem Basisstand: Kontakt-E-Mail (Freigabe vom 17.11.2026).
+ assert.equal(html.match(/<dialog id="impModal"[\s\S]*?<\/dialog>/)[0],before.match(/<dialog id="impModal"[\s\S]*?<\/dialog>/)[0].replace(/E-Mail: [^<]+<br\/>/,'E-Mail: zhlerncoaching@gmail.com<br/>'));
  for(const id of ['dsModal','impModal'])assert.ok(html.includes('<dialog id="'+id+'" class="modal" aria-labelledby="'+id+'-title">'));
 });
 test('hero is the existing approved image; source order and mobile rules preserve the full image',()=>{
