@@ -5,14 +5,15 @@ const fs=require('node:fs'),path=require('node:path'),crypto=require('node:crypt
 const vm=require('node:vm');
 const {execFileSync}=require('node:child_process');
 const root=path.resolve(__dirname,'..');
-const base='5545d7036b709555dfad9e867e799411f5ad8247';
+const base='7388ca1a263d85e3794b27d2fc3a40b1556069f1';
 const before=execFileSync('git',['show',base+':index.html'],{cwd:root,encoding:'utf8'});
 const html=fs.readFileSync(path.join(root,'index.html'),'utf8');
 const sha=b=>crypto.createHash('sha256').update(b).digest('hex');
 const section=(s,id)=>s.match(new RegExp('<section\\b[^>]*\\bid="'+id+'"[\\s\\S]*?<\\/section>'))?.[0];
 const scripts=s=>[...s.matchAll(/<script\b[^>]*>[\s\S]*?<\/script>/g)].map(m=>m[0]);
-test('existing registration section, exact iframe/direct link and processing entrypoints preserved',()=>{
- assert.equal(section(html,'kontakt'),section(before,'kontakt'));
+test('inquiry copy changes while the exact iframe/direct link and processing entrypoints stay preserved',()=>{
+ assert.match(section(html,'kontakt'),/Die Anfrage erzeugt keinen Vertrag und keine Buchung des Ersttermins/);
+ assert.match(section(html,'kontakt'),/unterschriebenen Ersttermin-Vereinbarung beziehungsweise dem Anmeldevertrag/);
  assert.deepEqual([...html.matchAll(/https:\/\/script\.google\.com\/macros\/s\/[^"\s<>]+\/exec/g)].map(m=>m[0]),[...before.matchAll(/https:\/\/script\.google\.com\/macros\/s\/[^"\s<>]+\/exec/g)].map(m=>m[0]));
  assert.ok(!/<form\b|formular-vorschau|formular-gesperrt|_apps-script|portal\.html/i.test(html));
 });
@@ -22,10 +23,12 @@ test('calendar, standard PDFs, flyer, domain and site configuration stay byte-id
   assert.equal(sha(fs.readFileSync(path.join(root,file))),sha(expected),file);
  }
 });
-test('navigation, dialog keyboard handlers and existing scripts remain unchanged',()=>{
- assert.equal(html.match(/<nav\b[\s\S]*?<\/nav>/)[0],before.match(/<nav\b[\s\S]*?<\/nav>/)[0]);assert.deepEqual(scripts(html),scripts(before));
+test('navigation destinations, dialog keyboard handlers and existing scripts remain unchanged',()=>{
+ const destinations=s=>[...s.match(/<nav\b[\s\S]*?<\/nav>/)[0].matchAll(/href="([^"]+)"/g)].map(x=>x[1]);
+ assert.deepEqual(destinations(html),destinations(before));assert.deepEqual(scripts(html),scripts(before));
  for(const script of scripts(html)){const body=script.replace(/^<script[^>]*>/,'').replace(/<\/script>$/,'');if(body.trim())new vm.Script(body);}
- for(const id of ['dsModal','impModal'])assert.equal(html.match(new RegExp('<dialog id="'+id+'"[\\s\\S]*?<\\/dialog>'))[0],before.match(new RegExp('<dialog id="'+id+'"[\\s\\S]*?<\\/dialog>'))[0]);
+ assert.equal(html.match(/<dialog id="impModal"[\s\S]*?<\/dialog>/)[0],before.match(/<dialog id="impModal"[\s\S]*?<\/dialog>/)[0]);
+ for(const id of ['dsModal','impModal'])assert.ok(html.includes('<dialog id="'+id+'" class="modal" aria-labelledby="'+id+'-title">'));
 });
 test('hero is the existing approved image; source order and mobile rules preserve the full image',()=>{
  assert.equal(sha(fs.readFileSync(path.join(root,'lerncoaching-hero.webp'))),'e4437c255deefaaf675087af7985a4904924e8742d460b04ed96aaaa45ce6d06');
@@ -34,9 +37,21 @@ test('hero is the existing approved image; source order and mobile rules preserv
  assert.match(html,/\.hero-content\{grid-template-columns:minmax\(0,1fr\);\}/);
  assert.match(html,/<img src="lerncoaching-hero\.webp" width="1000" height="1000"/);
 });
-test('FMS and fourth primary class are present; no new admission/form state is implied',()=>{
+test('FMS and fourth primary class are present; all inquiry CTAs use the full approved wording',()=>{
  assert.ok(html.includes('BMS, HMS und FMS'));assert.ok(html.includes('Lernende an BMS, HMS und FMS'));assert.ok(html.includes('ab der 4. Primarklasse'));
- for(const text of ['Unverbindlich anfragen','Platz anfragen','Die Anfrage allein'])assert.equal(html.includes(text),false,text);
+ const links=[...html.matchAll(/<a\b[^>]*href="#kontakt"[^>]*>([\s\S]*?)<\/a>/g)];assert.equal(links.length,11);
+ for(const link of links)assert.equal(link[1],'Ersttermin vereinbaren');
+ for(const text of ['Platz anfragen','Termin anfragen','Probestunde anfragen','keine Plätze frei','voller Belegung'])assert.equal(html.includes(text),false,text);
+ assert.ok(html.includes('Unverbindlich – wir melden uns persönlich bei dir.'));
+ assert.ok(html.includes('Anfragen, aus denen kein Vertrag entsteht, werden nach 12 Monaten gelöscht, auf Wunsch der Familie früher.'));
+});
+
+test('approved main cancellation clauses stay verbatim despite inquiry changes',()=>{
+ const faq=before.match(/<p[^>]*>Kostenlos ist die Kündigung per Quartalsende:[\s\S]*?<\/p>/)[0];assert.ok(html.includes(faq));
+ for(const marker of ['Kündigung kostenlos per Quartalsende','Austritt während des Quartals','Quartalsweise, verlängert sich automatisch.']){
+  const snippet=before.slice(before.indexOf(marker));const text=snippet.slice(0,snippet.indexOf('</p>')>=0&&marker!=='Quartalsweise, verlängert sich automatisch.'?snippet.indexOf('</p>'):snippet.indexOf('</div>'));
+  assert.ok(html.includes(text),marker);
+ }
 });
 test('Saturday sequence, optional strategy and parent note match the approved existing work',()=>{
  const cycle=section(html,'zyklus');assert.ok(cycle);for(const text of ['ausführliche Standortbestimmung','am ersten besuchten Samstag des Quartals','Stärken und Lücken erkennen','Aktuelle Schulaufgaben oder Prüfungsthemen','Verstehen vor Erledigen','Wenn es hilft:','Vereinbarte Ziele und Fortschritte vergleichen','keine starre Altersgrenze','Zeugniskopie ist nicht nötig','WhatsApp ist keine Voraussetzung'])assert.ok(cycle.includes(text),text);
