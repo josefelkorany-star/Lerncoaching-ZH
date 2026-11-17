@@ -1,0 +1,16 @@
+{
+  "package": "pdf-lib",
+  "version": "1.17.1",
+  "source": "https://registry.npmjs.org/pdf-lib/-/pdf-lib-1.17.1.tgz",
+  "integrity": "sha512-V/mpyJAoTsN4cnP31vc0wfNA1+p20evqqnap0KLoRUN0Yk/p3wN52DOEsL4oBFcLdb76hlpKPtzJIgo67j/XLw==",
+  "files": [
+    {
+      "path": "assets/vendor/pdf-lib-LICENSE.md",
+      "sha256": "f2c9fc00fdb66eb99ac156ba52d734af66d8d309f65753ae809ad34ee2883bcb"
+    },
+    {
+      "path": "assets/vendor/pdf-lib-1.17.1.min.js",
+      "sha256": "0f9a5cad07941f0826586c94e089d89b918c46e5c17cf2d5a3c6f666e3bc694f"
+    }
+  ]
+}

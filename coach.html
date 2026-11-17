@@ -163,8 +163,10 @@
   .send-btn[disabled]{background:#9CCFBE;cursor:default;}
   .send-btn svg{width:20px;height:20px;}
   .composer-note{font-size:.74rem;color:var(--muted);text-align:center;margin-top:.45rem;}
-  .bild-vorschau{position:relative;display:inline-block;margin:0 0 .5rem .2rem;}
+  .bild-vorschau{position:relative;display:inline-flex;align-items:center;gap:.65rem;max-width:calc(100% - 1rem);margin:0 0 .5rem .2rem;padding-right:1rem;}
   .bild-vorschau img{display:block;height:72px;width:auto;max-width:160px;border-radius:8px;border:1px solid var(--border);}
+  .anhang-info{min-width:0;font-size:.85rem;overflow-wrap:anywhere;}
+  .anhang-kontext{font-size:.78rem;color:var(--muted);margin:.35rem .2rem;overflow-wrap:anywhere;}
   .bild-vorschau button{position:absolute;top:-8px;right:-8px;width:26px;height:26px;border-radius:50%;background:var(--navy);color:#fff;font-size:.95rem;line-height:26px;text-align:center;}
 
   /* Fenster */
@@ -283,13 +285,15 @@
         <div class="composer-in">
           <div class="bild-vorschau" id="bild-vorschau" hidden>
             <img id="bild-img" alt="Vorschau des Fotos">
-            <button type="button" id="bild-weg" aria-label="Foto entfernen">×</button>
+            <span class="anhang-info" id="anhang-info"></span>
+            <button type="button" id="bild-weg" aria-label="Anhänge entfernen">×</button>
           </div>
+          <p class="anhang-kontext" id="anhang-kontext" hidden></p>
           <div class="composer-row">
-            <button type="button" class="icon-btn" id="btn-foto" aria-label="Foto einer Aufgabe hinzufügen" title="Foto einer Aufgabe">
+            <button type="button" class="icon-btn" id="btn-foto" aria-label="Foto oder PDF einer Aufgabe hinzufügen" title="Foto oder PDF einer Aufgabe">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg>
             </button>
-            <input type="file" id="datei" class="sr" accept="image/*" tabindex="-1" aria-hidden="true">
+            <input type="file" id="datei" class="sr" accept="image/*,application/pdf,.pdf" multiple tabindex="-1" aria-hidden="true">
             <label for="eingabe" class="sr">Deine Nachricht</label>
             <textarea id="eingabe" rows="1" placeholder="Schreib deine Frage …"></textarea>
             <button type="submit" class="send-btn" id="btn-senden" aria-label="Nachricht senden">
@@ -311,7 +315,8 @@
     <h3>So hilft dir der Coach am meisten</h3>
     <ul>
       <li>Sag, worum es geht: Fach, Aufgabe und was du schon versucht hast.</li>
-      <li>Schick ein Foto der Aufgabe, wenn das Abtippen lange dauert.</li>
+      <li>Schick ein Foto oder PDF der Aufgabe, wenn das Abtippen lange dauert. Möglich sind bis zu fünf Fotos oder ein PDF bis 3.5 MB und 20 Seiten. Bitte nur die Seiten mit der Aufgabe schicken.</li>
+      <li>Der letzte Anhang bleibt für Folgefragen in diesem Chat verfügbar, solange diese Seite geöffnet ist. Nach dem Neuladen oder Abmelden musst du ihn erneut hinzufügen.</li>
       <li>Rechne und schreib selbst mit. Der Coach gibt dir Tipps und Leitfragen statt fertiger Lösungen, damit du es wirklich verstehst.</li>
       <li>Frag nach, wenn du etwas nicht verstehst. Du kannst auch schreiben: «Erklär es einfacher.»</li>
     </ul>
@@ -339,9 +344,9 @@
     <h3>Was ist der KI-Coach?</h3>
     <p>Ein Lernhelfer auf Basis des KI-Modells Claude der Firma Anthropic. Du schreibst mit einer KI, nicht mit einem Menschen. Den Coach nutzen nur Schüler:innen und Lehrpersonen von Lerncoaching ZH mit persönlichem Code. Kinder und Jugendliche nutzen ihn nur mit dem Einverständnis ihrer Eltern.</p>
     <h3>Welche Daten wir bearbeiten</h3>
-    <p>Deinen Code, deinen Namen und deine Stufe (bei Lerncoaching ZH hinterlegt), das gewählte Fach, deine Nachrichten und Fotos sowie die Antworten. Dazu Zeitpunkt und Anzahl der Nachrichten für die Limits.</p>
+    <p>Deinen Code, deinen Namen und deine Stufe (bei Lerncoaching ZH hinterlegt), das gewählte Fach, deine Nachrichten und Anhänge (Foto oder PDF) sowie die Antworten. Dazu Zeitpunkt und Anzahl der Nachrichten für die Limits.</p>
     <h3>Wohin die Daten gehen</h3>
-    <p>Die Anfragen laufen über Google Apps Script und werden in einem passwortgeschützten Google Sheet von Lerncoaching ZH protokolliert (Google LLC, USA). Für die Antwort gehen Nachricht, Foto, Stufe und Fach an Anthropic (USA). <b>Dein Name geht nicht an Anthropic.</b> Anthropic verwendet diese Daten nicht zum Trainieren seiner KI und löscht sie in der Regel innerhalb von 30 Tagen. Ausnahme: Inhalte, die Anthropics Sicherheitssysteme markieren, können bis zu zwei Jahre aufbewahrt werden.</p>
+    <p>Die Anfragen laufen über Google Apps Script. Nachrichtentexte und Antworten werden in einem passwortgeschützten Google Sheet von Lerncoaching ZH protokolliert (Google LLC, USA); die Foto- und PDF-Dateien werden dort nicht gespeichert. Für die Antwort gehen Nachricht, Foto oder PDF, Stufe und Fach an Anthropic (USA). Anhänge bleiben für Folgefragen nur im Speicher dieser geöffneten Seite und werden dafür erneut übertragen. <b>Dein Name geht nicht an Anthropic.</b> Anthropic verwendet diese Daten nicht zum Trainieren seiner KI und löscht sie in der Regel innerhalb von 30 Tagen. Ausnahme: Inhalte, die Anthropics Sicherheitssysteme markieren, können bis zu zwei Jahre aufbewahrt werden.</p>
     <h3>Wie lange wir speichern</h3>
     <p>Fragen und Antworten speichern wir zur Sicherheit und Qualitätskontrolle höchstens <span data-tage>30</span> Tage, dann werden sie automatisch gelöscht. Markierte oder gemeldete Nachrichten bewahren wir bis zu 180 Tage auf. Einsicht hat nur die Leitung von Lerncoaching ZH. Deine Chatliste speichert nur dein Browser auf diesem Gerät. Du kannst sie jederzeit löschen.</p>
     <h3>Schutz für Kinder und Jugendliche</h3>
@@ -387,6 +392,7 @@
   </div>
 </div>
 
+<script src="assets/vendor/pdf-lib-1.17.1.min.js"></script>
 <script>
 (function () {
   'use strict';
@@ -397,6 +403,9 @@
     PROTOKOLL_TAGE: 30,      // muss zur Einstellung «Protokoll aufbewahren (Tage)» im Google Sheet passen
     MAX_CHATS: 40,
     MAX_VERLAUF: 24,
+    MAX_PDF_BYTES: 3670016, // 3.5 MiB; Seiten- und Tokenprüfung zusätzlich auf dem Server.
+    MAX_PDF_SEITEN: 20,
+    MAX_BILDER: 5,
     TIMEOUT_MS: 95000
   };
 
@@ -437,8 +446,10 @@
   var S = {
     code: '', nutzer: null, verbrauch: null, dauerhaft: true,
     chats: [], aktivId: null, entwurf: null, fachWahl: 'Allgemein',
-    laeuft: false, bild: null, letzteAnfrage: null, meldenIdx: -1, zuletztFokus: null
+    laeuft: false, bild: null, anhaenge: [], anhaengeLaden: false, letzteAnfrage: null, meldenIdx: -1, zuletztFokus: null
   };
+  // Ausschliesslich Arbeitsspeicher: niemals Teil der gespeicherten Chats/Sitzung.
+  var chatAnhaenge = Object.create(null), offeneDateileser = [];
   // Jede Anmeldung erhält einen eigenen Gültigkeitsbereich für Rückläufe.
   var sitzungsGeneration = 0, bildGeneration = 0, meldeGeneration = 0;
   var sitzungsTimer = [], offeneAnfragen = [], vorgangsNummer = 0;
@@ -457,6 +468,8 @@
     var alt = offeneAnfragen.slice(); offeneAnfragen = [];
     alt.forEach(function (abbrechen) { abbrechen(); });
     S.letzteAnfrage = null; S.meldenIdx = -1; S.meldeKontext = null; S.laeuft = false;
+    chatAnhaenge = Object.create(null);
+    renderAnhangKontext(null);
     $('eingabe').value = ''; passeHoeheAn();
     $('ansage').textContent = '';
     $('melden-text').value = ''; $('melden-status').textContent = '';
@@ -544,7 +557,7 @@
     if (S.chats.length > KONFIG.MAX_CHATS) S.chats.length = KONFIG.MAX_CHATS;
     var sauber = S.chats.map(function (c) {
       return { id: c.id, fach: c.fach, titel: c.titel, erstellt: c.erstellt, geaendert: c.geaendert,
-        nachrichten: c.nachrichten.map(function (m) { return { rolle: m.rolle, text: m.text, zeit: m.zeit, bild: !!m.bild, gemeldet: !!m.gemeldet, gekuerzt: !!m.gekuerzt, anfrageId: m.anfrageId }; }) };
+        nachrichten: c.nachrichten.map(function (m) { return { rolle: m.rolle, text: m.text, zeit: m.zeit, bild: !!m.bild, pdf: !!m.pdf, bildAnzahl: m.bildAnzahl || 0, gemeldet: !!m.gemeldet, gekuerzt: !!m.gekuerzt, anfrageId: m.anfrageId }; }) };
     });
     var ok = schreib(chatKey(), sauber, S.dauerhaft);
     while (!ok && sauber.length > 1) { sauber.length = Math.ceil(sauber.length / 2); ok = schreib(chatKey(), sauber, S.dauerhaft); }
@@ -735,6 +748,7 @@
   }
 
   function oeffneChat(id) {
+    entferneBild();
     S.aktivId = id; S.entwurf = null;
     zeigeHinweis('');
     renderListe(); renderChat();
@@ -772,6 +786,7 @@
 
   function renderChat() {
     var c = aktuellerChat();
+    renderAnhangKontext(c);
     var badge = $('fach-badge');
     badge.innerHTML = '<span class="dot" style="background:' + fachFarbe(c.fach) + '"></span>' + esc(c.fach);
     $('chat-title').textContent = c.titel || 'Neuer Chat';
@@ -779,7 +794,9 @@
     if (!c.nachrichten.length) { box.innerHTML = leerAnsicht(c); return; }
     var html = c.nachrichten.map(function (m, i) {
       if (m.rolle === 'user') {
-        var foto = m._vorschau ? '<img class="foto-mini" src="' + m._vorschau + '" alt="Gesendetes Foto">' : (m.bild ? '<span class="foto-chip">📷 Foto</span>' + (m.text ? '\n' : '') : '');
+        var foto = m.pdf ? '<span class="foto-chip">📄 PDF</span>\n' : (m.bild ? '<span class="foto-chip">📷 ' + (m.bildAnzahl > 1 ? m.bildAnzahl + ' Fotos' : 'Foto') + '</span>\n' : '');
+        var kontext = chatAnhaenge[c.id];
+        if (kontext && kontext.anfrageId === m.anfrageId && !m.pdf) foto = kontext.dateien.map(function (a) { return '<img class="foto-mini" src="' + a.vorschau + '" alt="Gesendetes Foto">'; }).join('');
         return '<div class="msg msg-user"><div class="bubble">' + foto + esc(m.text) + '</div></div>';
       }
       return '<div class="msg msg-ai"><div class="msg-label">KI-Coach<span class="ki">KI</span></div>' +
@@ -801,7 +818,7 @@
       return '<button type="button" class="vorschlag" data-vorschlag="' + i + '"><b>' + (v.foto ? '📷' : '→') + '</b>' + esc(v.t) + '</button>';
     }).join('');
     return '<div class="leer"><h2>Hallo ' + esc(vorname) + '! <span>' + (lp ? 'Woran arbeitest du?' : 'Wobei kann ich helfen?') + '</span></h2>' +
-      '<p>' + (lp ? 'Wähl ein Thema und beschreib, was du brauchst. Vollständige Lösungen sind für Lehrpersonen erlaubt.' : 'Wähl zuerst dein Fach. Dann schreib deine Frage oder schick ein Foto deiner Aufgabe.') + '</p>' +
+      '<p>' + (lp ? 'Wähl ein Thema und beschreib, was du brauchst. Vollständige Lösungen sind für Lehrpersonen erlaubt.' : 'Wähl zuerst dein Fach. Dann schreib deine Frage oder schick ein Foto oder PDF deiner Aufgabe.') + '</p>' +
       '<p class="leer-label">' + (lp ? 'Thema' : 'Fach') + '</p><div role="group" aria-label="Fach wählen">' + chips + '</div>' +
       '<p class="leer-label">Zum Beispiel</p>' + vor +
       (lp ? '' : '<p class="leer-tipp">Ich gebe dir Tipps und Leitfragen, damit du selbst auf die Lösung kommst. So bleibt es auch in der Prüfung hängen.</p>') +
@@ -817,29 +834,48 @@
   }
 
   /* ===== Senden ===== */
+  function verlaufAuswahl(c) {
+    var kontext = chatAnhaenge[c.id], n = c.nachrichten.slice(-KONFIG.MAX_VERLAUF);
+    if (kontext) {
+      var ursprung = c.nachrichten.filter(function (m) { return m.anfrageId === kontext.anfrageId; })[0];
+      if (ursprung && n.indexOf(ursprung) < 0) {
+        n = c.nachrichten.slice(-(KONFIG.MAX_VERLAUF - 2));
+        if (n.length && n[0].rolle !== 'user') n.shift();
+        n.unshift(ursprung);
+      }
+    }
+    return n;
+  }
   function verlaufFuerServer(c) {
-    var n = c.nachrichten.slice(-KONFIG.MAX_VERLAUF);
+    var kontext = chatAnhaenge[c.id], n = verlaufAuswahl(c);
     return n.map(function (m, i) {
       var text = m.text || '';
-      if (m.bild && i < n.length - 1) text = (text ? text + '\n' : '') + '[Foto gesendet]';
+      // Die Anhangsfrage bleibt bei Folgefragen bytegleich: kein nachträglich
+      // eingefügter Foto-Hinweis, der den Cache-Präfix verändern würde.
+      if ((m.bild || m.pdf) && (!kontext || kontext.anfrageId !== m.anfrageId)) text = (text ? text + '\n' : '') + (m.pdf ? '[PDF nicht mehr verfügbar; bei Bedarf erneut hinzufügen]' : '[Foto nicht mehr verfügbar; bei Bedarf erneut hinzufügen]');
       return { rolle: m.rolle, text: text };
     });
   }
 
   function senden() {
-    if (S.laeuft) return;
+    if (S.laeuft || S.anhaengeLaden) return;
     var feld = $('eingabe');
     var text = feld.value.replace(/\s+$/, '');
-    if (!text.trim() && !S.bild) { try { feld.focus(); } catch (e) {} return; }
+    if (!text.trim() && !S.anhaenge.length) { try { feld.focus(); } catch (e) {} return; }
     var c = aktuellerChat();
     if (!S.aktivId) { S.chats.unshift(c); S.aktivId = c.id; S.entwurf = null; }
-    var nachricht = { rolle: 'user', text: text.trim(), zeit: Date.now(), bild: !!S.bild, anfrageId: neueVorgangsId() };
-    if (S.bild) nachricht._vorschau = S.bild.vorschau;
+    var pdf = S.anhaenge.length && S.anhaenge[0].typ === 'application/pdf';
+    var nachricht = { rolle: 'user', text: text.trim(), zeit: Date.now(), bild: !!S.anhaenge.length && !pdf, pdf: !!pdf, bildAnzahl: pdf ? 0 : S.anhaenge.length, anfrageId: neueVorgangsId() };
     c.nachrichten.push(nachricht);
-    if (!c.titel) c.titel = (text.trim() || 'Foto einer Aufgabe').replace(/\s+/g, ' ').slice(0, 50);
+    if (S.anhaenge.length) chatAnhaenge[c.id] = { anfrageId: nachricht.anfrageId, dateien: S.anhaenge.slice() };
+    if (!c.titel) c.titel = (text.trim() || (pdf ? 'PDF einer Aufgabe' : 'Foto einer Aufgabe')).replace(/\s+/g, ' ').slice(0, 50);
     c.geaendert = Date.now();
-    var anfrage = { aktion: 'chat', anfrageId: nachricht.anfrageId, code: S.code, fach: c.fach, nachrichten: verlaufFuerServer(c),
-      bild: S.bild ? { typ: S.bild.typ, daten: S.bild.daten } : null };
+    var anfrage = { aktion: 'chat', anfrageId: nachricht.anfrageId, code: S.code, fach: c.fach, nachrichten: verlaufFuerServer(c) };
+    var kontext = chatAnhaenge[c.id];
+    if (kontext) {
+      anfrage.anhaenge = kontext.dateien.map(function (a) { return { typ: a.typ, daten: a.daten }; });
+      anfrage.anhangNachricht = verlaufAuswahl(c).map(function (m) { return m.anfrageId; }).indexOf(kontext.anfrageId);
+    }
     feld.value = ''; passeHoeheAn();
     entferneBild();
     speichereChats();
@@ -896,7 +932,81 @@
     schicke(c, l.anfrage);
   }
 
-  /* ===== Fotos ===== */
+  /* ===== Anhänge (ausschliesslich im Arbeitsspeicher) ===== */
+  function istPdf(datei) { return datei && (datei.type === 'application/pdf' || /\.pdf$/i.test(datei.name || '')); }
+  function pdfVorbereiten(datei) {
+    if (!datei || !datei.size || datei.size > KONFIG.MAX_PDF_BYTES) return Promise.reject(new Error('PDF_GROESSE'));
+    return new Promise(function (resolve, reject) {
+      var leser = new FileReader();
+      offeneDateileser.push(leser);
+      function fertig() { offeneDateileser = offeneDateileser.filter(function (l) { return l !== leser; }); }
+      leser.onload = function () {
+        fertig();
+        if (!window.PDFLib) { reject(new Error('PDF_BIBLIOTHEK')); return; }
+        // Ein echter PDF-Parser prüft auch komprimierte Objektströme. Die
+        // Normalisierung macht den Seitenbaum für die zusätzliche serverseitige
+        // Prüfung lesbar; weder Original noch normalisierte Bytes werden gespeichert.
+        window.PDFLib.PDFDocument.load(new Uint8Array(leser.result), { ignoreEncryption: false, updateMetadata: false }).then(function (dokument) {
+          var seiten = dokument.getPageCount();
+          if (!seiten || seiten > KONFIG.MAX_PDF_SEITEN) throw new Error('PDF_SEITEN');
+          return dokument.save({ useObjectStreams: false, addDefaultPage: false });
+        }).then(function (bytes) {
+          if (!bytes.length || bytes.length > KONFIG.MAX_PDF_BYTES) throw new Error('PDF_GROESSE');
+          var teile = [];
+          for (var i = 0; i < bytes.length; i += 8192) teile.push(String.fromCharCode.apply(null, bytes.subarray(i, i + 8192)));
+          resolve({ typ: 'application/pdf', daten: btoa(teile.join('')), name: String(datei.name || 'Aufgabe.pdf') });
+        }).catch(function (e) {
+          // The pinned UMD build uses Error.name="Error" for this subclass.
+          var verschluesselt = e && (e.name === 'EncryptedPDFError' || /Input document to .* is encrypted\./.test(String(e.message)));
+          reject(verschluesselt ? new Error('PDF_VERSCHLUESSELT') : e);
+        });
+      };
+      leser.onerror = function () { fertig(); reject(new Error('PDF_FORMAT')); };
+      leser.onabort = function () { fertig(); reject(new Error('SITZUNG')); };
+      leser.readAsArrayBuffer(datei);
+    });
+  }
+  function renderAnhangKontext(c) {
+    var kontext = c && chatAnhaenge[c.id], el = $('anhang-kontext');
+    el.hidden = !kontext;
+    el.textContent = kontext ? (kontext.dateien[0].typ === 'application/pdf' ? '📄 PDF' : '📷 ' + kontext.dateien.length + (kontext.dateien.length === 1 ? ' Foto' : ' Fotos')) + ' für Folgefragen in diesem Chat verfügbar (bis zum Neuladen oder Abmelden).' : '';
+  }
+  function renderAnhangVorschau() {
+    var a = S.anhaenge[0];
+    S.bild = a && a.typ !== 'application/pdf' ? a : null;
+    $('bild-vorschau').hidden = !a;
+    $('bild-img').hidden = !S.bild;
+    if (S.bild) $('bild-img').src = S.bild.vorschau; else $('bild-img').removeAttribute('src');
+    $('anhang-info').textContent = !a ? '' : (a.typ === 'application/pdf' ? '📄 ' + a.name : S.anhaenge.length + (S.anhaenge.length === 1 ? ' Foto' : ' Fotos'));
+  }
+  function uebernehmeAnhaenge(dateien) {
+    if (!dateien.length || !S.nutzer) return;
+    var pdfs = dateien.filter(istPdf), vorher = S.anhaenge.slice();
+    if (pdfs.length && (dateien.length !== 1 || vorher.length)) { zeigeHinweis('Bitte ein PDF oder bis zu fünf Fotos wählen. Entferne zuerst die bereits ausgewählten Anhänge.'); return; }
+    if (!pdfs.length && (vorher.length && vorher[0].typ === 'application/pdf')) { zeigeHinweis('Bitte zuerst das ausgewählte PDF entfernen, bevor du Fotos hinzufügst.'); return; }
+    if (!pdfs.length && dateien.length + vorher.length > KONFIG.MAX_BILDER) { zeigeHinweis('Du kannst höchstens fünf Fotos pro Nachricht hinzufügen.'); return; }
+    if (dateien.some(function (f) { return !istPdf(f) && String(f.type || '').indexOf('image/') !== 0; })) { zeigeHinweis('Bitte ein Foto (JPG oder PNG) oder PDF wählen.'); return; }
+    var generation = sitzungsGeneration, bildAuftrag = ++bildGeneration, chatId = aktuellerChat().id;
+    S.anhaengeLaden = true; $('btn-senden').disabled = true;
+    zeigeHinweis('');
+    Promise.all(dateien.map(function (f) { return istPdf(f) ? pdfVorbereiten(f) : bildVorbereiten(f); })).then(function (neu) {
+      if (generation !== sitzungsGeneration || bildAuftrag !== bildGeneration || !aktuellerChat() || chatId !== aktuellerChat().id) return;
+      S.anhaenge = vorher.concat(neu); S.anhaengeLaden = false; $('btn-senden').disabled = S.laeuft;
+      renderAnhangVorschau();
+      try { $('eingabe').focus(); } catch (e) {}
+    }).catch(function (e) {
+      if (generation !== sitzungsGeneration || bildAuftrag !== bildGeneration) return;
+      S.anhaengeLaden = false; $('btn-senden').disabled = S.laeuft;
+      var meldungen = {
+        PDF_GROESSE: 'Das PDF ist leer oder nach der Aufbereitung grösser als 3.5 MB. Bitte nur die Seiten mit der Aufgabe schicken.',
+        PDF_SEITEN: 'Bitte ein PDF mit 1 bis 20 Seiten wählen. Bitte nur die Seiten mit der Aufgabe schicken.',
+        PDF_VERSCHLUESSELT: 'Dieses PDF ist passwortgeschützt. Bitte eine ungeschützte Kopie nur der Seiten mit der Aufgabe schicken.',
+        PDF_BIBLIOTHEK: 'Die PDF-Unterstützung konnte nicht geladen werden. Bitte die Seite neu laden.'
+      };
+      zeigeHinweis(meldungen[e && e.message] || 'Dieses Foto oder PDF konnte ich nicht öffnen. Bitte eine andere Datei wählen.');
+    });
+    $('datei').value = '';
+  }
   function bildVorbereiten(datei) {
     return new Promise(function (resolve, reject) {
       if (!datei || (datei.type && datei.type.indexOf('image/') !== 0)) { reject(new Error('TYP')); return; }
@@ -924,9 +1034,11 @@
   }
   function entferneBild() {
     bildGeneration++;
-    S.bild = null;
-    $('bild-vorschau').hidden = true;
-    $('bild-img').removeAttribute('src');
+    var leser = offeneDateileser.slice(); offeneDateileser = [];
+    leser.forEach(function (l) { try { l.abort(); } catch (e) {} });
+    S.anhaenge = []; S.anhaengeLaden = false; S.bild = null;
+    $('btn-senden').disabled = S.laeuft;
+    renderAnhangVorschau();
     $('datei').value = '';
   }
 
@@ -990,56 +1102,38 @@
       if (ev.key === 'Enter' && !ev.shiftKey && !ev.isComposing && !istTouch()) { ev.preventDefault(); senden(); }
     });
     $('btn-foto').addEventListener('click', function () { $('datei').click(); });
-    function uebernehmeBild(f) {
-      if (!f) return;
-      if (f.type === 'application/pdf' || /\.pdf$/i.test(f.name || '')) {
-        zeigeHinweis('PDFs kann der Coach noch nicht lesen. Mach vorerst einen Screenshot der Seite mit der Aufgabe und füge ihn ein.');
-        return;
-      }
-      var generation = sitzungsGeneration, bildAuftrag = ++bildGeneration;
-      zeigeHinweis('');
-      bildVorbereiten(f).then(function (b) {
-        if (generation !== sitzungsGeneration || bildAuftrag !== bildGeneration) return;
-        S.bild = b;
-        $('bild-img').src = b.vorschau;
-        $('bild-vorschau').hidden = false;
-        try { $('eingabe').focus(); } catch (e) {}
-      }).catch(function () {
-        if (generation !== sitzungsGeneration || bildAuftrag !== bildGeneration) return;
-        entferneBild();
-        zeigeHinweis('Dieses Foto konnte ich nicht öffnen. Bitte ein anderes Foto (JPG oder PNG) wählen.');
-      });
-    }
-    function dateiAusListe(liste) {
-      if (!liste) return null;
+    function dateienAusListe(liste) {
+      var dateien = [];
+      if (!liste) return dateien;
       for (var i = 0; i < liste.length; i++) {
         var eintrag = liste[i];
-        var f = eintrag && eintrag.kind === 'file' && eintrag.getAsFile ? eintrag.getAsFile() : (eintrag && eintrag.name !== undefined ? eintrag : null);
-        if (f && (f.type.indexOf('image/') === 0 || f.type === 'application/pdf' || /\.pdf$/i.test(f.name || ''))) return f;
+        var f = eintrag && eintrag.kind === 'file' && eintrag.getAsFile ? eintrag.getAsFile() : (eintrag && eintrag.type !== undefined && !eintrag.kind ? eintrag : null);
+        if (f) dateien.push(f);
       }
-      return null;
+      return dateien;
     }
     $('datei').addEventListener('change', function () {
-      uebernehmeBild(this.files && this.files[0]);
+      uebernehmeAnhaenge(dateienAusListe(this.files));
     });
-    // Bild direkt einfügen (Strg+V / Cmd+V oder «Einsetzen» auf dem Handy)
+    // Foto oder PDF direkt einfügen; normale Text-Zwischenablage bleibt erhalten.
     $('eingabe').addEventListener('paste', function (ev) {
       var cd = ev.clipboardData;
-      var f = cd && (dateiAusListe(cd.files) || dateiAusListe(cd.items));
-      if (!f) return;
+      var dateien = cd ? dateienAusListe(cd.files) : [];
+      if (!dateien.length && cd) dateien = dateienAusListe(cd.items);
+      if (!dateien.length) return;
       ev.preventDefault();
-      uebernehmeBild(f);
+      uebernehmeAnhaenge(dateien);
     });
-    // Bild in das Chatfenster ziehen und loslassen
+    // Fotos oder PDF in das Chatfenster ziehen und loslassen.
     var ablage = $('v-chat');
     ablage.addEventListener('dragover', function (ev) {
       if (ev.dataTransfer && Array.prototype.indexOf.call(ev.dataTransfer.types || [], 'Files') >= 0) ev.preventDefault();
     });
     ablage.addEventListener('drop', function (ev) {
-      var f = ev.dataTransfer && dateiAusListe(ev.dataTransfer.files);
-      if (!f) return;
+      var dateien = ev.dataTransfer ? dateienAusListe(ev.dataTransfer.files) : [];
+      if (!dateien.length) return;
       ev.preventDefault();
-      uebernehmeBild(f);
+      uebernehmeAnhaenge(dateien);
     });
     $('bild-weg').addEventListener('click', entferneBild);
     $('btn-neu').addEventListener('click', neuerChat);
@@ -1108,6 +1202,7 @@
           return;
         }
         var id = el.getAttribute('data-del');
+        delete chatAnhaenge[id];
         S.chats = S.chats.filter(function (c) { return c.id !== id; });
         speichereChats();
         if (S.aktivId === id) neuerChat(); else renderListe();

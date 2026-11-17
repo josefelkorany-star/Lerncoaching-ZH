@@ -1,0 +1,2 @@
+# The four user-supplied files must retain their exact bytes in Git and checkout.
+original/** -text
