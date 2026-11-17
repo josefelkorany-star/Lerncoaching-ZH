@@ -17,8 +17,8 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 12
     env:
-      COACH_DEPENDENCY_ROOT: ${{ runner.temp }}/coach-tools
-      PLAYWRIGHT_BROWSERS_PATH: ${{ runner.temp }}/coach-browsers
+      COACH_DEPENDENCY_ROOT: /tmp/coach-tools
+      PLAYWRIGHT_BROWSERS_PATH: /tmp/coach-browsers
       COACH_CLOUD_QA: 'true'
       COACH_LIVE_QA: ${{ (inputs.live || github.ref == 'refs/heads/main') && 'true' || 'false' }}
     steps:
