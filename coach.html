@@ -156,7 +156,7 @@
   .composer-in{max-width:760px;margin:0 auto;}
   .composer-row{display:-webkit-box;display:-webkit-flex;display:flex;-webkit-box-align:end;-webkit-align-items:flex-end;align-items:flex-end;background:var(--bg);border:1.5px solid rgba(11,34,68,0.14);border-radius:14px;padding:.3rem;}
   .composer-row:focus-within{border-color:var(--teal);}
-  #eingabe{-webkit-box-flex:1;-webkit-flex:1 1 auto;flex:1 1 auto;min-width:0;border:0;background:transparent;resize:none;font-size:16px;line-height:1.5;padding:.6rem .5rem;max-height:160px;margin:0 .3rem;}
+  #eingabe{-webkit-box-flex:1;-webkit-flex:1 1 auto;flex:1 1 auto;min-width:0;border:0;background:transparent;resize:none;font-size:16px;line-height:1.5;padding:.6rem .5rem;min-height:44px;max-height:160px;margin:0 .3rem;}
   #eingabe:focus{-webkit-box-shadow:none;box-shadow:none;}
   .send-btn{display:-webkit-inline-box;display:-webkit-inline-flex;display:inline-flex;-webkit-box-align:center;-webkit-align-items:center;align-items:center;-webkit-box-pack:center;-webkit-justify-content:center;justify-content:center;width:44px;height:44px;border-radius:10px;background:var(--teal);color:#fff;-webkit-flex-shrink:0;flex-shrink:0;}
   .send-btn:hover{background:var(--teal-mid);}
@@ -949,6 +949,9 @@
   function passeHoeheAn() {
     var t = $('eingabe');
     t.style.height = 'auto';
+    // Ist der Chat noch ausgeblendet, liefert scrollHeight 0. Dann keine feste Höhe setzen,
+    // sonst bleibt das Eingabefeld nach der Anmeldung halb abgeschnitten.
+    if (!t.scrollHeight) { t.style.height = ''; return; }
     t.style.height = Math.min(t.scrollHeight, 160) + 'px';
   }
   function setzeVh() {
@@ -987,9 +990,12 @@
       if (ev.key === 'Enter' && !ev.shiftKey && !ev.isComposing && !istTouch()) { ev.preventDefault(); senden(); }
     });
     $('btn-foto').addEventListener('click', function () { $('datei').click(); });
-    $('datei').addEventListener('change', function () {
-      var f = this.files && this.files[0];
+    function uebernehmeBild(f) {
       if (!f) return;
+      if (f.type === 'application/pdf' || /\.pdf$/i.test(f.name || '')) {
+        zeigeHinweis('PDFs kann der Coach noch nicht lesen. Mach vorerst einen Screenshot der Seite mit der Aufgabe und füge ihn ein.');
+        return;
+      }
       var generation = sitzungsGeneration, bildAuftrag = ++bildGeneration;
       zeigeHinweis('');
       bildVorbereiten(f).then(function (b) {
@@ -1003,6 +1009,37 @@
         entferneBild();
         zeigeHinweis('Dieses Foto konnte ich nicht öffnen. Bitte ein anderes Foto (JPG oder PNG) wählen.');
       });
+    }
+    function dateiAusListe(liste) {
+      if (!liste) return null;
+      for (var i = 0; i < liste.length; i++) {
+        var eintrag = liste[i];
+        var f = eintrag && eintrag.kind === 'file' && eintrag.getAsFile ? eintrag.getAsFile() : (eintrag && eintrag.name !== undefined ? eintrag : null);
+        if (f && (f.type.indexOf('image/') === 0 || f.type === 'application/pdf' || /\.pdf$/i.test(f.name || ''))) return f;
+      }
+      return null;
+    }
+    $('datei').addEventListener('change', function () {
+      uebernehmeBild(this.files && this.files[0]);
+    });
+    // Bild direkt einfügen (Strg+V / Cmd+V oder «Einsetzen» auf dem Handy)
+    $('eingabe').addEventListener('paste', function (ev) {
+      var cd = ev.clipboardData;
+      var f = cd && (dateiAusListe(cd.files) || dateiAusListe(cd.items));
+      if (!f) return;
+      ev.preventDefault();
+      uebernehmeBild(f);
+    });
+    // Bild in das Chatfenster ziehen und loslassen
+    var ablage = $('v-chat');
+    ablage.addEventListener('dragover', function (ev) {
+      if (ev.dataTransfer && Array.prototype.indexOf.call(ev.dataTransfer.types || [], 'Files') >= 0) ev.preventDefault();
+    });
+    ablage.addEventListener('drop', function (ev) {
+      var f = ev.dataTransfer && dateiAusListe(ev.dataTransfer.files);
+      if (!f) return;
+      ev.preventDefault();
+      uebernehmeBild(f);
     });
     $('bild-weg').addEventListener('click', entferneBild);
     $('btn-neu').addEventListener('click', neuerChat);
